@@ -23,7 +23,7 @@ import fi.majavapaja.lukkari.Oppilas;
 public class EtsiOppilas extends JPanel {
 	private JTextField etunimiField;
 	private JTextField sukunimiField;
-	private JList oppilaatList;
+	private JList<Oppilas> oppilaatList;
 
 	/**
 	 * Create the panel.
@@ -123,7 +123,7 @@ public class EtsiOppilas extends JPanel {
 					.addContainerGap())
 		);
 		
-		oppilaatList = new JList();
+		oppilaatList = new JList<Oppilas>();
 		scrollPane.setViewportView(oppilaatList);
 		setLayout(groupLayout);
 	}
@@ -134,11 +134,11 @@ public class EtsiOppilas extends JPanel {
 		
 		List<Oppilas> oppilaat = Database.haeOppilaatByName(etunimi, sukunimi);
 		if (oppilaat == null) {
-			// FIXME: Käsittele kunnolla
+			// FIXME: KÃ¤sittele kunnolla
 			System.out.println("LOOOOL NULLL");
 			return;
 		}
-		oppilaatList.setListData(oppilaat.toArray());
+		oppilaatList.setListData((Oppilas[]) oppilaat.toArray());
 	}
 	
 	private void takaisinActionPerformed(ActionEvent e) {}
