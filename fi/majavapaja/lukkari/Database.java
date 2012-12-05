@@ -460,7 +460,7 @@ public class Database {
 		Connection con = connect();
 		try {
 			PreparedStatement updateKayttajatunnus = con.prepareStatement("UPDATE kayttajatunnus SET kayttajatunnus=?, salasana=?, oikeudet=? WHERE kayttajatunnusID=?");
-			updateKayttajatunnus.setString(1, kayttaja.getKayttajatunnus());
+			updateKayttajatunnus.setString(1, kayttaja.getKayttajanimi());
 			updateKayttajatunnus.setString(2, kayttaja.getSalasana());
 			updateKayttajatunnus.setInt(3, kayttaja.getOikeudet());
 			updateKayttajatunnus.setInt(4, kayttaja.getId());
