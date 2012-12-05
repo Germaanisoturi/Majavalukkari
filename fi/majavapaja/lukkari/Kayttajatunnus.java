@@ -20,7 +20,7 @@ public class Kayttajatunnus {
 		this.id = id;
 	}
 
-	public String getKayttajatunnus() {
+	public String getKayttajanimi() {
 		return kayttajatunnus;
 	}
 
