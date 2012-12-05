@@ -18,12 +18,12 @@ import javax.swing.JMenuItem;
  *
  * @author s1001069
  */
+@SuppressWarnings("serial")
 public class Menupalkki extends JMenuBar implements ActionListener {
+    private Paaikkuna ikkuna;
 
-    private Paaikkuna paaikkuna;
-
-    public Menupalkki(Paaikkuna paaikkuna) {
-        this.paaikkuna = paaikkuna;
+    public Menupalkki(Paaikkuna ikkuna) {
+        this.ikkuna = ikkuna;
         luoTiedostoMenu();
         luoLisaaMenu();
         luoNaytaMenu();
@@ -67,22 +67,27 @@ public class Menupalkki extends JMenuBar implements ActionListener {
 
         this.add(lisaaMenu);
     }
-
+    
     private void luoNaytaMenu() {
-        JMenu naytaMenu = new JMenu("Näytä");
-        naytaMenu.setMnemonic('N');
+        JMenu naytaMenu = new JMenu("Muokkaa");
+        naytaMenu.setMnemonic('M');
 
-        JMenuItem oppilas = new JMenuItem("Näytä oppilas...");
+        JMenuItem oppilas = new JMenuItem("Hallinnoi oppilaita/käyttäjiä");
         oppilas.setMnemonic('o');
         oppilas.addActionListener(this);
         naytaMenu.add(oppilas);
+        
+        JMenuItem kurssi = new JMenuItem("Hallinnoi kursseja");
+        kurssi.setMnemonic('k');
+        kurssi.addActionListener(this);
+        naytaMenu.add(kurssi);
 
-        JMenuItem ryhma = new JMenuItem("Näytä ryhmä...");
+        JMenuItem ryhma = new JMenuItem("Hallinnoi ryhmiä");
         ryhma.setMnemonic('r');
         ryhma.addActionListener(this);
         naytaMenu.add(ryhma);
 
-        JMenuItem lukkari = new JMenuItem("Etsi lukujärjestys...");
+        JMenuItem lukkari = new JMenuItem("Hallinnoi lukujärjestyksiä");
         lukkari.setMnemonic('l');
         lukkari.addActionListener(this);
         naytaMenu.add(lukkari);
@@ -97,17 +102,18 @@ public class Menupalkki extends JMenuBar implements ActionListener {
         } else if (e.getActionCommand().equals("Lopeta")) {
             System.exit(0);
         } else if (e.getActionCommand().equals("Uusi käyttäjätunnus/oppilas...")) {
-            paaikkuna.vaihdaPaneeli(new LisaaKayttaja(paaikkuna));
+            ikkuna.vaihdaPaneeli(new LisaaKayttaja(ikkuna));
         } else if (e.getActionCommand().equals("Uusi ryhmä")) {
-            paaikkuna.vaihdaPaneeli(new LisaaRyhma(paaikkuna));
-            System.out.println("ass");
+            ikkuna.vaihdaPaneeli(new LisaaRyhma(ikkuna));
         } else if (e.getActionCommand().equals("Uusi kurssi")) {
-            paaikkuna.vaihdaPaneeli(new LisaaKurssi());
-        } else if (e.getActionCommand().equals("Näytä oppilas...")) {
-            paaikkuna.vaihdaPaneeli(new EtsiOppilas());
-        } else if (e.getActionCommand().equals("Näytä ryhmä...")) {
+            ikkuna.vaihdaPaneeli(new LisaaKurssi(ikkuna));
+        } else if (e.getActionCommand().equals("Hallinnoi oppilaita/käyttäjiä")) {
+            ikkuna.vaihdaPaneeli(new EtsiOppilas(ikkuna));
+        } else if (e.getActionCommand().equals("Hallinnoi kursseja")){
+//            ikkuna.vaihdaPaneeli(new EtsiKurssi(ikkuna));
+        } else if (e.getActionCommand().equals("Hallinnoi ryhmiä")) {
 //            paaikkuna.vaihdaPaneeli(new EtsiRyhma());
-        } else if (e.getActionCommand().equals("Etsi lukujärjestys...")) {
+        } else if (e.getActionCommand().equals("Hallinnoi lukujärjestyksiä")) {
 //            paaikkuna.vaihdaPaneeli(new EtsiLukkari());
         }
     }
