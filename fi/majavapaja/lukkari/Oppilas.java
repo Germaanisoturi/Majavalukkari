@@ -37,7 +37,7 @@ public class Oppilas {
         this.ryhma = ryhma;
     }
 
-    public Oppilas(int id, String etunimi, String sukunimi, Ryhma ryhma) {
+    public Oppilas(String etunimi, String sukunimi, Ryhma ryhma, int id) {
     	this.id = id;
         this.etunimi = etunimi;
         this.sukunimi = sukunimi;

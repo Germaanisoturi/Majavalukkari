@@ -9,7 +9,6 @@ package fi.majavapaja.lukkari;
  * @author s1001069
  */
 public class Ryhma {
-    
     private String nimi;
     private int id;
     
@@ -17,20 +16,20 @@ public class Ryhma {
         this.nimi=nimi;
     }
     
-    public Ryhma(int id, String nimi) {
-    	this.id = id;
+    public Ryhma(String nimi, int id) {
     	this.nimi = nimi;
+    	this.id = id;
 	}
 
 	public String getNimi(){
         return nimi;
     }
     
-    public void setId(int id){
-        this.id = id;
-    }
-    
     public int getId(){
         return id;
+    }
+    
+    public String toString() {
+    	return nimi;
     }
 }

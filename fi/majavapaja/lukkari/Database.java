@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -26,8 +26,8 @@ public class Database {
     private static Connection connect() {
         try {
             Class.forName(driver).newInstance();
-            return DriverManager.getConnection(connection);
-        } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+            return DriverManager.getConnection(connection, "root", "");
+        } catch (Exception ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -259,7 +259,7 @@ public class Database {
 	private static Ryhma ryhmaResultSetista(ResultSet rs) throws SQLException {
 		String ryhmanNimi = rs.getString("nimi");
 		int ryhmanId = rs.getInt("ryhmaID");
-		Ryhma ryhma = new Ryhma(ryhmanId, ryhmanNimi);
+		Ryhma ryhma = new Ryhma(ryhmanNimi, ryhmanId);
 		return ryhma;
 	}
 
@@ -276,7 +276,7 @@ public class Database {
 		String sukunimi = rs.getString("sukunimi");
 		int oppilaanId = rs.getInt("oppilasID");
 		Ryhma ryhma = ryhmaResultSetista(rs);
-		return new Oppilas(oppilaanId, etunimi, sukunimi, ryhma);
+		return new Oppilas(etunimi, sukunimi, ryhma, oppilaanId);
 	}
 	
 	/**
@@ -314,7 +314,7 @@ public class Database {
 			return null;
 		try {
 			List<Oppilas> oppilaat = new ArrayList<Oppilas>();
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas"
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas "
 					+ "JOIN ryhma ON oppilas.ryhma = ryhma.ryhmaID;");
 
 			ResultSet rs = ps.executeQuery();
@@ -337,9 +337,9 @@ public class Database {
 			return null;
 		try {
 			List<Oppilas> oppilaat = new ArrayList<Oppilas>();
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas"
-					+ "JOIN ryhma ON oppilas.ryhma = ryhma.ryhmaID"
-					+ "WHERE etunimi = ? AND sukunimi = ?");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas "
+					+ "JOIN ryhma ON oppilas.ryhma = ryhma.ryhmaID "
+					+ "WHERE etunimi LIKE ? AND sukunimi LIKE ?");
 			ps.setString(1, "%" + etunimi + "%");
 			ps.setString(2, "%" + sukunimi + "%");
 
@@ -401,10 +401,10 @@ public class Database {
 	public static List<Tunti> getRyhmanTunnit(Ryhma ryhma) {
 		Connection c = connect();
 		try {
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM ryhma"
-					+ "JOIN osallistuminen ON osallistuinen.ryhma = ryhma.ryhmaID"
-					+ "JOIN tunti ON osallistuminen.tunti = tunti.tuntiID"
-					+ "JOIN kurssi ON tunti.kurssi = kurssi.kurssiID"
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM ryhma "
+					+ "JOIN osallistuminen ON osallistuminen.ryhma = ryhma.ryhmaID "
+					+ "JOIN tunti ON osallistuminen.tunti = tunti.tuntiID "
+					+ "JOIN kurssi ON tunti.kurssi = kurssi.kurssiID "
 					+ "WHERE ryhma.ryhmaID = ?");
 			ps.setInt(1, ryhma.getId());
 			List<Tunti> tunnit = new ArrayList<Tunti>();
@@ -416,6 +416,7 @@ public class Database {
 			
 			return tunnit;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
 		} finally {
 			closeConnection(c);
@@ -437,6 +438,8 @@ public class Database {
 			updateOppilas.setString(2, oppilas.getSukunimi());
 			updateOppilas.setInt(3, oppilas.getRyhma().getId());
 			updateOppilas.setInt(4, oppilas.getId());
+			
+			updateOppilas.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -456,11 +459,13 @@ public class Database {
 	public static boolean updateKayttajatunnus(Kayttajatunnus kayttaja) {
 		Connection con = connect();
 		try {
-			PreparedStatement updateOppilas = con.prepareStatement("UPDATE kayttajatunnus SET kayttajatunnus=?, salasana=?, oikeudet=? WHERE kayttajatunnusID=?");
-			updateOppilas.setString(1, kayttaja.getKayttajatunnus());
-			updateOppilas.setString(2, kayttaja.getSalasana());
-			updateOppilas.setInt(3, kayttaja.getOikeudet());
-			updateOppilas.setInt(4, kayttaja.getId());
+			PreparedStatement updateKayttajatunnus = con.prepareStatement("UPDATE kayttajatunnus SET kayttajatunnus=?, salasana=?, oikeudet=? WHERE kayttajatunnusID=?");
+			updateKayttajatunnus.setString(1, kayttaja.getKayttajatunnus());
+			updateKayttajatunnus.setString(2, kayttaja.getSalasana());
+			updateKayttajatunnus.setInt(3, kayttaja.getOikeudet());
+			updateKayttajatunnus.setInt(4, kayttaja.getId());
+			
+			updateKayttajatunnus.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -480,9 +485,11 @@ public class Database {
 	public static boolean updateKurssi(Kurssi kurssi) {
 		Connection con = connect();
 		try {
-			PreparedStatement updateOppilas = con.prepareStatement("UPDATE kurssi SET nimi=? WHERE kurssiID=?");
-			updateOppilas.setString(1, kurssi.getNimi());
-			updateOppilas.setInt(2, kurssi.getId());
+			PreparedStatement updateKurssi = con.prepareStatement("UPDATE kurssi SET nimi=? WHERE kurssiID=?");
+			updateKurssi.setString(1, kurssi.getNimi());
+			updateKurssi.setInt(2, kurssi.getId());
+			
+			updateKurssi.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -502,9 +509,11 @@ public class Database {
 	public static boolean updateRyhma(Ryhma ryhma) {
 		Connection con = connect();
 		try {
-			PreparedStatement updateOppilas = con.prepareStatement("UPDATE ryhma SET nimi=? WHERE ryhmaID=?");
-			updateOppilas.setString(1, ryhma.getNimi());
-			updateOppilas.setInt(2, ryhma.getId());
+			PreparedStatement updateRyhma = con.prepareStatement("UPDATE ryhma SET nimi=? WHERE ryhmaID=?");
+			updateRyhma.setString(1, ryhma.getNimi());
+			updateRyhma.setInt(2, ryhma.getId());
+		
+			updateRyhma.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -524,11 +533,13 @@ public class Database {
 	public static boolean updateTunti(Tunti tunti) {
 		Connection con = connect();
 		try {
-			PreparedStatement updateOppilas = con.prepareStatement("UPDATE tunti SET viikonpaiva=?, alkuklo=?, loppuklo=? WHERE tuntiID=?");
-			updateOppilas.setString(1, tunti.getViikonpaiva());
-			updateOppilas.setInt(2, tunti.getAlkuklo());
-			updateOppilas.setInt(3, tunti.getLoppuklo());
-			updateOppilas.setInt(4, tunti.getId());
+			PreparedStatement updateTunti = con.prepareStatement("UPDATE tunti SET viikonpaiva=?, alkuklo=?, loppuklo=? WHERE tuntiID=?");
+			updateTunti.setString(1, tunti.getViikonpaiva());
+			updateTunti.setInt(2, tunti.getAlkuklo());
+			updateTunti.setInt(3, tunti.getLoppuklo());
+			updateTunti.setInt(4, tunti.getId());
+			
+			updateTunti.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
