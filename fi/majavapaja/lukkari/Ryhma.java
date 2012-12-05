@@ -12,8 +12,8 @@ public class Ryhma {
     private String nimi;
     private int id;
     
-    public Ryhma(String nimi){
-        this.nimi=nimi;
+    public Ryhma(String nimi) {
+    	this(nimi, -1);
     }
     
     public Ryhma(String nimi, int id) {

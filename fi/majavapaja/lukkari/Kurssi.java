@@ -15,7 +15,7 @@ public class Kurssi {
 	private int id;
 
 	public Kurssi(String nimi) {
-		this.nimi = nimi;
+		this(nimi, -1);
 	}
 
 	public Kurssi(String nimi, int id) {

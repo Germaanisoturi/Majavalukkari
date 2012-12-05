@@ -28,10 +28,7 @@ public class Tunti {
 	 *            Tämän tunnin kurssi.
 	 */
 	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi) {
-		this.viikonpaiva = viikonpaiva;
-		this.alkuklo = alkuklo;
-		this.loppuklo = loppuklo;
-		this.kurssi = kurssi;
+		this(viikonpaiva, alkuklo, loppuklo, kurssi, 1);
 	}
 
 	/**
@@ -49,12 +46,11 @@ public class Tunti {
 	 *            Tunnin ID.
 	 */
 	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi, int id) {
-		// TODO Heitä exception jos ID löytyy jo?
-		this.id = id;
 		this.viikonpaiva = viikonpaiva;
 		this.alkuklo = alkuklo;
 		this.loppuklo = loppuklo;
 		this.kurssi = kurssi;
+		this.id = id;
 	}
 
 	/**
