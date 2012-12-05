@@ -6,91 +6,111 @@ package fi.majavapaja.lukkari;
  * @author Henry Heikkinen
  */
 public class Oppilas {
-
-    /**
-     * Oppilaan id
-     */
-    private int id;
-    /**
-     * Oppilaan etunimi
-     */
-    private String etunimi;
-    /**
-     * Oppilaan sukunimi
-     */
-    private String sukunimi;
-    /**
-     * Oppilaan ryhma
-     */
-    private Ryhma ryhma;
-
-    /**
-     * Luo uuden oppilaan annetuilla tiedoilla.
-     *
-     * @param etunimi oppilaan etunimi
-     * @param sukunimi oppilaan sukunimi
-     * @param ryhma oppilaan ryhmä
-     */
-    public Oppilas(String etunimi, String sukunimi, Ryhma ryhma) {
-        this.etunimi = etunimi;
-        this.sukunimi = sukunimi;
-        this.ryhma = ryhma;
-    }
-
-    public Oppilas(String etunimi, String sukunimi, Ryhma ryhma, int id) {
-    	this.id = id;
-        this.etunimi = etunimi;
-        this.sukunimi = sukunimi;
-        this.ryhma = ryhma;
-    }
+	private int id;
+	private String etunimi;
+	private String sukunimi;
+	private Ryhma ryhma;
 
 	/**
-     * Palauttaa oppilaan etunimen.
-     *     
-     * @return oppilaan etunimi
-     */
-    public String getEtunimi() {
-        return etunimi;
-    }
+	 * Luo uuden oppilaan annetuilla tiedoilla.
+	 * 
+	 * @param etunimi
+	 *            oppilaan etunimi
+	 * @param sukunimi
+	 *            oppilaan sukunimi
+	 * @param ryhma
+	 *            oppilaan ryhmä
+	 */
+	public Oppilas(String etunimi, String sukunimi, Ryhma ryhma) {
+		this(etunimi, sukunimi, ryhma, -1);
+	}
 
-    /**
-     * Palauttaa oppilaan sukunimen.
-     *     
-     * @return oppilaan sukunimi
-     */
-    public String getSukunimi() {
-        return sukunimi;
-    }
+	/**
+	 * Luo uuden oppilaan annetuilla tiedoilla.
+	 * 
+	 * @param etunimi
+	 *            oppilaan etunimi
+	 * @param sukunimi
+	 *            oppilaan sukunimi
+	 * @param ryhma
+	 *            oppilaan ryhmä
+	 * @param id
+	 *            oppilaan id
+	 */
+	public Oppilas(String etunimi, String sukunimi, Ryhma ryhma, int id) {
+		this.etunimi = etunimi;
+		this.sukunimi = sukunimi;
+		this.ryhma = ryhma;
+		this.id = id;
+	}
 
-    /**
-     * Palauttaa oppilaan ryhmän.
-     *     
-     * @return oppilaan ryhmä
-     */
-    public Ryhma getRyhma() {
-        return ryhma;
-    }
+	/**
+	 * Palauttaa oppilaan etunimen.
+	 * 
+	 * @return oppilaan etunimi
+	 */
+	public String getEtunimi() {
+		return etunimi;
+	}
 
-    /**
-     * Palauttaa opiskelijan id:n.
-     *     
-     * @return opiskelijan id
-     */
-    public int getId() {
-        return id;
-    }
+	/**
+	 * Palauttaa oppilaan sukunimen.
+	 * 
+	 * @return oppilaan sukunimi
+	 */
+	public String getSukunimi() {
+		return sukunimi;
+	}
 
-    /**
-     * Asettaa opiskelijan id:n.
-     *     
-     * @param id opiskelijan uusi id
-     */
-    public void setId(int id) {
-        id = id;
-    }
+	/**
+	 * Palauttaa oppilaan ryhmän.
+	 * 
+	 * @return oppilaan ryhmä
+	 */
+	public Ryhma getRyhma() {
+		return ryhma;
+	}
 
-    @Override
-    public String toString() {
-        return String.format("%s %s (%s)", etunimi, sukunimi, ryhma);
-    }
+	/**
+	 * Asettaa oppilaan etunimen.
+	 * 
+	 * @param etunimi
+	 *            oppilaan etunimi
+	 */
+	public void setEtunimi(String etunimi) {
+		this.etunimi = etunimi;
+	}
+
+	/**
+	 * Asettaa oppilaan sukunimen.
+	 * 
+	 * @param sukunimi
+	 *            oppilaan sukunimi
+	 */
+	public void setSukunimi(String sukunimi) {
+		this.sukunimi = sukunimi;
+	}
+
+	/**
+	 * Asettaa oppilaan ryhmän.
+	 * 
+	 * @param ryhma
+	 */
+	public void setRyhma(Ryhma ryhma) {
+		this.ryhma = ryhma;
+	}
+
+	/**
+	 * Palauttaa opiskelijan id:n.
+	 * 
+	 * @return opiskelijan id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s %s", etunimi, sukunimi);
+	}
 }

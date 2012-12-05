@@ -2,12 +2,13 @@ package fi.majavapaja.lukkari.paneelipaketti;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -15,33 +16,48 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Oppilas;
+import fi.majavapaja.lukkari.Paaikkuna;
 
 @SuppressWarnings("serial")
 public class EtsiOppilas extends JPanel {
 	private JTextField etunimiField;
 	private JTextField sukunimiField;
 	private JList oppilaatList;
+	private JTextArea oppilasInfoTextArea;
+	private Paaikkuna paaikkuna;
 
-	/**
-	 * Create the panel.
-	 */
-	public EtsiOppilas() {
+	public EtsiOppilas(Paaikkuna paaikkuna) {
+		this.paaikkuna = paaikkuna;
 		setSize(800, 600);
+		
+		KeyAdapter enterAdapter = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					etsiActionPerformed(null);
+				}
+			}
+		};
 		
 		JLabel lblEtunimi = new JLabel("Etunimi");
 		
 		etunimiField = new JTextField();
 		lblEtunimi.setLabelFor(etunimiField);
 		etunimiField.setColumns(10);
+		etunimiField.addKeyListener(enterAdapter);
 		
 		JLabel lblSukunimi = new JLabel("Sukunimi");
 		
 		sukunimiField = new JTextField();
 		lblSukunimi.setLabelFor(sukunimiField);
 		sukunimiField.setColumns(10);
+		sukunimiField.addKeyListener(enterAdapter);
 		
 		JButton btnEtsi = new JButton("Etsi");
 		btnEtsi.addActionListener(new ActionListener() {
@@ -59,9 +75,9 @@ public class EtsiOppilas extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setLineWrap(true);
-		textArea.setEditable(false);
+		oppilasInfoTextArea = new JTextArea();
+		oppilasInfoTextArea.setLineWrap(true);
+		oppilasInfoTextArea.setEditable(false);
 		
 		JButton btnNewButton = new JButton("Muokkaa oppilasta");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -81,22 +97,19 @@ public class EtsiOppilas extends JPanel {
 								.addComponent(lblSukunimi, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							.addGap(34)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(etunimiField, GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
-								.addComponent(sukunimiField, GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)))
+								.addComponent(etunimiField, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+								.addComponent(sukunimiField, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-								.addComponent(btnEtsi, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnTakaisin, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addComponent(textArea))))
-					.addGap(0))
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+								.addComponent(btnEtsi, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(oppilasInfoTextArea)
+								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+								.addComponent(btnTakaisin, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -111,23 +124,29 @@ public class EtsiOppilas extends JPanel {
 						.addComponent(sukunimiField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(11)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnTakaisin)
-						.addComponent(btnEtsi))
+						.addComponent(btnEtsi)
+						.addComponent(btnTakaisin))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+							.addComponent(oppilasInfoTextArea, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		
 		oppilaatList = new JList();
+		oppilaatList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		oppilaatList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				oppilaatListSelectionChanged(e);
+			}
+		});
 		scrollPane.setViewportView(oppilaatList);
 		setLayout(groupLayout);
 	}
-	
+
 	private void etsiActionPerformed(ActionEvent e) {
 		String etunimi = etunimiField.getText().trim();
 		String sukunimi = sukunimiField.getText().trim();
@@ -141,14 +160,33 @@ public class EtsiOppilas extends JPanel {
 		oppilaatList.setListData(oppilaat.toArray());
 	}
 	
-	private void takaisinActionPerformed(ActionEvent e) {}
-	private void muokkaaOppilastaActionPerformed(ActionEvent e) {}
 	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new EtsiOppilas());
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setVisible(true);
+	private void oppilaatListSelectionChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting())
+			return;
+		int i = oppilaatList.getSelectedIndex();
+		if (i == -1) {
+			// Listassa ei ole enää valintaa, tyhjennä infoteksti
+			oppilasInfoTextArea.setText("");
+			return;
+		}
+		
+		Oppilas oppilas = (Oppilas) oppilaatList.getModel().getElementAt(i);
+		String infoteksti = "Nimi:\t" + oppilas.getEtunimi() + " " + oppilas.getSukunimi();
+		infoteksti += "\nRyhmä:\t" + oppilas.getRyhma().getNimi();
+		oppilasInfoTextArea.setText(infoteksti);
+	}
+	
+	private void takaisinActionPerformed(ActionEvent e) {
+		paaikkuna.edellinenPaneeli();
+	}
+	
+	
+	private void muokkaaOppilastaActionPerformed(ActionEvent e) {
+		int i = oppilaatList.getSelectedIndex();
+		if (i == -1)
+			return;
+		Oppilas oppilas = (Oppilas) oppilaatList.getModel().getElementAt(i);
+		paaikkuna.vaihdaPaneeli(new MuokkaaOppilasta(paaikkuna, oppilas));
 	}
 }
