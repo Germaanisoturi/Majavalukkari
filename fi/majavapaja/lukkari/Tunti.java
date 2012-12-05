@@ -9,12 +9,24 @@ package fi.majavapaja.lukkari;
  * @author SAMI
  */
 public class Tunti {
-	String viikonpaiva;
-	int alkuklo;
-	int loppuklo;
-	int id;
-	Kurssi kurssi;
+	private String viikonpaiva;
+	private int alkuklo;
+	private int loppuklo;
+	private int id;
+	private Kurssi kurssi;
 
+	/**
+	 * Luo uuden kurssin ilman ID:tä
+	 * 
+	 * @param viikonpaiva
+	 *            Viikonpäivä jolloin tunti pidetään.
+	 * @param alkuklo
+	 *            Tunnin alkuaika.
+	 * @param loppuklo
+	 *            Tunnin loppuaika.
+	 * @param kurssi
+	 *            Tämän tunnin kurssi.
+	 */
 	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi) {
 		this.viikonpaiva = viikonpaiva;
 		this.alkuklo = alkuklo;
@@ -22,7 +34,22 @@ public class Tunti {
 		this.kurssi = kurssi;
 	}
 
-	public Tunti(int id, String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi) {
+	/**
+	 * Luo uuden kurssin.
+	 * 
+	 * @param viikonpaiva
+	 *            Viikonpäivä jolloin tunti pidetään.
+	 * @param alkuklo
+	 *            Tunnin alkuaika.
+	 * @param loppuklo
+	 *            Tunnin loppuaika.
+	 * @param kurssi
+	 *            Tämän tunnin kurssi.
+	 * @param id
+	 *            Tunnin ID.
+	 */
+	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi, int id) {
+		// TODO Heitä exception jos ID löytyy jo?
 		this.id = id;
 		this.viikonpaiva = viikonpaiva;
 		this.alkuklo = alkuklo;
@@ -30,28 +57,54 @@ public class Tunti {
 		this.kurssi = kurssi;
 	}
 
+	/**
+	 * Palauttaa tunnin ID:n
+	 * 
+	 * @return Tunnin ID.
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Asettaa uuden arvon ID:lle
+	 * 
+	 * @param id
+	 *            uusi ID
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Palauttaa tunnin viikonpäivän
+	 * @return tunnin viikonpäivä.
+	 */
 	public String getViikonpaiva() {
 		return viikonpaiva;
 	}
 
+	/**
+	 * Palauttaa tunnin alkamisajan.
+	 * @return Tunnin alkamisaika.
+	 */
 	public int getAlkuklo() {
 		return alkuklo;
 	}
 
+	/**
+	 * Palauttaa tunnin päättymisajan.
+	 * @return Tunnin päättymisaika.
+	 */
 	public int getLoppuklo() {
 		return loppuklo;
 	}
 
+	/**
+	 * Palauttaa tunnin kurssin.
+	 * @return Tunnin kurssi.
+	 */
 	public Kurssi getKurssi() {
-		// TODO Auto-generated method stub
-		return null;
+		return kurssi;
 	}
 }
