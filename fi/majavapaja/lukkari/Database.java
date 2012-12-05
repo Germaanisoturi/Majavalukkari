@@ -42,7 +42,7 @@ public class Database {
 
 	/**
 	 * Lisätään uusi käyttäjätunnus tietokantaan.
-	 * 
+	 * HAHHAHAHHAHAHHAHAHHAHAH
 	 * @param tunnus
 	 *            käyttäjän käyttäjätunnus.
 	 * @param salasana
