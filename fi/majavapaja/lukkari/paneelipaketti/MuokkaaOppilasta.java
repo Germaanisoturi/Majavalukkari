@@ -39,7 +39,7 @@ public class MuokkaaOppilasta extends JPanel {
 
 		JLabel lblSukunimi = new JLabel("Sukunimi");
 
-		JLabel lblRyhm = new JLabel("Ryhm�");
+		JLabel lblRyhm = new JLabel("Ryhmä");
 
 		etunimiField = new JTextField();
 		lblEtunimi.setLabelFor(etunimiField);
