@@ -216,10 +216,10 @@ public class EtsiOppilas extends JPanel {
 	
 	
 	private void muokkaaOppilastaActionPerformed(ActionEvent e) {
-		/*int i = oppilaatList.getSelectedIndex();
+		int i = kayttajatunnuksetList.getSelectedIndex();
 		if (i == -1)
 			return;
-		Oppilas oppilas = (Oppilas) oppilaatList.getModel().getElementAt(i);
-		paaikkuna.vaihdaPaneeli(new MuokkaaOppilasta(paaikkuna, oppilas));*/
+		Kayttajatunnus oppilas = (Kayttajatunnus) kayttajatunnuksetList.getModel().getElementAt(i);
+		paaikkuna.vaihdaPaneeli(new MuokkaaOppilasta(paaikkuna, oppilas));
 	}
 }
