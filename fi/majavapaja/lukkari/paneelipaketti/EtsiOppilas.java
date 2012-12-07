@@ -184,19 +184,30 @@ public class EtsiOppilas extends JPanel {
 	
 	
 	private void oppilaatListSelectionChanged(ListSelectionEvent e) {
-		/*if (e.getValueIsAdjusting())
+		if (e.getValueIsAdjusting())
 			return;
-		int i = oppilaatList.getSelectedIndex();
+		int i = kayttajatunnuksetList.getSelectedIndex();
 		if (i == -1) {
 			// Listassa ei ole enää valintaa, tyhjennä infoteksti
 			oppilasInfoTextArea.setText("");
 			return;
 		}
 		
-		Oppilas oppilas = (Oppilas) oppilaatList.getModel().getElementAt(i);
-		String infoteksti = "Nimi:\t" + oppilas.getEtunimi() + " " + oppilas.getSukunimi();
-		infoteksti += "\nRyhmä:\t" + oppilas.getRyhma().getNimi();
-		oppilasInfoTextArea.setText(infoteksti);*/
+		Kayttajatunnus kt = (Kayttajatunnus) kayttajatunnuksetList.getModel().getElementAt(i);
+		String infoteksti = "";
+		if (kt.getOppilas() == null) {
+			// Ylläpitäjä
+			infoteksti = "Käyttäjänimi:\t" + kt.getKayttajanimi();
+			infoteksti += "\n\nKäyttäjä on ylläpitäjä.";
+		} else {
+			// Oppilas
+			Oppilas o = kt.getOppilas();
+			infoteksti = "Käyttäjänimi:\t" + kt.getKayttajanimi();
+			infoteksti += "\nNimi:\t" + o.getEtunimi() + " " + o.getSukunimi();
+			infoteksti += "\nRyhmä:\t" + o.getRyhma().getNimi();
+		}
+		oppilasInfoTextArea.setText(infoteksti);
+		
 	}
 	
 	private void takaisinActionPerformed(ActionEvent e) {
