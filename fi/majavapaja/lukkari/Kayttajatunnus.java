@@ -23,12 +23,10 @@ public class Kayttajatunnus {
 		this.oppilas = oppilas;
 		this.id = id;
 	}
-
-    public Kayttajatunnus(String kayttajatunnus, String salasana, int oikeudet) {
-        this.kayttajatunnus = kayttajatunnus;
-        this.salasana = salasana;
-        this.oikeudet = oikeudet;
-    }
+	
+	public int getId() {
+		return id;
+	}
 
 	public String getKayttajanimi() {
 		return kayttajatunnus;
