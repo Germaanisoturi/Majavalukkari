@@ -163,23 +163,23 @@ public class EtsiOppilas extends JPanel {
 
 	private void etsiActionPerformed(ActionEvent e) {
 		String kayttajanimi = kayttajatunnusField.getText().trim();
+		String etunimi = etunimiField.getText().trim();
+		String sukunimi = sukunimiField.getText().trim();
 		
-		List<Kayttajatunnus> kayttajatunnukset = Database.haeKayttajatunnukset(kayttajanimi);
+		List<Kayttajatunnus> kayttajatunnukset;
+		
+		if ("".equals(etunimi) && "".equals(sukunimi)) {
+			kayttajatunnukset = Database.haeKayttajatunnukset(kayttajanimi);
+		} else {
+			kayttajatunnukset = Database.haeKayttajatunnukset(kayttajanimi, etunimi, sukunimi);
+		}
+		
 		if (kayttajatunnukset == null) {
 			System.out.println("LOOOOL NULLL");
 			return;
 		}
-		kayttajatunnuksetList.setListData(kayttajatunnukset.toArray());
-		/*String etunimi = etunimiField.getText().trim();
-		String sukunimi = sukunimiField.getText().trim();
 		
-		List<Oppilas> oppilaat = Database.haeOppilaatByName(etunimi, sukunimi);
-		if (oppilaat == null) {
-			// FIXME: Käsittele kunnolla
-			System.out.println("LOOOOL NULLL");
-			return;
-		}
-		oppilaatList.setListData(oppilaat.toArray());*/
+		kayttajatunnuksetList.setListData(kayttajatunnukset.toArray());
 	}
 	
 	

@@ -393,7 +393,12 @@ public class Database {
 		String salasana = rs.getString("salasana");
 		int oikeudet = rs.getInt("oikeudet");
 		int id = rs.getInt("kayttajatunnusID");
-		Oppilas oppilas = getKayttajanOppilas(id);
+		Oppilas oppilas;
+		try {
+			oppilas = oppilasResultSetista(rs);
+		} catch (SQLException e) {
+			oppilas = getKayttajanOppilas(id);
+		}
 		return new Kayttajatunnus(kayttajanimi, salasana, oikeudet, oppilas, id);
 	}
 	
@@ -413,6 +418,31 @@ public class Database {
 
 			return oppilaat;
 		} catch (SQLException e) {
+			return null;
+		} finally {
+			closeConnection(c);
+		}
+	}
+	
+	public static List<Kayttajatunnus> haeKayttajatunnukset(String kayttajanimi, String etunimi, String sukunimi) {
+		Connection c = connect();
+		if (c == null)
+			return null;
+		try {
+			List<Kayttajatunnus> oppilaat = new ArrayList<Kayttajatunnus>();
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM kayttajatunnus JOIN oppilas ON kayttajatunnus = kayttajatunnusID WHERE kayttajanimi LIKE ? AND etunimi LIKE ? AND sukunimi LIKE ?");
+			ps.setString(1, "%" + kayttajanimi + "%");
+			ps.setString(2, "%" + etunimi + "%");
+			ps.setString(3, "%" + sukunimi + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				oppilaat.add(kayttajatunnusResultSetista(rs));
+			}
+
+			return oppilaat;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			return null;
 		} finally {
 			closeConnection(c);
