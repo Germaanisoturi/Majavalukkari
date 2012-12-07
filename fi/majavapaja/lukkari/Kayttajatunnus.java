@@ -31,9 +31,17 @@ public class Kayttajatunnus {
 	public String getKayttajanimi() {
 		return kayttajatunnus;
 	}
+	
+	public void setKayttajnimi(String kayttajanimi) {
+		this.kayttajatunnus = kayttajanimi;
+	}
 
 	public String getSalasana() {
 		return salasana;
+	}
+	
+	public void setSalasana(String salasana) {
+		this.salasana = salasana;
 	}
 
 	public int getOikeudet() {

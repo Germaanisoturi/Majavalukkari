@@ -155,6 +155,7 @@ public class MuokkaaOppilasta extends JPanel {
 			etunimiField.setEnabled(false);
 			sukunimiField.setEnabled(false);
 			ryhmaComboBox.setEnabled(false);
+			ryhmaComboBox.setModel(new DefaultComboBoxModel());
 		} else {
 			Oppilas o = kayttajatunnus.getOppilas();
 			etunimiField.setText(o.getEtunimi());
@@ -171,29 +172,44 @@ public class MuokkaaOppilasta extends JPanel {
 	}
 
 	protected void tallennaActionPerformed() {
-//		String etunimi = etunimiField.getText().trim();
-//		String sukunimi = sukunimiField.getText().trim();
-//		Ryhma ryhma = (Ryhma) ryhmaComboBox.getModel().getSelectedItem();
-//
-//		// TODO: Käsittele kunnolla
-//		if (ryhma == null)
-//			return;
-//		if ("".equals(etunimi))
-//			return;
-//		if ("".equals(sukunimi))
-//			return;
-//
-//		kayttajatunnus.setEtunimi(etunimi);
-//		kayttajatunnus.setSukunimi(sukunimi);
-//		kayttajatunnus.setRyhma(ryhma);
-//
-//		boolean onnistui = Database.updateOppilas(kayttajatunnus);
-//		if (onnistui) {
-//			JOptionPane.showMessageDialog(this, "Tietojen päivitys onnistui");
-//			paaikkuna.edellinenPaneeli();
-//		} else {
-//			JOptionPane
-//					.showMessageDialog(this, "Tietojen päivitys epäonnistui");
-//		}
+
+
+		if (kayttajatunnus.getOppilas() != null) {
+			String etunimi = etunimiField.getText().trim();
+			String sukunimi = sukunimiField.getText().trim();
+			Ryhma ryhma = (Ryhma) ryhmaComboBox.getModel().getSelectedItem();
+			
+			// TODO: Käsittele kunnolla
+			if ("".equals(etunimi))
+				return;
+			if ("".equals(sukunimi))
+				return;
+			if (ryhma == null)
+				return;
+			
+			Oppilas o = kayttajatunnus.getOppilas();
+			o.setEtunimi(etunimi);
+			o.setSukunimi(sukunimi);
+			o.setRyhma(ryhma);
+		}
+		
+		String kayttajanimi = kayttajatunnusField.getText().trim();
+		String salasana = salasanaField.getText().trim();
+		
+		if ("".equals(kayttajanimi))
+			return;
+		if ("".equals(salasana))
+			return;
+		
+		kayttajatunnus.setKayttajnimi(kayttajanimi);
+		kayttajatunnus.setSalasana(salasana);
+
+		boolean onnistui = Database.updateKayttajatunnus(kayttajatunnus);
+		if (onnistui) {
+			JOptionPane.showMessageDialog(this, "Tietojen päivitys onnistui");
+			paaikkuna.edellinenPaneeli();
+		} else {
+			JOptionPane.showMessageDialog(this, "Tietojen päivitys epäonnistui");
+		}
 	}
 }

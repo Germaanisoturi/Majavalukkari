@@ -546,11 +546,17 @@ public class Database {
 	public static boolean updateKayttajatunnus(Kayttajatunnus kayttaja) {
 		Connection con = connect();
 		try {
-			PreparedStatement updateKayttajatunnus = con.prepareStatement("UPDATE kayttajatunnus SET kayttajatunnus=?, salasana=?, oikeudet=? WHERE kayttajatunnusID=?");
+			PreparedStatement updateKayttajatunnus = con.prepareStatement("UPDATE kayttajatunnus SET kayttajanimi = ?, salasana = ?, oikeudet = ? WHERE kayttajatunnusID = ?");
 			updateKayttajatunnus.setString(1, kayttaja.getKayttajanimi());
 			updateKayttajatunnus.setString(2, kayttaja.getSalasana());
 			updateKayttajatunnus.setInt(3, kayttaja.getOikeudet());
 			updateKayttajatunnus.setInt(4, kayttaja.getId());
+			
+			if (kayttaja.getOppilas() != null) {
+				boolean onnistui = updateOppilas(kayttaja.getOppilas());
+				if (!onnistui)
+					return false;
+			}
 
 			updateKayttajatunnus.executeUpdate();
 			return true;
