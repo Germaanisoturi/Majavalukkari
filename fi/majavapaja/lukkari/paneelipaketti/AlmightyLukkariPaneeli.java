@@ -1,125 +1,185 @@
 package fi.majavapaja.lukkari.paneelipaketti;
 
-import java.awt.*;
-import java.util.List;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-
 import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Ryhma;
 import fi.majavapaja.lukkari.Tunti;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.border.Border;
 
-public class AlmightyLukkariPaneeli extends JPanel {
+public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, MouseMotionListener {
 
-	private static final int RIVI = 9;
-	private static final int SARA = 6;
+    private static final int RIVI = 9;
+    private static final int SARA = 6;
+    private String[] vkpaivatTxt = {"KLO", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai"};
+    private String[] kellonajatTxt = {"8", "9", "10", "11", "12", "13", "14", "15", "16"};
+    private JPanel sisaltoPaneeli;
+    private JPanel vkpaivatPaneeli;
+    private JPanel kellonajatPaneeli;
+    private JLabel[][] sisalto;
+    private JLabel[] vkpaivat;
+    private JLabel[] kellonajat;
+    private JList<JLabel> valikoidutTunnit;
+    private List<Tunti> tunnit;
 
-	private String[] vkpaivatTxt = { "KLO", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai" };
-	private String[] kellonajatTxt = { "8", "9", "10", "11", "12", "13", "14", "15", "16" };
+    public AlmightyLukkariPaneeli(Ryhma ryhma) {
+        setPreferredSize(new Dimension(800, 600));
+        setLayout(new BorderLayout());
 
-	private JPanel sisaltoPaneeli;
-	private JPanel vkpaivatPaneeli;
-	private JPanel kellonajatPaneeli;
-	private JLabel[][] sisalto;
-	private JLabel[] vkpaivat;
-	private JLabel[] kellonajat;
-	private List<Tunti> tunnit;
+        sisaltoPaneeli = new JPanel(new GridLayout(RIVI, SARA));
+        vkpaivatPaneeli = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        kellonajatPaneeli = new JPanel(new GridLayout(0, 1));
 
-	public AlmightyLukkariPaneeli(Ryhma ryhma) {
-		setPreferredSize(new Dimension(800, 600));
-		setLayout(new BorderLayout());
+        tunnit = Database.getRyhmanTunnit(ryhma);
 
-		sisaltoPaneeli = new JPanel(new GridLayout(RIVI, SARA));
-		vkpaivatPaneeli = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		kellonajatPaneeli = new JPanel(new GridLayout(0, 1));
+        taulukonAlustus();
 
-		tunnit = Database.getRyhmanTunnit(ryhma);
+        for (int i = 0; i < sisalto.length; i++) {
+            for (int j = 0; j < sisalto[i].length; j++) {
+                sisaltoPaneeli.add(sisalto[i][j]);
+            }
+        }
 
-		taulukonAlustus();
+        for (int i = 0; i < vkpaivat.length; i++) {
+            vkpaivatPaneeli.add(vkpaivat[i]);
+        }
 
-		for (int i = 0; i < sisalto.length; i++) {
-			for (int j = 0; j < sisalto[i].length; j++) {
-				sisaltoPaneeli.add(sisalto[i][j]);
-			}
-		}
+        for (int i = 0; i < kellonajat.length; i++) {
+            kellonajatPaneeli.add(kellonajat[i]);
+        }
 
-		for (int i = 0; i < vkpaivat.length; i++) {
-			vkpaivatPaneeli.add(vkpaivat[i]);
-		}
+        add(sisaltoPaneeli, BorderLayout.CENTER);
+        add(vkpaivatPaneeli, BorderLayout.NORTH);
+        add(kellonajatPaneeli, BorderLayout.WEST);
 
-		for (int i = 0; i < kellonajat.length; i++) {
-			kellonajatPaneeli.add(kellonajat[i]);
-		}
+        /*
+         * ALL OUR PURPLE FRIENDS
+         * do while break continue if public static final abstract void int char
+         * boolean double float enum long short byte interface class extends
+         * implements new private protected case switch for import package
+         */
 
-		add(sisaltoPaneeli, BorderLayout.CENTER);
-		add(vkpaivatPaneeli, BorderLayout.NORTH);
-		add(kellonajatPaneeli, BorderLayout.WEST);
+        for (int i = 0; i < vkpaivat.length; i++) {
+            if (i == 0) {
+                vkpaivat[i].setPreferredSize(new Dimension(100, 20));
+            } else {
+                vkpaivat[i].setPreferredSize(new Dimension(140, 20));
+            }
+        }
+    }
 
-		/*
-		 * do while break continue if public static final abstract void int char boolean double float enum long short byte interface class extends implements new private protected case switch for import package
-		 */
+    private void taulukonAlustus() {
+        vkpaivat = new JLabel[SARA];
+        kellonajat = new JLabel[RIVI];
 
-		for (int i = 0; i < vkpaivat.length; i++) {
-			if (i == 0) {
-				vkpaivat[i].setPreferredSize(new Dimension(100, 20));
-			} else {
-				vkpaivat[i].setPreferredSize(new Dimension(140, 20));
-			}
-		}
-	}
+        Border reunat = BorderFactory.createLineBorder(Color.BLACK);
+        Border otsikkoReunat = BorderFactory.createMatteBorder(0, 1, 1, 1, Color.BLACK);
 
-	private void taulukonAlustus() {
-		vkpaivat = new JLabel[SARA];
-		kellonajat = new JLabel[RIVI];
+        for (int i = 0; i < vkpaivat.length; i++) {
+            vkpaivat[i] = new JLabel(vkpaivatTxt[i]);
+            vkpaivat[i].setName(vkpaivat[i].getText().substring(0, 2));
+            vkpaivat[i].setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
+            vkpaivat[i].setHorizontalAlignment(JLabel.CENTER);
+            vkpaivat[i].setBorder(otsikkoReunat);
+            vkpaivat[i].setOpaque(true);
+            vkpaivat[i].setBackground(Color.WHITE);
+        }
 
-		Border reunat = BorderFactory.createLineBorder(Color.BLACK);
-		Border otsikkoReunat = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.BLACK);
+        for (int i = 0; i < kellonajat.length; i++) {
+            kellonajat[i] = new JLabel(kellonajatTxt[i]);
+            kellonajat[i].setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+            kellonajat[i].setHorizontalAlignment(JLabel.CENTER);
+            kellonajat[i].setBorder(reunat);
+            kellonajat[i].setPreferredSize(new Dimension(100, 0));
+            kellonajat[i].setOpaque(true);
+            kellonajat[i].setBackground(Color.WHITE);
+        }
 
-		for (int i = 0; i < vkpaivat.length; i++) {
-			vkpaivat[i] = new JLabel(vkpaivatTxt[i]);
-			vkpaivat[i].setName(vkpaivat[i].getText().substring(0, 2));
-			vkpaivat[i].setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
-			vkpaivat[i].setHorizontalAlignment(JLabel.CENTER);
-			vkpaivat[i].setBorder(otsikkoReunat);
-		}
+        sisalto = new JLabel[RIVI][SARA - 1];
+        System.out.println(tunnit.size());
+        for (int i = 0; i < tunnit.size(); i++) {
+            for (int j = 0; j < vkpaivatTxt.length; j++) {
+                System.out.println("JOKONYT");
+                if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(vkpaivatTxt[i])) {
+                    for(int asd = 0; asd < kellonajatTxt.length; asd++){
+                        System.out.println("ASD");
+                        if(kellonajatTxt[asd].equals("" + tunnit.get(i).getAlkuklo())){
+                            System.out.println("dasd");
+                            System.out.println(tunnit.get(i).getKurssi().getNimi());
+                            sisalto[j][asd] = new JLabel(tunnit.get(i).getKurssi().getNimi());
+                        }
+                    }
+                }
+            }
+        }
 
-		for (int i = 0; i < kellonajat.length; i++) {
-			kellonajat[i] = new JLabel(kellonajatTxt[i]);
-			kellonajat[i].setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-			kellonajat[i].setHorizontalAlignment(JLabel.CENTER);
-			kellonajat[i].setBorder(reunat);
-			kellonajat[i].setPreferredSize(new Dimension(100, 0));
-		}
+        for (int i = 0; i < sisalto.length; i++) {
+            for (int j = 0; j < sisalto[i].length; j++) {
+                if (sisalto[i][j] == null) {
+                    sisalto[i][j] = new JLabel();
+                    sisalto[i][j].setBorder(reunat);
+                    sisalto[i][j].setOpaque(true);
+                    sisalto[i][j].setBackground(Color.WHITE);
+                    sisalto[i][j].addMouseListener(this);
+                }
+            }
+        }
+    }
 
-		sisalto = new JLabel[RIVI][SARA - 1];
+    public static void main(String[] args) {
+        AlmightyLukkariPaneeli lukkari = new AlmightyLukkariPaneeli(Database.getRyhmat().get(0));
+        JFrame frame = new JFrame("");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.add(lukkari);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
 
-		for (int i = 0; i < tunnit.size(); i++) {
-			for (int j = 0; j < vkpaivatTxt.length; j++) {
-				if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(vkpaivatTxt[i])) {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
 
-				}
-			}
-		}
+    @Override
+    public void mousePressed(MouseEvent e) {
+        for (int row = 0; row < sisalto.length; row++) {
+            for (int col = 0; col < sisalto[row].length; col++) {
+                if (sisalto[row][col].equals(e.getSource())) {
+                    if (sisalto[row][col].getBackground().equals(Color.WHITE)) {
+                        sisalto[row][col].setBackground(Color.BLUE);
+                    } else {
+                        sisalto[row][col].setBackground(Color.WHITE);
+                    }
+                }
+            }
+        }
+    }
 
-		for (int i = 0; i < sisalto.length; i++) {
-			for (int j = 0; j < sisalto[i].length; j++) {
-				if (sisalto[i][j] == null) {
-					sisalto[i][j] = new JLabel();
-					sisalto[i][j].setBorder(reunat);
-				}
-			}
-		}
-	}
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
 
-	public static void main(String[] args) {
-		AlmightyLukkariPaneeli lukkari = new AlmightyLukkariPaneeli(new Ryhma("ABC"));
-		JFrame frame = new JFrame("");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.add(lukkari);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-	}
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        
+    }
 }

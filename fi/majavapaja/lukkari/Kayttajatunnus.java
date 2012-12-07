@@ -1,34 +1,37 @@
 package fi.majavapaja.lukkari;
 
 public class Kayttajatunnus {
-	private String kayttajatunnus;
-	private String salasana;
-	private int oikeudet;
-	private int id;
-	
-	public Kayttajatunnus(String kayttajatunnus, String salasana, int oikeudet) {
-		this.kayttajatunnus = kayttajatunnus;
-		this.salasana = salasana;
-		this.oikeudet = oikeudet;
-	}
+    
+    public static final int OPPILAS = 0;
+    public static final int YLLAPITO = 1;
+    private String kayttajatunnus;
+    private String salasana;
+    private int oikeudet;
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    public Kayttajatunnus(String kayttajatunnus, String salasana, int oikeudet) {
+        this.kayttajatunnus = kayttajatunnus;
+        this.salasana = salasana;
+        this.oikeudet = oikeudet;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getKayttajanimi() {
-		return kayttajatunnus;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getSalasana() {
-		return salasana;
-	}
+    public String getKayttajanimi() {
+        return kayttajatunnus;
+    }
 
-	public int getOikeudet() {
-		return oikeudet;
-	}
+    public String getSalasana() {
+        return salasana;
+    }
+
+    public int getOikeudet() {
+        return oikeudet;
+    }
 }

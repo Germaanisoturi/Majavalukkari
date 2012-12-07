@@ -42,22 +42,17 @@ public class Database {
 
 	/**
 	 * Lisätään uusi käyttäjätunnus tietokantaan.
-	 * HAHHAHAHHAHAHHAHAHHAHAH
-	 * @param tunnus
-	 *            käyttäjän käyttäjätunnus.
-	 * @param salasana
-	 *            käyttäjän salasana.
-	 * @param oikeudet
-	 *            käyttäjän oikeudet (oppilas tai ylläpito).
+	 * 
+	 * @param kayttajatunnus lisättävä käyttäjätunnus.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
-	public static boolean lisaaKayttajatunnus(String tunnus, String salasana, int oikeudet) {
+	public static boolean lisaaKayttajatunnus(Kayttajatunnus kayttajatunnus) {
 		Connection con = connect();
 		try {
 			PreparedStatement tunnusInsert = con.prepareStatement("INSERT INTO kayttajatunnus (kayttajanimi, salasana, oikeudet) VALUES (?,?,?)");
-			tunnusInsert.setString(1, tunnus);
-			tunnusInsert.setString(2, salasana);
-			tunnusInsert.setInt(3, oikeudet);
+			tunnusInsert.setString(1, kayttajatunnus.getKayttajanimi());
+			tunnusInsert.setString(2, kayttajatunnus.getSalasana());
+			tunnusInsert.setInt(3, kayttajatunnus.getOikeudet());
 			tunnusInsert.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
@@ -71,31 +66,25 @@ public class Database {
 	/**
 	 * Lisätään uusi oppilas ja käyttäjätunnus tietokantaan. Metodi suorittaa tietokantaan haun lisätyn käyttäjätunnuksen id:tä varten.
 	 * 
-	 * @param tunnus
-	 *            käyttäjän käyttäjätunnus.
-	 * @param salasana
-	 *            käyttäjän salasana.
-	 * @param oikeudet
-	 *            käyttäjän oikeudet (oppilas tai ylläpito).
-	 * @param uusiOppilas
-	 *            uuden oppilaan tiedot.
+	 * @param kayttajatunnus lisättävä käyttäjätunnus.
+	 * @param uusiOppilas uuden oppilaan tiedot.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
-	public static boolean lisaaKayttajatunnus(String tunnus, String salasana, int oikeudet, Oppilas uusiOppilas) {
+	public static boolean lisaaKayttajatunnus(Kayttajatunnus kayttajatunnus, Oppilas uusiOppilas) {
 		Connection con = connect();
 		try {
-			if (!lisaaKayttajatunnus(tunnus, salasana, oikeudet)) {
+			if (!lisaaKayttajatunnus(kayttajatunnus)) {
 				return false;
 			}
-			PreparedStatement archeologicalExcavation = con.prepareStatement("SELECT kayttajatunnusID FROM kayttajatunnus WHERE kayttajanimi = ?");
-			archeologicalExcavation.setString(1, tunnus);
-			ResultSet ancientSet = archeologicalExcavation.executeQuery();
-			ancientSet.next();
-			int longLostFossil = ancientSet.getInt("kayttajatunnusID");
+			PreparedStatement haeKayttajatunnuksenId = con.prepareStatement("SELECT kayttajatunnusID FROM kayttajatunnus WHERE kayttajanimi = ?");
+			haeKayttajatunnuksenId.setString(1, kayttajatunnus.getKayttajanimi());
+			ResultSet rs = haeKayttajatunnuksenId.executeQuery();
+			rs.next();
+			int kayttajatunnusId = rs.getInt("kayttajatunnusID");
 			PreparedStatement oppilasInsert = con.prepareStatement("INSERT INTO oppilas (etunimi, sukunimi, kayttajatunnus, ryhma) VALUES (?,?,?,?)");
 			oppilasInsert.setString(1, uusiOppilas.getEtunimi());
 			oppilasInsert.setString(2, uusiOppilas.getSukunimi());
-			oppilasInsert.setInt(3, longLostFossil);
+			oppilasInsert.setInt(3, kayttajatunnusId);
 			oppilasInsert.setInt(4, uusiOppilas.getRyhma().getId());
 			oppilasInsert.executeUpdate();
 			return true;
@@ -278,7 +267,7 @@ public class Database {
 	 * Luo Oppilas objektin annetun ResultSetin sisällöstä.
 	 * 
 	 * @param rs
-	 * @return ResultSetin sis�ll�st� muodostettu Oppilas objekti
+	 * @return ResultSetin sisällöstä muodostettu Oppilas objekti
 	 * @throws SQLException
 	 */
 	private static Oppilas oppilasResultSetista(ResultSet rs) throws SQLException {
@@ -293,7 +282,7 @@ public class Database {
 	 * Luo Kurssi objektin annetun ResultSetin sisällöstä.
 	 * 
 	 * @param rs
-	 * @return ResultSetin sis�ll�st� muodostetu Oppilas objekti
+	 * @return ResultSetin sisällöstä muodostetu Oppilas objekti
 	 * @throws SQLException
 	 */
 	private static Kurssi kurssiResultSetista(ResultSet rs) throws SQLException {
