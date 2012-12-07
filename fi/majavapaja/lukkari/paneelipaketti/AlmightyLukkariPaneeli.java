@@ -12,7 +12,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, MouseMotionListener {
-
+//PERSE
     private static final int RIVI = 9;
     private static final int SARA = 6;
     private String[] vkpaivatTxt = {"KLO", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai"};
