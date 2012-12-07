@@ -5,19 +5,27 @@ public class Kayttajatunnus {
 	private String salasana;
 	private int oikeudet;
 	private int id;
+	private Oppilas oppilas;
 	
+	public Kayttajatunnus(String kayttajatunnus, String salasana, int oikeudet, Oppilas oppilas) {
+		this(kayttajatunnus, salasana, oikeudet, oppilas, -1);
+	}
+	
+	// TODO: Poista tämä käytöstä.
 	public Kayttajatunnus(String kayttajatunnus, String salasana, int oikeudet) {
+		this(kayttajatunnus, salasana, oikeudet, null, -1);
+	}
+	
+	public Kayttajatunnus(String kayttajatunnus, String salasana, int oikeudet, Oppilas oppilas, int id) {
 		this.kayttajatunnus = kayttajatunnus;
 		this.salasana = salasana;
 		this.oikeudet = oikeudet;
+		this.oppilas = oppilas;
+		this.id = id;
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getKayttajanimi() {
@@ -30,5 +38,15 @@ public class Kayttajatunnus {
 
 	public int getOikeudet() {
 		return oikeudet;
+	}
+	
+	public Oppilas getOppilas() {
+		return oppilas;
+	}
+	
+	public String toString() {
+		if (oppilas == null)
+			return kayttajatunnus;
+		return String.format("%s (%s)", kayttajatunnus, oppilas);
 	}
 }

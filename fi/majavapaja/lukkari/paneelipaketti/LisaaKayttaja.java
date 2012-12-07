@@ -209,7 +209,7 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 			lblSukunimi.setVisible(false);
 			lblRyhm.setVisible(false);
 		} else if (btnLis == e.getSource()) {
-			
+			// TODO: Käytä konstruktoria, joka ottaa Oppilaan argumenttina
 			Kayttajatunnus k = new Kayttajatunnus(tfEtunimi.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet);
 			Oppilas o = new Oppilas(tfEtunimi.getText(), tfSukunimi.getText(), (Ryhma)comboBox.getSelectedItem());
 			

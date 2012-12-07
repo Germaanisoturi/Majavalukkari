@@ -21,6 +21,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import fi.majavapaja.lukkari.Database;
+import fi.majavapaja.lukkari.Kayttajatunnus;
 import fi.majavapaja.lukkari.Oppilas;
 import fi.majavapaja.lukkari.Paaikkuna;
 
@@ -28,9 +29,10 @@ import fi.majavapaja.lukkari.Paaikkuna;
 public class EtsiOppilas extends JPanel {
 	private JTextField etunimiField;
 	private JTextField sukunimiField;
-	private JList oppilaatList;
+	private JList kayttajatunnuksetList;
 	private JTextArea oppilasInfoTextArea;
 	private Paaikkuna paaikkuna;
+	private JTextField kayttajatunnusField;
 
 	public EtsiOppilas(Paaikkuna paaikkuna) {
 		this.paaikkuna = paaikkuna;
@@ -85,6 +87,12 @@ public class EtsiOppilas extends JPanel {
 				muokkaaOppilastaActionPerformed(e);
 			}
 		});
+		
+		JLabel lblKayttajatunnus = new JLabel("Käyttäjätunnus");
+		
+		kayttajatunnusField = new JTextField();
+		lblKayttajatunnus.setLabelFor(kayttajatunnusField);
+		kayttajatunnusField.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -92,23 +100,25 @@ public class EtsiOppilas extends JPanel {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblEtunimi, Alignment.LEADING)
-								.addComponent(lblSukunimi, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGap(34)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(etunimiField, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-								.addComponent(sukunimiField, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-								.addComponent(btnEtsi, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
-							.addGap(18)
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+								.addComponent(btnEtsi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnTakaisin, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
 								.addComponent(oppilasInfoTextArea)
-								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-								.addComponent(btnTakaisin, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(lblEtunimi, Alignment.LEADING)
+									.addComponent(lblSukunimi, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(lblKayttajatunnus))
+							.addGap(19)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(etunimiField, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
+								.addComponent(sukunimiField, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
+								.addComponent(kayttajatunnusField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -122,33 +132,45 @@ public class EtsiOppilas extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSukunimi)
 						.addComponent(sukunimiField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(11)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGap(6)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblKayttajatunnus)
+						.addComponent(kayttajatunnusField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnEtsi)
 						.addComponent(btnTakaisin))
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(oppilasInfoTextArea, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(oppilasInfoTextArea, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		
-		oppilaatList = new JList();
-		oppilaatList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		oppilaatList.addListSelectionListener(new ListSelectionListener() {
+		kayttajatunnuksetList = new JList();
+		kayttajatunnuksetList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		kayttajatunnuksetList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				oppilaatListSelectionChanged(e);
 			}
 		});
-		scrollPane.setViewportView(oppilaatList);
+		scrollPane.setViewportView(kayttajatunnuksetList);
 		setLayout(groupLayout);
 	}
 
 	private void etsiActionPerformed(ActionEvent e) {
-		String etunimi = etunimiField.getText().trim();
+		String kayttajanimi = kayttajatunnusField.getText().trim();
+		
+		List<Kayttajatunnus> kayttajatunnukset = Database.haeKayttajatunnukset(kayttajanimi);
+		if (kayttajatunnukset == null) {
+			System.out.println("LOOOOL NULLL");
+			return;
+		}
+		kayttajatunnuksetList.setListData(kayttajatunnukset.toArray());
+		/*String etunimi = etunimiField.getText().trim();
 		String sukunimi = sukunimiField.getText().trim();
 		
 		List<Oppilas> oppilaat = Database.haeOppilaatByName(etunimi, sukunimi);
@@ -157,12 +179,12 @@ public class EtsiOppilas extends JPanel {
 			System.out.println("LOOOOL NULLL");
 			return;
 		}
-		oppilaatList.setListData(oppilaat.toArray());
+		oppilaatList.setListData(oppilaat.toArray());*/
 	}
 	
 	
 	private void oppilaatListSelectionChanged(ListSelectionEvent e) {
-		if (e.getValueIsAdjusting())
+		/*if (e.getValueIsAdjusting())
 			return;
 		int i = oppilaatList.getSelectedIndex();
 		if (i == -1) {
@@ -174,7 +196,7 @@ public class EtsiOppilas extends JPanel {
 		Oppilas oppilas = (Oppilas) oppilaatList.getModel().getElementAt(i);
 		String infoteksti = "Nimi:\t" + oppilas.getEtunimi() + " " + oppilas.getSukunimi();
 		infoteksti += "\nRyhmä:\t" + oppilas.getRyhma().getNimi();
-		oppilasInfoTextArea.setText(infoteksti);
+		oppilasInfoTextArea.setText(infoteksti);*/
 	}
 	
 	private void takaisinActionPerformed(ActionEvent e) {
@@ -183,10 +205,10 @@ public class EtsiOppilas extends JPanel {
 	
 	
 	private void muokkaaOppilastaActionPerformed(ActionEvent e) {
-		int i = oppilaatList.getSelectedIndex();
+		/*int i = oppilaatList.getSelectedIndex();
 		if (i == -1)
 			return;
 		Oppilas oppilas = (Oppilas) oppilaatList.getModel().getElementAt(i);
-		paaikkuna.vaihdaPaneeli(new MuokkaaOppilasta(paaikkuna, oppilas));
+		paaikkuna.vaihdaPaneeli(new MuokkaaOppilasta(paaikkuna, oppilas));*/
 	}
 }

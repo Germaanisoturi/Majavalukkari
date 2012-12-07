@@ -359,6 +359,65 @@ public class Database {
 			closeConnection(c);
 		}
 	}
+	
+	public static Oppilas getKayttajanOppilas(int kayttajatunnusID) {
+		Connection c = connect();
+		if (c == null)
+			return null;
+		try {
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas JOIN ryhma ON oppilas.ryhma = ryhma.ryhmaID WHERE oppilas.kayttajatunnus = ?;");
+			ps.setInt(1, kayttajatunnusID);
+			
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return oppilasResultSetista(rs);
+			}
+
+			return null;
+		} catch (SQLException e) {
+			return null;
+		} finally {
+			closeConnection(c);
+		}
+	}
+	
+	/**
+	 * Luo Kayttajatunnus objektin annetun ResultSetin sisällöstä.
+	 * 
+	 * @param rs
+	 * @return ResultSetin sisällöstä muodostetu Kayttajatunnus objekti
+	 * @throws SQLException
+	 */
+	private static Kayttajatunnus kayttajatunnusResultSetista(ResultSet rs) throws SQLException {
+		String kayttajanimi = rs.getString("kayttajanimi");
+		String salasana = rs.getString("salasana");
+		int oikeudet = rs.getInt("oikeudet");
+		int id = rs.getInt("kayttajatunnusID");
+		Oppilas oppilas = getKayttajanOppilas(id);
+		return new Kayttajatunnus(kayttajanimi, salasana, oikeudet, oppilas, id);
+	}
+	
+	public static List<Kayttajatunnus> haeKayttajatunnukset(String kayttajanimi) {
+		Connection c = connect();
+		if (c == null)
+			return null;
+		try {
+			List<Kayttajatunnus> oppilaat = new ArrayList<Kayttajatunnus>();
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM kayttajatunnus WHERE kayttajanimi LIKE ?");
+			ps.setString(1, "%" + kayttajanimi + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				oppilaat.add(kayttajatunnusResultSetista(rs));
+			}
+
+			return oppilaat;
+		} catch (SQLException e) {
+			return null;
+		} finally {
+			closeConnection(c);
+		}
+	}
 
 	public static List<Kurssi> getKurssit() {
 		Connection c = connect();
