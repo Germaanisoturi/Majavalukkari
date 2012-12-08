@@ -535,22 +535,36 @@ public class Database {
 	public static boolean updateKayttajatunnus(Kayttajatunnus kayttaja) {
 		Connection con = connect();
 		try {
+			con.setAutoCommit(false);
 			PreparedStatement updateKayttajatunnus = con.prepareStatement("UPDATE kayttajatunnus SET kayttajanimi = ?, salasana = ?, oikeudet = ? WHERE kayttajatunnusID = ?");
+
 			updateKayttajatunnus.setString(1, kayttaja.getKayttajanimi());
 			updateKayttajatunnus.setString(2, kayttaja.getSalasana());
 			updateKayttajatunnus.setInt(3, kayttaja.getOikeudet());
 			updateKayttajatunnus.setInt(4, kayttaja.getId());
-			
-			if (kayttaja.getOppilas() != null) {
-				boolean onnistui = updateOppilas(kayttaja.getOppilas());
-				if (!onnistui)
-					return false;
-			}
 
 			updateKayttajatunnus.executeUpdate();
+
+			if (kayttaja.getOppilas() != null) {
+				Oppilas oppilas = kayttaja.getOppilas();
+				PreparedStatement updateOppilas = con.prepareStatement("UPDATE oppilas SET etunimi = ?, sukunimi = ?, ryhma = ? WHERE oppilasID = ?;");
+
+				updateOppilas.setString(1, oppilas.getEtunimi());
+				updateOppilas.setString(2, oppilas.getSukunimi());
+				updateOppilas.setInt(3, oppilas.getRyhma().getId());
+				updateOppilas.setInt(4, oppilas.getId());
+
+				updateOppilas.executeUpdate();
+			}
+
+			con.commit();
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+			try {
+				con.rollback();
+			} catch (Exception e) {
+			}
 			return false;
 		} finally {
 			closeConnection(con);
