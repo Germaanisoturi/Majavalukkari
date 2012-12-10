@@ -1,19 +1,16 @@
 package fi.majavapaja.lukkari.paneelipaketti;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import sun.misc.FpUtils;
 
 import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Kayttajatunnus;
@@ -41,8 +38,6 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 	private JComboBox<Ryhma> comboBox;
 	private JButton btnLis = new JButton("Lisää");
 	private JButton btnPalaa = new JButton("Takaisin");
-	private JButton ÇŒÆØﬂßƒﬁ = new JButton("       ");
-	private String[] blah = { "∞", "8" , "☺", "‽", "Ç", "▌"};
 	private Paaikkuna paaikkuna = new Paaikkuna();;
 
 	/**
@@ -81,13 +76,6 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 
 		btnPalaa.setFocusable(false);
 		btnPalaa.addActionListener(this);
-
-		ÇŒÆØﬂßƒﬁ.setFocusable(false);
-		ÇŒÆØﬂßƒﬁ.addActionListener(this);
-		// ÇŒÆØﬂßƒﬁ.setBorder(null);
-		ÇŒÆØﬂßƒﬁ.setBorderPainted(false);
-		ÇŒÆØﬂßƒﬁ.setContentAreaFilled(false);
-		ÇŒÆØﬂßƒﬁ.setOpaque(false);
 
 		pfSalasana = new JPasswordField();
 
@@ -134,7 +122,6 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 					.addGap(259))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(ÇŒÆØﬂßƒﬁ)
 					.addContainerGap(738, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -177,11 +164,62 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 						.addComponent(btnPalaa)
 						.addComponent(btnLis))
 					.addPreferredGap(ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-					.addComponent(ÇŒÆØﬂßƒﬁ)
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
 
+	}
+	
+	private void checkEmptyFields() {
+		if (tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15) lblKayttajatunnus.setForeground(Color.RED);
+		if (pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30) lblSalasana.setForeground(Color.RED);
+		if (pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30) lblSalasanaUudestaan.setForeground(Color.RED);
+		if (tfEtunimi.getText().equals("") || tfEtunimi.getText().length() > 20) lblEtunimi.setForeground(Color.RED);
+		if (tfSukunimi.getText().equals("") || tfSukunimi.getText().length() > 30) lblSukunimi.setForeground(Color.RED);
+
+		
+		if (tfKayttajatunnus.getText().length() < 5) {
+			String message = "Kayttajatunnus pitää olla vähintään 5 merkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (pfSalasana.getPassword().length < 5) {
+			String message = "Salasana pitää olla vähintään 5 merkkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (pfSalasanaUudestaan.getPassword().length < 5) {
+			String message = "Salasana pitää olla vähintään 5 merkkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (tfEtunimi.getText().equals("")) {
+			String message = "Etunimi ei voi olla tyhjä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (tfSukunimi.getText().equals("")) {
+			String message = "Sukunimi ei voi olla tyhjä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if (tfKayttajatunnus.getText().length() > 15) {
+			String message = "Kayttajatunnus voi olla enintään 15 merkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (pfSalasana.getPassword().length > 30) {
+			String message = "Salasana voi olla enintään 30 merkkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (pfSalasanaUudestaan.getPassword().length > 30) {
+			String message = "Salasana voi olla enintään 30 merkkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (tfEtunimi.getText().length() > 20) {
+			String message = "Etunimi voi olla enintään 20 merkkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		} else if (tfSukunimi.getText().length() > 30) {
+			String message = "Sukunimi voi olla enintään 30 merkkiä pitkä.";
+			JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
+	private void clearTextFields() {
+		tfEtunimi.setText("");
+		tfSukunimi.setText("");
+		tfKayttajatunnus.setText("");
+		pfSalasana.setText("");
+		pfSalasanaUudestaan.setText("");
 	}
 	
 	private String ripoffPassword(char[] password) {
@@ -201,6 +239,7 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 			lblEtunimi.setVisible(true);
 			lblSukunimi.setVisible(true);
 			lblRyhm.setVisible(true);
+			Oikeudet = 0;
 		} else if (rdbtnYllpito == e.getSource()) {
 			tfEtunimi.setVisible(false);
 			tfSukunimi.setVisible(false);
@@ -208,67 +247,37 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 			lblEtunimi.setVisible(false);
 			lblSukunimi.setVisible(false);
 			lblRyhm.setVisible(false);
+			Oikeudet = 1;
 		} else if (btnLis == e.getSource()) {
-			// TODO: Käytä konstruktoria, joka ottaa Oppilaan argumenttina
-			Kayttajatunnus k = new Kayttajatunnus(tfEtunimi.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet);
-			Oppilas o = new Oppilas(tfEtunimi.getText(), tfSukunimi.getText(), (Ryhma)comboBox.getSelectedItem());
+			lblKayttajatunnus.setForeground(Color.BLACK);
+			lblSalasana.setForeground(Color.BLACK);
+			lblSalasanaUudestaan.setForeground(Color.BLACK);
+			lblEtunimi.setForeground(Color.BLACK);
+			lblSukunimi.setForeground(Color.BLACK);
 			
-			System.out.println("us: " + tfKayttajatunnus.getText() + " pw1: "
-					+ ripoffPassword(pfSalasana.getPassword()) + " pw2: "
-					+ripoffPassword(pfSalasanaUudestaan.getPassword()) + " fna: "
-					+ tfEtunimi.getText() + " lna: " + tfSukunimi.getText());
+			if (tfEtunimi.getText().equals("") || tfEtunimi.getText().length() > 20 || tfSukunimi.getText().equals("") || tfSukunimi.getText().length() > 30 || tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15 || pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30 || pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30 ) {
+				checkEmptyFields();
+			} else {
+				if (ripoffPassword(pfSalasana.getPassword()).equals(ripoffPassword(pfSalasanaUudestaan.getPassword()))) {
+					if (rdbtnOppilas.isSelected()) {
+						Oppilas o = new Oppilas(tfEtunimi.getText(), tfSukunimi.getText(), (Ryhma)comboBox.getSelectedItem());
+						Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet, o);
+//						Database.lisaaKayttajatunnus(k, o);
+						clearTextFields();
+					} else if(rdbtnYllpito.isSelected()) {
+						Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet);
+//						Database.lisaaKayttajatunnus(k);
+						clearTextFields();
+					}
+				} else {
+					lblSalasana.setForeground(Color.RED);
+					lblSalasanaUudestaan.setForeground(Color.RED);
+					String message = "Salasana kentät eivät ole samoja.";
+					JOptionPane.showMessageDialog(this, message, "Virhe", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		} else if (btnPalaa == e.getSource()) {
 			paaikkuna.edellinenPaneeli();
-			System.out.println("blaa");
-		} else if (ÇŒÆØﬂßƒﬁ == e.getSource()) {
-			Ryhma r = (Ryhma) comboBox.getSelectedItem();
-			if (r.getNimi().equals("Ç") && rdbtnYllpito.isSelected()) {
-				System.out.println("vblah");
-				new Thread() {
-					int asd = 0;
-
-					public void run() {
-						while (true) {
-							asd++;
-							if (asd >= blah.length)
-								asd = 0;
-							String text = blah[asd];
-
-							tfKayttajatunnus.setText(text);
-							tfEtunimi.setText(text);
-							tfSukunimi.setText(text);
-							pfSalasana.setText(text);
-							pfSalasanaUudestaan.setText(text);
-								lblEtunimi.setText(text);
-								lblKayttajatunnus.setText(text);
-								lblOikeudet.setText(text);
-								lblRyhm.setText(text);
-								lblSalasana.setText(text);
-								lblSalasanaUudestaan.setText(text);
-								lblSukunimi.setText(text);
-								rdbtnOppilas.setText(text);
-								rdbtnYllpito.setText(text);
-								comboBox.removeAllItems();
-								btnLis.setText(text);
-								btnPalaa.setText(text);
-
-							try {
-								Thread.sleep(100);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}.start();
-			} else {
-				System.out.println("ÇŒÆØﬂßƒﬁ");
-				tfKayttajatunnus.setText("ÇŒÆØﬂßƒﬁ");
-				tfEtunimi.setText("ÇŒÆØﬂßƒﬁ");
-				tfSukunimi.setText("ÇŒÆØﬂßƒﬁ");
-				pfSalasana.setText("ÇŒÆØﬂßƒﬁ");
-				pfSalasanaUudestaan.setText("ÇŒÆØﬂßƒﬁ");
-
-			}
 		}
 	}
 }
