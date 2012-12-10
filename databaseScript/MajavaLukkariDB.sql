@@ -111,7 +111,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- ----------------------------------------------------
 -- Insertit
 -- ----------------------------------------------------
-INSERT INTO kayttajatunnus (kayttajanimi, salasana, oikeudet) VALUES ('engblal', 'Salasana1', 0), ('heikkhe', 'Salasana1', 0),('eklunsa', 'Salasana1', 0), ('admin', 'Salasana1', 1), ('sudo', 'Salasana1', 1);
+INSERT INTO kayttajatunnus (kayttajanimi, salasana, oikeudet) VALUES ('engblal', 'Salasana1', 0), ('heikkhe', 'Salasana1', 0),('eklunsa', 'salsa', 0), ('admin', 'admin', 1), ('sudo', 'Salasana1', 1);
 INSERT INTO ryhma (nimi) VALUES ('Jediakatemia'), ('Hattiwatit'), ('Muumijengi'), ('DP10S2A');
 INSERT INTO oppilas (etunimi, sukunimi, kayttajatunnus, ryhma) VALUES ('Alex', 'Engblom', 1, 4), ('Henry', 'Heikkinen', 2, 1),('Sami', 'Eklund', 3, 2);
 INSERT INTO kurssi (nimi) VALUES ('BIOLOGIA'), ('FYSIIKKA'), ('KEMIA'), ('MATEMATIIKKA'), ('MAANTIETO'), ('JAVA');
