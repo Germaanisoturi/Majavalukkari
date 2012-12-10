@@ -16,6 +16,15 @@ import java.util.logging.Logger;
  * @author s1001069
  */
 public class Database {
+	
+	public static void main(String[] args) {
+		System.out.println("TESTING");
+		List<Tunti> tunteja = Database.getRyhmanTunnit(Database.getRyhmat().get(2));
+		System.out.println(tunteja.size());
+		for (int i = 0; i < tunteja.size(); i++) {
+			System.out.println(tunteja.get(i).toString());
+		}
+	}
 
 	private static String driver = "com.mysql.jdbc.Driver";
 	private static String connection = "jdbc:mysql://localhost/majavalukkari";
@@ -99,8 +108,7 @@ public class Database {
 	/**
 	 * Lisätään uusi ryhmä tietokantaan.
 	 * 
-	 * @param uusiRyhma
-	 *            uuden ryhmän tiedot.
+	 * @param uusiRyhma uuden ryhmän tiedot.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean lisaaRyhma(Ryhma uusiRyhma) {
@@ -121,8 +129,7 @@ public class Database {
 	/**
 	 * Lisätään uusi kurssi tietokantaan.
 	 * 
-	 * @param uusiKurssi
-	 *            uuden kurssin tiedot.
+	 * @param uusiKurssi uuden kurssin tiedot.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean lisaaKurssi(Kurssi uusiKurssi) {
@@ -140,14 +147,20 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Lisätään uusi tunti tietokantaan.
+	 * @param uusiTunti uuden kurssin tiedot.
+	 * @return true tai false operaation onnistumisen mukaan.
+	 */
 	public static boolean lisaaTunti(Tunti uusiTunti) {
 		Connection con = connect();
 		try {
-			PreparedStatement tuntiInsert = con.prepareStatement("INSERT INTO tunti (kurssi, viikonpaiva, alkuklo, loppuklo) VALUES ?,?,?,?");
-			tuntiInsert.setInt(1, uusiTunti.getKurssi().getId());
-			tuntiInsert.setString(2, uusiTunti.getViikonpaiva());
-			tuntiInsert.setInt(3, uusiTunti.getAlkuklo());
-			tuntiInsert.setInt(4, uusiTunti.getLoppuklo());
+			PreparedStatement tuntiInsert = con.prepareStatement("INSERT INTO tunti (ryhma, kurssi, viikonpaiva, alkuklo, loppuklo) VALUES ?,?,?,?");
+			tuntiInsert.setInt(1, uusiTunti.getRyhma().getId());
+			tuntiInsert.setInt(2, uusiTunti.getKurssi().getId());
+			tuntiInsert.setString(3, uusiTunti.getViikonpaiva());
+			tuntiInsert.setInt(4, uusiTunti.getAlkuklo());
+			tuntiInsert.setInt(5, uusiTunti.getLoppuklo());
 			tuntiInsert.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
@@ -158,22 +171,11 @@ public class Database {
 		}
 	}
 
-	public static boolean lisaaOsallistuminen(Ryhma ryhma, Tunti tunti) {
-		Connection con = connect();
-		try {
-			PreparedStatement osallistumisInsert = con.prepareStatement("INSERT INTO osallistuminen (tunti, ryhma) VALUES ?,?");
-			osallistumisInsert.setInt(1, tunti.getId());
-			osallistumisInsert.setInt(2, ryhma.getId());
-			osallistumisInsert.executeUpdate();
-			return true;
-		} catch (SQLException ex) {
-			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-			return false;
-		} finally {
-			closeConnection(con);
-		}
-	}
-
+	/**
+	 * Poistaa ryhmän tietokannasta.
+	 * @param poistettavaRyhma Poistettava ryhmä.
+	 * @return true tai false operaation onnistumisen mukaan.
+	 */
 	public static boolean poistaRyhma(Ryhma poistettavaRyhma) {
 		Connection con = connect();
 		try {
@@ -189,6 +191,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Poistetaan tunti tietokannasta.
+	 * @param poistettavaTunti Poistettava tunti.
+	 * @return true tai false operaation onnistumisen mukaan.
+	 */
 	public static boolean poistaTunti(Tunti poistettavaTunti) {
 		Connection con = connect();
 		try {
@@ -203,7 +210,11 @@ public class Database {
 			closeConnection(con);
 		}
 	}
-
+	/**
+	 * Poistaa osallistumisen tietokannasta.
+	 * @param poistettavaOsallistuminen Poistettavan osallistumisen ID.
+	 * @return true tai false operaation onnistumisen mukaan.
+	 */
 	public static boolean poistaOsallistuminen(int poistettavaOsallistuminen) {
 		Connection con = connect();
 		try {
@@ -219,6 +230,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Poistetaan oppilas tietokannasta.
+	 * @param poistettavaOppilas Poistettava oppilas.
+	 * @returntrue tai false operaation onnistumisen mukaan.
+	 */
 	public static boolean poistaKayttajatunnus(Oppilas poistettavaOppilas) {
 		Connection con = connect();
 		try {
@@ -234,6 +250,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Poistetaan käyttäjätunnus tietokannasta.
+	 * @param tunnus Poistettavan käyttäjätunnuksen ID.
+	 * @return true tai false operaation onnistumisen mukaan.
+	 */
 	public static boolean poistaKayttajatunnus(int tunnus) {
 		Connection con = connect();
 		try {
@@ -300,11 +321,12 @@ public class Database {
 	 */
 	private static Tunti tuntiResultSetista(ResultSet rs) throws SQLException {
 		Kurssi kurssi = kurssiResultSetista(rs);
+		Ryhma ryhma = ryhmaResultSetista(rs);
 		String viikonpaiva = rs.getString("viikonpaiva");
 		int alkuklo = rs.getInt("alkuklo");
 		int loppuklo = rs.getInt("loppuklo");
 		int tunninId = rs.getInt("tuntiID");
-		return new Tunti(viikonpaiva, alkuklo, loppuklo, kurssi, tunninId);
+		return new Tunti(viikonpaiva, alkuklo, loppuklo, kurssi, ryhma, tunninId);
 	}
 
 	public static List<Oppilas> getOppilaat() {
@@ -502,8 +524,7 @@ public class Database {
 	/**
 	 * Päivittää annetun oppilaan tiedot.
 	 * 
-	 * @param oppilas
-	 *            päivitetty oppilas.
+	 * @param oppilas päivitetty oppilas.
 	 * @return true jos päivittäminen onnistui.
 	 */
 	public static boolean updateOppilas(Oppilas oppilas) {
@@ -528,8 +549,7 @@ public class Database {
 	/**
 	 * Päivittää annetun käyttäjätunnuksen tiedot.
 	 * 
-	 * @param kayttaja
-	 *            päivitetty käyttäjätunnus.
+	 * @param kayttaja päivitetty käyttäjätunnus.
 	 * @return ture jos päivittäminen onnistui.
 	 */
 	public static boolean updateKayttajatunnus(Kayttajatunnus kayttaja) {
@@ -574,8 +594,7 @@ public class Database {
 	/**
 	 * Päivittää annetun kurssin tiedot.
 	 * 
-	 * @param kurssi
-	 *            päivitetty kurssi
+	 * @param kurssi päivitetty kurssi
 	 * @return true jos ryhmän päivittäminen onnistui
 	 */
 	public static boolean updateKurssi(Kurssi kurssi) {
@@ -598,8 +617,7 @@ public class Database {
 	/**
 	 * Päivittää annetun ryhmän tiedot.
 	 * 
-	 * @param ryhma
-	 *            päivitetty ryhmä
+	 * @param ryhma päivitetty ryhmä
 	 * @return true jos ryhmän päivittäminen onnistui
 	 */
 	public static boolean updateRyhma(Ryhma ryhma) {
@@ -622,8 +640,7 @@ public class Database {
 	/**
 	 * Päivittää annetun tunnin tiedot
 	 * 
-	 * @param tunti
-	 *            päivitettävä tunti
+	 * @param tunti päivitettävä tunti
 	 * @return true jos päivitys onnistui
 	 */
 	public static boolean updateTunti(Tunti tunti) {
