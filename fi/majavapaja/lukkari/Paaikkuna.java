@@ -7,7 +7,11 @@ package fi.majavapaja.lukkari;
 import java.awt.Dimension;
 import java.util.EmptyStackException;
 import java.util.Stack;
+
 import javax.swing.JPanel;
+
+import fi.majavapaja.lukkari.paneelipaketti.AlmightyLukkariPaneeli;
+import fi.majavapaja.lukkari.paneelipaketti.KirjautumisPaneeli;
 
 /**
  * @author s1001069
@@ -18,9 +22,17 @@ public class Paaikkuna extends javax.swing.JFrame {
     
     public Paaikkuna() {
         initComponents();
-        setJMenuBar(new Menupalkki(this));
         setTitle("Majavalukkari");
         paneeliPino = new Stack<JPanel>();
+        vaihdaPaneeli(new KirjautumisPaneeli(this));
+    }
+    
+    public void kirjaudu(Kayttajatunnus k){
+    	if(k.getOppilas() != null) vaihdaPaneeli(new AlmightyLukkariPaneeli(k.getOppilas().getRyhma()));
+    	else{
+    		setJMenuBar(new Menupalkki(this));
+    		edellinenPaneeli();
+    	}
     }
     
     public void vaihdaPaneeli(JPanel uusiPaneeli){
@@ -75,22 +87,6 @@ public class Paaikkuna extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Paaikkuna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Paaikkuna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Paaikkuna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Paaikkuna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         //</editor-fold>
 
         /* Create and display the form */
