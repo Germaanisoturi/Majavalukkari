@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, MouseMotionListener {
+public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 //PERSE
 
     private static final int RIVI = 9;
@@ -172,13 +172,5 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
 
     @Override
     public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
     }
 }

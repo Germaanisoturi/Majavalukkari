@@ -19,7 +19,7 @@ public class LisaaKurssi extends javax.swing.JPanel {
      * Creates new form LisaaKurssi
      */
     private Paaikkuna ikkuna;
-    
+
     public LisaaKurssi(Paaikkuna ikkuna) {
         initComponents();
         setSize(800, 600);
@@ -44,6 +44,7 @@ public class LisaaKurssi extends javax.swing.JPanel {
 
         lisaaButton.setText("Lisää");
         lisaaButton.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lisaaButtonActionPerformed(evt);
             }
@@ -51,6 +52,7 @@ public class LisaaKurssi extends javax.swing.JPanel {
 
         takaisinButton.setText("Takaisin");
         takaisinButton.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 takaisinButtonActionPerformed(evt);
             }
@@ -61,48 +63,26 @@ public class LisaaKurssi extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(252, 252, 252)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lisaaButton, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(takaisinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(kurssiField))
-                .addGap(333, 333, 333))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addGap(252, 252, 252).addComponent(jLabel1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(lisaaButton, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(takaisinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addComponent(kurssiField)).addGap(333, 333, 333)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(290, 290, 290)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(kurssiField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lisaaButton)
-                    .addComponent(takaisinButton))
-                .addContainerGap(261, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(290, 290, 290).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(kurssiField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(jLabel1)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(lisaaButton).addComponent(takaisinButton)).addContainerGap(261, Short.MAX_VALUE)));
     }// </editor-fold>                        
 
-    private void lisaaButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        Kurssi uusiKurssi = new Kurssi(kurssiField.getText());
-        if(Database.lisaaKurssi(uusiKurssi)){
-            kurssiField.setText("");
-        } else {
-            String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
-            JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
-        }  
-    }                                           
+    private void lisaaButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!kurssiField.equals("")) {
+            Kurssi uusiKurssi = new Kurssi(kurssiField.getText());
+            if (Database.lisaaKurssi(uusiKurssi)) {
+                kurssiField.setText("");
+            } else {
+                String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
+                JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
-    private void takaisinButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void takaisinButtonActionPerformed(java.awt.event.ActionEvent evt) {
         ikkuna.edellinenPaneeli();
-    }                                              
-
+    }
     // Variables declaration - do not modify                     
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField kurssiField;
