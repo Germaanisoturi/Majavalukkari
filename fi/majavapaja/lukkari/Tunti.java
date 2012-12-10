@@ -14,6 +14,7 @@ public class Tunti {
 	private int loppuklo;
 	private int id;
 	private Kurssi kurssi;
+	private Ryhma ryhma;
 
 	/**
 	 * Luo uuden kurssin ilman ID:tä
@@ -27,8 +28,8 @@ public class Tunti {
 	 * @param kurssi
 	 *            Tämän tunnin kurssi.
 	 */
-	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi) {
-		this(viikonpaiva, alkuklo, loppuklo, kurssi, 1);
+	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi, Ryhma ryhma) {
+		this(viikonpaiva, alkuklo, loppuklo, kurssi, ryhma, -1);
 	}
 
 	/**
@@ -45,11 +46,12 @@ public class Tunti {
 	 * @param id
 	 *            Tunnin ID.
 	 */
-	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi, int id) {
+	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi, Ryhma ryhma, int id) {
 		this.viikonpaiva = viikonpaiva;
 		this.alkuklo = alkuklo;
 		this.loppuklo = loppuklo;
 		this.kurssi = kurssi;
+		this.ryhma = ryhma;
 		this.id = id;
 	}
 
@@ -74,6 +76,7 @@ public class Tunti {
 
 	/**
 	 * Palauttaa tunnin viikonpäivän
+	 * 
 	 * @return tunnin viikonpäivä.
 	 */
 	public String getViikonpaiva() {
@@ -82,6 +85,7 @@ public class Tunti {
 
 	/**
 	 * Palauttaa tunnin alkamisajan.
+	 * 
 	 * @return Tunnin alkamisaika.
 	 */
 	public int getAlkuklo() {
@@ -90,6 +94,7 @@ public class Tunti {
 
 	/**
 	 * Palauttaa tunnin päättymisajan.
+	 * 
 	 * @return Tunnin päättymisaika.
 	 */
 	public int getLoppuklo() {
@@ -98,9 +103,24 @@ public class Tunti {
 
 	/**
 	 * Palauttaa tunnin kurssin.
+	 * 
 	 * @return Tunnin kurssi.
 	 */
 	public Kurssi getKurssi() {
 		return kurssi;
+	}
+
+	/**
+	 * Palauttaa tunnin ryhman.
+	 * 
+	 * @return Tunnint ryhma.
+	 */
+	public Ryhma getRyhma() {
+		return ryhma;
+	}
+
+	@Override
+	public String toString() {
+		return viikonpaiva + " " + alkuklo + " - " + loppuklo + " " + kurssi.toString() + " ryhmällä " + ryhma.toString();
 	}
 }
