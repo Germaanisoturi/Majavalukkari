@@ -16,16 +16,6 @@ import java.util.logging.Logger;
  * @author s1001069
  */
 public class Database {
-	
-	public static void main(String[] args) {
-		System.out.println("TESTING");
-		List<Tunti> tunteja = Database.getRyhmanTunnit(Database.getRyhmat().get(2));
-		System.out.println(tunteja.size());
-		for (int i = 0; i < tunteja.size(); i++) {
-			System.out.println(tunteja.get(i).toString());
-		}
-	}
-
 	private static String driver = "com.mysql.jdbc.Driver";
 	private static String connection = "jdbc:mysql://localhost/majavalukkari";
 
