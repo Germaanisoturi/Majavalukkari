@@ -115,4 +115,4 @@ INSERT INTO kayttajatunnus (kayttajanimi, salasana, oikeudet) VALUES ('engblal',
 INSERT INTO ryhma (nimi) VALUES ('Jediakatemia'), ('Hattiwatit'), ('Muumijengi'), ('DP10S2A');
 INSERT INTO oppilas (etunimi, sukunimi, kayttajatunnus, ryhma) VALUES ('Alex', 'Engblom', 1, 4), ('Henry', 'Heikkinen', 2, 1),('Sami', 'Eklund', 3, 2);
 INSERT INTO kurssi (nimi) VALUES ('BIOLOGIA'), ('FYSIIKKA'), ('KEMIA'), ('MATEMATIIKKA'), ('MAANTIETO'), ('JAVA');
-INSERT INTO tunti (ryhma, kurssi, viikonpaiva, alkuklo, loppuklo) VALUES (1, 6, 'MA', 8, 10), (1, 2, 'MA', 10, 12), (1, 3, 'MA', 12, 13), (2, 1, 'TI', 10, 11);
+INSERT INTO tunti (ryhma, kurssi, viikonpaiva, alkuklo, loppuklo) VALUES (1, 6, 'MA', 8, 10), (1, 2, 'MA', 10, 12), (1, 3, 'MA', 12, 13), (2, 1, 'TI', 10, 11), ('1', '6', 'TI', '8', '10');
