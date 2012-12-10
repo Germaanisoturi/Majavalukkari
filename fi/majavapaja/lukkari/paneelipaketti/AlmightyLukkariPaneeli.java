@@ -131,6 +131,7 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
     }
 
     public static void main(String[] args) {
+        System.out.println(Database.getRyhmat().get(0).getNimi());
         AlmightyLukkariPaneeli lukkari = new AlmightyLukkariPaneeli(Database.getRyhmat().get(0));
         JFrame frame = new JFrame("");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

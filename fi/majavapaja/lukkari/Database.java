@@ -481,7 +481,7 @@ public class Database {
 	public static List<Tunti> getRyhmanTunnit(Ryhma ryhma) {
 		Connection c = connect();
 		try {
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM ryhma " + "JOIN osallistuminen ON osallistuminen.ryhma = ryhma.ryhmaID " + "JOIN tunti ON osallistuminen.tunti = tunti.tuntiID " + "JOIN kurssi ON tunti.kurssi = kurssi.kurssiID " + "WHERE ryhma.ryhmaID = ?");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM ryhma JOIN tunti ON tunti.ryhma = ryhma.ryhmaID JOIN kurssi ON tunti.kurssi = kurssi.kurssiID WHERE ryhma.ryhmaID = ?");
 			ps.setInt(1, ryhma.getId());
 			List<Tunti> tunnit = new ArrayList<Tunti>();
 
