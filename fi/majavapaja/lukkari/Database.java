@@ -307,7 +307,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	private static Kurssi kurssiResultSetista(ResultSet rs) throws SQLException {
-		String kurssinNimi = rs.getString("nimi");
+		String kurssinNimi = rs.getString("kurssi.nimi");
 		int kurssinId = rs.getInt("kurssiID");
 		return new Kurssi(kurssinNimi, kurssinId);
 	}
