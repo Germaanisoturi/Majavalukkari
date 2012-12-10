@@ -38,6 +38,7 @@ public class Paaikkuna extends javax.swing.JFrame {
     public void vaihdaPaneeli(JPanel uusiPaneeli){
         paneeliPino.push(uusiPaneeli);
         setContentPane(uusiPaneeli);
+        revalidate();
     }
     
     public void edellinenPaneeli(){

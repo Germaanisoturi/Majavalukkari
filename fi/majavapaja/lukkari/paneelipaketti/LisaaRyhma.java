@@ -53,11 +53,13 @@ public class LisaaRyhma extends JPanel {
 	}
 
 	protected void lisaaRyhma() {
+            if (!textField.getText().equals("")){
 		if (Database.lisaaRyhma(new Ryhma(textField.getText()))) {
 			textField.setText("");
 		} else {
 			String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
 			JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
 		}
+            }
 	}
 }
