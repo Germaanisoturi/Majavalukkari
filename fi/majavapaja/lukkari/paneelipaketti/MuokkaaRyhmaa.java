@@ -75,6 +75,11 @@ public class MuokkaaRyhmaa extends JPanel {
 					.addContainerGap(235, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
+		taytaKentat();
+	}
+	
+	private void taytaKentat() {
+		ryhmanNimiField.setText(ryhma.getNimi());
 	}
 
 	protected void tallennaActionPerformed() {
