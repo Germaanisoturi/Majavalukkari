@@ -35,7 +35,6 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
         kellonajatPaneeli = new JPanel(new GridLayout(0, 1));
 
         tunnit = Database.getRyhmanTunnit(ryhma);
-
         taulukonAlustus();
 
         for (int i = 0; i < sisalto.length; i++) {
@@ -100,17 +99,15 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
         }
 
         sisalto = new JLabel[RIVI][SARA - 1];
-        System.out.println(tunnit.size());
         for (int i = 0; i < tunnit.size(); i++) {
-            for (int j = 0; j < vkpaivatTxt.length; j++) {
-                System.out.println("JOKONYT");
-                if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(vkpaivatTxt[i])) {
-                    for(int asd = 0; asd < kellonajatTxt.length; asd++){
-                        System.out.println("ASD");
-                        if(kellonajatTxt[asd].equals("" + tunnit.get(i).getAlkuklo())){
-                            System.out.println("dasd");
-                            System.out.println(tunnit.get(i).getKurssi().getNimi());
-                            sisalto[j][asd] = new JLabel(tunnit.get(i).getKurssi().getNimi());
+            System.out.println("da");
+            for (int paiva = 0; paiva < vkpaivat.length; paiva++) {
+                System.out.println(paiva);
+                if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(vkpaivat[paiva].getName())) {
+                    System.out.println(tunnit.get(i).getViikonpaiva());
+                    for(int klo = 0; klo < kellonajatTxt.length; klo++){
+                        if(kellonajatTxt[klo].equals("" + tunnit.get(i).getAlkuklo())){
+                            sisalto[klo][paiva-1] = new JLabel(tunnit.get(i).getKurssi().getNimi());
                         }
                     }
                 }
@@ -131,8 +128,7 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
     }
 
     public static void main(String[] args) {
-        System.out.println(Database.getRyhmat().get(0).getNimi());
-        AlmightyLukkariPaneeli lukkari = new AlmightyLukkariPaneeli(Database.getRyhmat().get(0));
+        AlmightyLukkariPaneeli lukkari = new AlmightyLukkariPaneeli(Database.getRyhmat().get(2));
         JFrame frame = new JFrame("");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
