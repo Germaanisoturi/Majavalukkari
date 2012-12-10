@@ -1,6 +1,9 @@
 package fi.majavapaja.lukkari;
 
 public class Kayttajatunnus {
+	public static final int OPPILAS = 0;
+	public static final int YLLAPITAJA = 1;
+	
 	private String kayttajatunnus;
 	private String salasana;
 	private int oikeudet;
