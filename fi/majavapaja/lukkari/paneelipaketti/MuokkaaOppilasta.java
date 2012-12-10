@@ -28,7 +28,7 @@ public class MuokkaaOppilasta extends JPanel {
 	private Kayttajatunnus kayttajatunnus;
 	private JTextField etunimiField;
 	private JTextField sukunimiField;
-	private JComboBox ryhmaComboBox;
+	private JComboBox<Ryhma> ryhmaComboBox;
 	private JTextField kayttajatunnusField;
 	private JTextField salasanaField;
 
@@ -51,8 +51,8 @@ public class MuokkaaOppilasta extends JPanel {
 		sukunimiField = new JTextField();
 		sukunimiField.setColumns(10);
 
-		ryhmaComboBox = new JComboBox(new DefaultComboBoxModel(Database
-				.getRyhmat().toArray()));
+		ryhmaComboBox = new JComboBox<Ryhma>(new DefaultComboBoxModel<Ryhma>(Database
+				.getRyhmat().toArray(new Ryhma[0])));
 
 		JButton btnTallennaMuutokset = new JButton("Tallenna muutokset");
 		btnTallennaMuutokset.addActionListener(new ActionListener() {
@@ -155,7 +155,7 @@ public class MuokkaaOppilasta extends JPanel {
 			etunimiField.setEnabled(false);
 			sukunimiField.setEnabled(false);
 			ryhmaComboBox.setEnabled(false);
-			ryhmaComboBox.setModel(new DefaultComboBoxModel());
+			ryhmaComboBox.setModel(new DefaultComboBoxModel<Ryhma>());
 		} else {
 			Oppilas o = kayttajatunnus.getOppilas();
 			etunimiField.setText(o.getEtunimi());
