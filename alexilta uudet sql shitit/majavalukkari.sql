@@ -76,7 +76,7 @@ CREATE  TABLE IF NOT EXISTS `majavalukkari`.`tunti` (
   PRIMARY KEY (`tuntiID`) ,
   INDEX `ryhma` (`ryhma` ASC) ,
   INDEX `kurssi` (`kurssi` ASC) ,
-  CONSTRAINT `ryhma`
+  CONSTRAINT `tunti-ryhma`
 	FOREIGN KEY (`ryhma` )
 	REFERENCES `majavalukkari`.`ryhma` (`ryhmaID` )
 	ON DELETE NO ACTION
