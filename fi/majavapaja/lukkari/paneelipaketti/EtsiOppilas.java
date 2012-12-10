@@ -29,7 +29,7 @@ import fi.majavapaja.lukkari.Paaikkuna;
 public class EtsiOppilas extends JPanel {
 	private JTextField etunimiField;
 	private JTextField sukunimiField;
-	private JList kayttajatunnuksetList;
+	private JList<Kayttajatunnus> kayttajatunnuksetList;
 	private JTextArea oppilasInfoTextArea;
 	private Paaikkuna paaikkuna;
 	private JTextField kayttajatunnusField;
@@ -150,7 +150,7 @@ public class EtsiOppilas extends JPanel {
 					.addContainerGap())
 		);
 		
-		kayttajatunnuksetList = new JList();
+		kayttajatunnuksetList = new JList<Kayttajatunnus>();
 		kayttajatunnuksetList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		kayttajatunnuksetList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -179,7 +179,7 @@ public class EtsiOppilas extends JPanel {
 			return;
 		}
 		
-		kayttajatunnuksetList.setListData(kayttajatunnukset.toArray());
+		kayttajatunnuksetList.setListData(kayttajatunnukset.toArray(new Kayttajatunnus[0]));
 	}
 	
 	
