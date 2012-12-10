@@ -499,6 +499,30 @@ public class Database {
 		}
 	}
 
+	
+	public static List<Ryhma> haeRyhmat(String nimi) {
+		Connection c = connect();
+		if (c == null)
+			return null;
+		try {
+			List<Ryhma> ryhmat = new ArrayList<Ryhma>();
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM ryhma WHERE nimi LIKE ?;");
+			ps.setString(1, "%" + nimi + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ryhmat.add(ryhmaResultSetista(rs));
+			}
+
+			return ryhmat;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			closeConnection(c);
+		}
+	}
+
 	/**
 	 * Päivittää annetun oppilaan tiedot.
 	 * 
