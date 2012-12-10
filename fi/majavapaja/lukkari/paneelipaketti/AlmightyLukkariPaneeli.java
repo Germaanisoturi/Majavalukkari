@@ -13,6 +13,7 @@ import javax.swing.border.Border;
 
 public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, MouseMotionListener {
 //PERSE
+
     private static final int RIVI = 9;
     private static final int SARA = 6;
     private String[] vkpaivatTxt = {"KLO", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai"};
@@ -56,10 +57,10 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
         add(kellonajatPaneeli, BorderLayout.WEST);
 
         /*
-         * ALL OUR PURPLE FRIENDS
-         * do while break continue if public static final abstract void int char
-         * boolean double float enum long short byte interface class extends
-         * implements new private protected case switch for import package
+         * ALL OUR PURPLE FRIENDS do while break continue if public static final
+         * abstract void int char boolean double float enum long short byte
+         * interface class extends implements new private protected case switch
+         * for import package
          */
 
         for (int i = 0; i < vkpaivat.length; i++) {
@@ -99,29 +100,33 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
         }
 
         sisalto = new JLabel[RIVI][SARA - 1];
-        for (int i = 0; i < tunnit.size(); i++) {
-            System.out.println("da");
-            for (int paiva = 0; paiva < vkpaivat.length; paiva++) {
-                System.out.println(paiva);
-                if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(vkpaivat[paiva].getName())) {
-                    System.out.println(tunnit.get(i).getViikonpaiva());
-                    for(int klo = 0; klo < kellonajatTxt.length; klo++){
-                        if(kellonajatTxt[klo].equals("" + tunnit.get(i).getAlkuklo())){
-                            sisalto[klo][paiva-1] = new JLabel(tunnit.get(i).getKurssi().getNimi());
-                        }
-                    }
-                }
-            }
-        }
 
         for (int i = 0; i < sisalto.length; i++) {
             for (int j = 0; j < sisalto[i].length; j++) {
                 if (sisalto[i][j] == null) {
                     sisalto[i][j] = new JLabel();
+                    sisalto[i][j].setHorizontalAlignment(JLabel.CENTER);
                     sisalto[i][j].setBorder(reunat);
                     sisalto[i][j].setOpaque(true);
                     sisalto[i][j].setBackground(Color.WHITE);
                     sisalto[i][j].addMouseListener(this);
+                }
+            }
+        }
+
+        for (int i = 0; i < tunnit.size(); i++) {
+            for (int paiva = 0; paiva < vkpaivat.length; paiva++) {
+                if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(vkpaivat[paiva].getName())) {
+                    int alkuklo = tunnit.get(i).getAlkuklo();
+                    int loppuklo = tunnit.get(i).getLoppuklo();
+                    for (int klo = alkuklo; klo < loppuklo; klo++) {
+                        sisalto[klo - 8][paiva - 1].setText(tunnit.get(i).getKurssi().getNimi());
+                        if (klo + 1 < tunnit.get(i).getLoppuklo()) {
+                            sisalto[klo - 8][paiva - 1].setBorder(BorderFactory.createMatteBorder(1, 1, 0, 1, Color.BLACK));
+                        } else if (klo+1 == loppuklo && alkuklo+1 < loppuklo){
+                            sisalto[klo - 8][paiva - 1].setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, Color.BLACK));
+                        }
+                    }
                 }
             }
         }
@@ -159,7 +164,6 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
     }
 
     @Override
@@ -172,11 +176,9 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener, Mou
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        
     }
 }
