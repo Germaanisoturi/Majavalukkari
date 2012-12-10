@@ -1,4 +1,3 @@
-
 package fi.majavapaja.lukkari;
 
 import java.sql.Connection;
@@ -42,7 +41,8 @@ public class Database {
 	/**
 	 * Lisätään uusi käyttäjätunnus tietokantaan.
 	 * 
-	 * @param kayttajatunnus lisättävä käyttäjätunnus.
+	 * @param kayttajatunnus
+	 *            lisättävä käyttäjätunnus.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean lisaaKayttajatunnus(Kayttajatunnus kayttajatunnus) {
@@ -65,8 +65,10 @@ public class Database {
 	/**
 	 * Lisätään uusi oppilas ja käyttäjätunnus tietokantaan. Metodi suorittaa tietokantaan haun lisätyn käyttäjätunnuksen id:tä varten.
 	 * 
-	 * @param kayttajatunnus lisättävä käyttäjätunnus.
-	 * @param uusiOppilas uuden oppilaan tiedot.
+	 * @param kayttajatunnus
+	 *            lisättävä käyttäjätunnus.
+	 * @param uusiOppilas
+	 *            uuden oppilaan tiedot.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean lisaaKayttajatunnus(Kayttajatunnus kayttajatunnus, Oppilas uusiOppilas) {
@@ -98,7 +100,8 @@ public class Database {
 	/**
 	 * Lisätään uusi ryhmä tietokantaan.
 	 * 
-	 * @param uusiRyhma uuden ryhmän tiedot.
+	 * @param uusiRyhma
+	 *            uuden ryhmän tiedot.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean lisaaRyhma(Ryhma uusiRyhma) {
@@ -119,7 +122,8 @@ public class Database {
 	/**
 	 * Lisätään uusi kurssi tietokantaan.
 	 * 
-	 * @param uusiKurssi uuden kurssin tiedot.
+	 * @param uusiKurssi
+	 *            uuden kurssin tiedot.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean lisaaKurssi(Kurssi uusiKurssi) {
@@ -139,7 +143,9 @@ public class Database {
 
 	/**
 	 * Lisätään uusi tunti tietokantaan.
-	 * @param uusiTunti uuden kurssin tiedot.
+	 * 
+	 * @param uusiTunti
+	 *            uuden kurssin tiedot.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean lisaaTunti(Tunti uusiTunti) {
@@ -163,7 +169,9 @@ public class Database {
 
 	/**
 	 * Poistaa ryhmän tietokannasta.
-	 * @param poistettavaRyhma Poistettava ryhmä.
+	 * 
+	 * @param poistettavaRyhma
+	 *            Poistettava ryhmä.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean poistaRyhma(Ryhma poistettavaRyhma) {
@@ -183,7 +191,9 @@ public class Database {
 
 	/**
 	 * Poistetaan tunti tietokannasta.
-	 * @param poistettavaTunti Poistettava tunti.
+	 * 
+	 * @param poistettavaTunti
+	 *            Poistettava tunti.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean poistaTunti(Tunti poistettavaTunti) {
@@ -200,9 +210,12 @@ public class Database {
 			closeConnection(con);
 		}
 	}
+
 	/**
 	 * Poistaa osallistumisen tietokannasta.
-	 * @param poistettavaOsallistuminen Poistettavan osallistumisen ID.
+	 * 
+	 * @param poistettavaOsallistuminen
+	 *            Poistettavan osallistumisen ID.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean poistaOsallistuminen(int poistettavaOsallistuminen) {
@@ -222,7 +235,9 @@ public class Database {
 
 	/**
 	 * Poistetaan oppilas tietokannasta.
-	 * @param poistettavaOppilas Poistettava oppilas.
+	 * 
+	 * @param poistettavaOppilas
+	 *            Poistettava oppilas.
 	 * @returntrue tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean poistaKayttajatunnus(Oppilas poistettavaOppilas) {
@@ -242,7 +257,9 @@ public class Database {
 
 	/**
 	 * Poistetaan käyttäjätunnus tietokannasta.
-	 * @param tunnus Poistettavan käyttäjätunnuksen ID.
+	 * 
+	 * @param tunnus
+	 *            Poistettavan käyttäjätunnuksen ID.
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean poistaKayttajatunnus(int tunnus) {
@@ -360,15 +377,14 @@ public class Database {
 			closeConnection(c);
 		}
 	}
-	
+
 	public static Oppilas getKayttajanOppilas(int kayttajatunnusID) {
 		Connection c = connect();
-		if (c == null)
-			return null;
+		if (c == null) return null;
 		try {
 			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas JOIN ryhma ON oppilas.ryhma = ryhma.ryhmaID WHERE oppilas.kayttajatunnus = ?;");
 			ps.setInt(1, kayttajatunnusID);
-			
+
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				return oppilasResultSetista(rs);
@@ -381,7 +397,7 @@ public class Database {
 			closeConnection(c);
 		}
 	}
-	
+
 	/**
 	 * Luo Kayttajatunnus objektin annetun ResultSetin sisällöstä.
 	 * 
@@ -402,11 +418,10 @@ public class Database {
 		}
 		return new Kayttajatunnus(kayttajanimi, salasana, oikeudet, oppilas, id);
 	}
-	
+
 	public static List<Kayttajatunnus> haeKayttajatunnukset(String kayttajanimi) {
 		Connection c = connect();
-		if (c == null)
-			return null;
+		if (c == null) return null;
 		try {
 			List<Kayttajatunnus> oppilaat = new ArrayList<Kayttajatunnus>();
 			PreparedStatement ps = c.prepareStatement("SELECT * FROM kayttajatunnus WHERE kayttajanimi LIKE ?");
@@ -424,11 +439,10 @@ public class Database {
 			closeConnection(c);
 		}
 	}
-	
+
 	public static List<Kayttajatunnus> haeKayttajatunnukset(String kayttajanimi, String etunimi, String sukunimi) {
 		Connection c = connect();
-		if (c == null)
-			return null;
+		if (c == null) return null;
 		try {
 			List<Kayttajatunnus> oppilaat = new ArrayList<Kayttajatunnus>();
 			PreparedStatement ps = c.prepareStatement("SELECT * FROM kayttajatunnus JOIN oppilas ON kayttajatunnus = kayttajatunnusID WHERE kayttajanimi LIKE ? AND etunimi LIKE ? AND sukunimi LIKE ?");
@@ -514,7 +528,8 @@ public class Database {
 	/**
 	 * Päivittää annetun oppilaan tiedot.
 	 * 
-	 * @param oppilas päivitetty oppilas.
+	 * @param oppilas
+	 *            päivitetty oppilas.
 	 * @return true jos päivittäminen onnistui.
 	 */
 	public static boolean updateOppilas(Oppilas oppilas) {
@@ -539,7 +554,8 @@ public class Database {
 	/**
 	 * Päivittää annetun käyttäjätunnuksen tiedot.
 	 * 
-	 * @param kayttaja päivitetty käyttäjätunnus.
+	 * @param kayttaja
+	 *            päivitetty käyttäjätunnus.
 	 * @return ture jos päivittäminen onnistui.
 	 */
 	public static boolean updateKayttajatunnus(Kayttajatunnus kayttaja) {
@@ -573,8 +589,7 @@ public class Database {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 			try {
 				con.rollback();
-			} catch (Exception e) {
-			}
+			} catch (Exception e) {}
 			return false;
 		} finally {
 			closeConnection(con);
@@ -584,7 +599,8 @@ public class Database {
 	/**
 	 * Päivittää annetun kurssin tiedot.
 	 * 
-	 * @param kurssi päivitetty kurssi
+	 * @param kurssi
+	 *            päivitetty kurssi
 	 * @return true jos ryhmän päivittäminen onnistui
 	 */
 	public static boolean updateKurssi(Kurssi kurssi) {
@@ -607,7 +623,8 @@ public class Database {
 	/**
 	 * Päivittää annetun ryhmän tiedot.
 	 * 
-	 * @param ryhma päivitetty ryhmä
+	 * @param ryhma
+	 *            päivitetty ryhmä
 	 * @return true jos ryhmän päivittäminen onnistui
 	 */
 	public static boolean updateRyhma(Ryhma ryhma) {
@@ -630,7 +647,8 @@ public class Database {
 	/**
 	 * Päivittää annetun tunnin tiedot
 	 * 
-	 * @param tunti päivitettävä tunti
+	 * @param tunti
+	 *            päivitettävä tunti
 	 * @return true jos päivitys onnistui
 	 */
 	public static boolean updateTunti(Tunti tunti) {
@@ -650,5 +668,21 @@ public class Database {
 		} finally {
 			closeConnection(con);
 		}
+	}
+
+	public static Kayttajatunnus tarkastaKirjautuminen(String kayttaja, String salasana) {
+		Connection con = connect();
+		Kayttajatunnus kayttajaTunnus = null;
+		try {
+			PreparedStatement haeKayttajatunnukset = con.prepareStatement("SELECT * FROM kayttajatunnus WHERE kayttajanimi=? AND salasana=? ");
+			haeKayttajatunnukset.setString(1, kayttaja);
+			haeKayttajatunnukset.setString(2, salasana);
+
+			ResultSet rs = haeKayttajatunnukset.executeQuery();
+			if (rs.next()) kayttajaTunnus = kayttajatunnusResultSetista(rs);
+		} catch (SQLException ex) {} finally {
+			closeConnection(con);
+		}
+		return kayttajaTunnus;
 	}
 }
