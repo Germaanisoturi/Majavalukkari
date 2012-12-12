@@ -544,6 +544,29 @@ public class Database {
 			closeConnection(c);
 		}
 	}
+	
+	public static List<Kurssi> haeKurssit(String nimi) {
+		Connection c = connect();
+		if (c == null)
+			return null;
+		try {
+			List<Kurssi> kurssit = new ArrayList<Kurssi>();
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM kurssi WHERE nimi LIKE ?;");
+			ps.setString(1, "%" + nimi + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				kurssit.add(kurssiResultSetista(rs));
+			}
+
+			return kurssit;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			closeConnection(c);
+		}
+	}
 
 	/**
 	 * Päivittää annetun oppilaan tiedot.

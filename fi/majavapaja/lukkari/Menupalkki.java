@@ -4,6 +4,7 @@
  */
 package fi.majavapaja.lukkari;
 
+import fi.majavapaja.lukkari.paneelipaketti.EtsiKurssi;
 import fi.majavapaja.lukkari.paneelipaketti.EtsiOppilas;
 import fi.majavapaja.lukkari.paneelipaketti.EtsiRyhma;
 import fi.majavapaja.lukkari.paneelipaketti.LisaaKayttaja;
@@ -111,7 +112,7 @@ public class Menupalkki extends JMenuBar implements ActionListener {
         } else if (e.getActionCommand().equals("Hallinnoi oppilaita/käyttäjiä")) {
             ikkuna.vaihdaPaneeli(new EtsiOppilas(ikkuna));
         } else if (e.getActionCommand().equals("Hallinnoi kursseja")){
-//            ikkuna.vaihdaPaneeli(new EtsiKurssi(ikkuna));
+            ikkuna.vaihdaPaneeli(new EtsiKurssi(ikkuna));
         } else if (e.getActionCommand().equals("Hallinnoi ryhmiä")) {
             ikkuna.vaihdaPaneeli(new EtsiRyhma(ikkuna));
         } else if (e.getActionCommand().equals("Hallinnoi lukujärjestyksiä")) {

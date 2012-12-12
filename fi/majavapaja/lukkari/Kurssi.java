@@ -56,6 +56,14 @@ public class Kurssi {
 		return nimi;
 	}
 	
+	/**
+	 * Asettaa kurssin nimen.
+	 * @param nimi Kurssin uusi nimi.
+	 */
+	public void setNimi(String nimi) {
+		this.nimi = nimi;
+	}
+	
 	@Override
 	public String toString(){
 		return getNimi();
