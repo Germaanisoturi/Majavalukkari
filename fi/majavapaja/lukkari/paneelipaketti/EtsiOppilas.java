@@ -93,6 +93,8 @@ public class EtsiOppilas extends JPanel {
 		kayttajatunnusField = new JTextField();
 		lblKayttajatunnus.setLabelFor(kayttajatunnusField);
 		kayttajatunnusField.setColumns(10);
+		kayttajatunnusField.addKeyListener(enterAdapter);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
