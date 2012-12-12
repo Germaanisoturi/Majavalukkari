@@ -10,6 +10,8 @@ import javax.swing.*;
 import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Kayttajatunnus;
 import fi.majavapaja.lukkari.Paaikkuna;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class KirjautumisPaneeli extends JPanel {
 	private JTextField kayttajatunnusField;
@@ -27,11 +29,20 @@ public class KirjautumisPaneeli extends JPanel {
 		setPreferredSize(new Dimension(800, 600));
 		setLayout(null);
 
+		KeyAdapter enterAdapter = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					kirjaudu();
+				}
+			}
+		};
 		kayttajatunnusField = new JTextField();
 		kayttajatunnusField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		kayttajatunnusField.setBounds(326, 206, 156, 30);
 		add(kayttajatunnusField);
 		kayttajatunnusField.setColumns(10);
+		kayttajatunnusField.addKeyListener(enterAdapter);
 
 		JLabel kayttajatunnusLabel = new JLabel("Käyttäjätunnus");
 		kayttajatunnusLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -56,6 +67,7 @@ public class KirjautumisPaneeli extends JPanel {
 		salasanaField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		salasanaField.setBounds(326, 288, 156, 30);
 		add(salasanaField);
+		salasanaField.addKeyListener(enterAdapter);
 	}
 
 	protected void kirjaudu() {

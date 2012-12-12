@@ -4,12 +4,7 @@
  */
 package fi.majavapaja.lukkari;
 
-import fi.majavapaja.lukkari.paneelipaketti.EtsiKurssi;
-import fi.majavapaja.lukkari.paneelipaketti.EtsiOppilas;
-import fi.majavapaja.lukkari.paneelipaketti.EtsiRyhma;
-import fi.majavapaja.lukkari.paneelipaketti.LisaaKayttaja;
-import fi.majavapaja.lukkari.paneelipaketti.LisaaKurssi;
-import fi.majavapaja.lukkari.paneelipaketti.LisaaRyhma;
+import fi.majavapaja.lukkari.paneelipaketti.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
@@ -22,13 +17,18 @@ import javax.swing.JMenuItem;
  */
 @SuppressWarnings("serial")
 public class Menupalkki extends JMenuBar implements ActionListener {
+
     private Paaikkuna ikkuna;
 
-    public Menupalkki(Paaikkuna ikkuna) {
-        this.ikkuna = ikkuna;
-        luoTiedostoMenu();
-        luoLisaaMenu();
-        luoNaytaMenu();
+    public Menupalkki(Paaikkuna ikkuna, Kayttajatunnus ktunnus) {
+        if (ktunnus.getOppilas() == null) {
+            this.ikkuna = ikkuna;
+            luoTiedostoMenu();
+            luoLisaaMenu();
+            luoNaytaMenu();
+        } else {
+            luoTiedostoMenu();
+        }
     }
 
     private void luoTiedostoMenu() {
@@ -39,6 +39,11 @@ public class Menupalkki extends JMenuBar implements ActionListener {
         tulosta.setMnemonic('T');
         tulosta.addActionListener(this);
         tiedostoMenu.add(tulosta);
+
+        JMenuItem kirjaaulos = new JMenuItem("Kirjaudu ulos");
+        kirjaaulos.setMnemonic('K');
+        kirjaaulos.addActionListener(this);
+        tiedostoMenu.add(kirjaaulos);
 
         JMenuItem lopeta = new JMenuItem("Lopeta");
         lopeta.setMnemonic('L');
@@ -69,7 +74,7 @@ public class Menupalkki extends JMenuBar implements ActionListener {
 
         this.add(lisaaMenu);
     }
-    
+
     private void luoNaytaMenu() {
         JMenu naytaMenu = new JMenu("Muokkaa");
         naytaMenu.setMnemonic('M');
@@ -78,7 +83,7 @@ public class Menupalkki extends JMenuBar implements ActionListener {
         oppilas.setMnemonic('o');
         oppilas.addActionListener(this);
         naytaMenu.add(oppilas);
-        
+
         JMenuItem kurssi = new JMenuItem("Hallinnoi kursseja");
         kurssi.setMnemonic('k');
         kurssi.addActionListener(this);
@@ -103,6 +108,8 @@ public class Menupalkki extends JMenuBar implements ActionListener {
             //TODO TULOSTA LUKKARI PRINTTERILLÄ
         } else if (e.getActionCommand().equals("Lopeta")) {
             System.exit(0);
+        } else if (e.getActionCommand().equals("Kirjaudu ulos")) {
+            ikkuna.kirjaaUlos();
         } else if (e.getActionCommand().equals("Uusi käyttäjätunnus/oppilas...")) {
             ikkuna.vaihdaPaneeli(new LisaaKayttaja(ikkuna));
         } else if (e.getActionCommand().equals("Uusi ryhmä")) {
@@ -111,7 +118,7 @@ public class Menupalkki extends JMenuBar implements ActionListener {
             ikkuna.vaihdaPaneeli(new LisaaKurssi(ikkuna));
         } else if (e.getActionCommand().equals("Hallinnoi oppilaita/käyttäjiä")) {
             ikkuna.vaihdaPaneeli(new EtsiOppilas(ikkuna));
-        } else if (e.getActionCommand().equals("Hallinnoi kursseja")){
+        } else if (e.getActionCommand().equals("Hallinnoi kursseja")) {
             ikkuna.vaihdaPaneeli(new EtsiKurssi(ikkuna));
         } else if (e.getActionCommand().equals("Hallinnoi ryhmiä")) {
             ikkuna.vaihdaPaneeli(new EtsiRyhma(ikkuna));
