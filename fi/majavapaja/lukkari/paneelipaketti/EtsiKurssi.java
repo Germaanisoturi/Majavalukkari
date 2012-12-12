@@ -107,7 +107,11 @@ public class EtsiKurssi extends JPanel {
 	}
 	
 	protected void muokkaaActionPerformed() {
-		throw new NotImplementedException();
+		int i = kurssiList.getSelectedIndex();
+		if (i == -1)
+			return;
+		Kurssi kurssi = (Kurssi) kurssiList.getModel().getElementAt(i);
+		ikkuna.vaihdaPaneeli(new MuokkaaKurssia(ikkuna, kurssi));
 	}
 	
 	protected void takaisinActionPerformed() {
