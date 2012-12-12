@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -17,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Kurssi;
 import fi.majavapaja.lukkari.Paaikkuna;
@@ -32,11 +33,22 @@ public class EtsiKurssi extends JPanel {
 		this.ikkuna = ikkuna;
 		setPreferredSize(new Dimension(800, 600));
 		
+		KeyAdapter enterAdapter = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					haeActionPerformed();
+				}
+			}
+		};
+		
+		
 		JLabel lblKurssinNimi = new JLabel("Kurssin nimi");
 		
 		kurssinNimiField = new JTextField();
 		lblKurssinNimi.setLabelFor(kurssinNimiField);
 		kurssinNimiField.setColumns(10);
+		kurssinNimiField.addKeyListener(enterAdapter);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
