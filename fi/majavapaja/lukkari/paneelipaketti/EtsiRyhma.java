@@ -2,6 +2,8 @@ package fi.majavapaja.lukkari.paneelipaketti;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -29,9 +31,19 @@ public class EtsiRyhma extends JPanel {
 		setSize(800, 600);
 		JLabel lblRyhmanNimi = new JLabel("Ryhmän nimi");
 		
+		KeyAdapter enterAdapter = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					etsiActionPerformed();
+				}
+			}
+		};
+		
 		ryhmanNimiField = new JTextField();
 		lblRyhmanNimi.setLabelFor(ryhmanNimiField);
 		ryhmanNimiField.setColumns(10);
+		ryhmanNimiField.addKeyListener(enterAdapter);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
