@@ -9,8 +9,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import com.sun.org.apache.bcel.internal.generic.Select;
-
 import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Ryhma;
 import fi.majavapaja.lukkari.Tunti;
@@ -78,14 +76,13 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 		kellonajat = new JLabel[RIVI];
 
 		Border reunat = BorderFactory.createLineBorder(Color.BLACK);
-		Border otsikkoReunat = BorderFactory.createMatteBorder(0, 1, 1, 1, Color.BLACK);
 
 		for (int i = 0; i < vkpaivat.length; i++) {
 			vkpaivat[i] = new JLabel(vkpaivatTxt[i]);
 			vkpaivat[i].setName(vkpaivat[i].getText().substring(0, 2));
 			vkpaivat[i].setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
 			vkpaivat[i].setHorizontalAlignment(JLabel.CENTER);
-			vkpaivat[i].setBorder(otsikkoReunat);
+			vkpaivat[i].setBorder(reunat);
 			vkpaivat[i].setOpaque(true);
 			vkpaivat[i].setBackground(Color.WHITE);
 		}
@@ -117,7 +114,7 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 					sisalto[i][j].setOpaque(true);
 					sisalto[i][j].setBackground(Color.WHITE);
 					sisalto[i][j].addMouseListener(this);
-					sisalto[i][j].setName("" + j);
+					sisalto[i][j].setName(i + "#" + j);
 				}
 			}
 		}
@@ -140,52 +137,64 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 		}
 	}
 
-	private void selectTunti(JLabel source) {
+	private boolean valitseTunti(JLabel source) {
 		for (int i = 0; i < valikoidutTunnit.size(); i++) {
-			if (!valikoidutTunnit.get(i).getName().equalsIgnoreCase(source.getName())) {
-				for (int j = 0; j < valikoidutTunnit.size(); j++) {
-					valikoidutTunnit.get(j).setBackground(Color.WHITE);
-				}
-				valikoidutTunnit.clear();
-				source.setBackground(new Color(0,0,255,100));
+			if (!valikoidutTunnit.get(i).getName().split("#")[1].equalsIgnoreCase(source.getName().split("#")[1])) {
+				tyhjennaValikoidutTunnit();
+
+				source.setBackground(new Color(0, 0, 255, 100));
 				valikoidutTunnit.add(source);
-				return;
+				return true;
 			}
 		}
 		for (int i = 0; i < valikoidutTunnit.size(); i++) {
 			if (valikoidutTunnit.get(i) == source) {
 				source.setBackground(Color.WHITE);
 				valikoidutTunnit.remove(source);
-				return;
+				return false;
 			}
 		}
-		source.setBackground(new Color(0,0,255,100));
+		source.setBackground(new Color(0, 0, 255, 100));
 		valikoidutTunnit.add(source);
+		return true;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 
-	private boolean mousePress;
-	
+	private boolean hiiriPohjassa;
+	private JLabel kaikenAlkuJaLoppu;
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (MouseEvent.BUTTON1 == e.getButton()) {
+			tyhjennaValikoidutTunnit();
 			JLabel source = (JLabel) e.getSource();
-			selectTunti(source);
+			if (valitseTunti(source)) kaikenAlkuJaLoppu = source;
 			source.repaint();
-			mousePress = true;
+			hiiriPohjassa = true;
 		}
+	}
+
+	private void tyhjennaValikoidutTunnit() {
+		for (int j = 0; j < valikoidutTunnit.size(); j++) {
+			valikoidutTunnit.get(j).setBackground(Color.WHITE);
+		}
+		valikoidutTunnit.clear();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(MouseEvent.BUTTON1 == e.getButton()) mousePress = false;
+		if (MouseEvent.BUTTON1 == e.getButton()) hiiriPohjassa = false;
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
+		if (hiiriPohjassa) {
+			JLabel source = (JLabel) e.getSource();
+			valitseTunti(source);
+			source.repaint();
+		}
 	}
 
 	@Override
