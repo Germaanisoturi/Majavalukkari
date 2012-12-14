@@ -1,49 +1,46 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.majavapaja.lukkari;
 
+import fi.majavapaja.lukkari.paneelipaketti.Kirjautuminen;
 import java.awt.Dimension;
 import java.util.EmptyStackException;
 import java.util.Stack;
-
 import javax.swing.JPanel;
 
-import fi.majavapaja.lukkari.paneelipaketti.AlmightyLukkariPaneeli;
-import fi.majavapaja.lukkari.paneelipaketti.KirjautumisPaneeli;
-
 /**
+ * Pääikkunassa näytetään ja selataan kaikkia ohjelman paneeleita.
+ * Pääikkunan näkymä määräytyy sisäänkirjautujan oikeuksien mukaan.
  * @author s1001069
  */
 @SuppressWarnings("serial")
 public class Paaikkuna extends javax.swing.JFrame {
 
     private Stack<JPanel> paneeliPino;
-
+    
+    /**
+     * Luo Majavalukkarin pääikkunan ja pakottaa
+     * ensimmäiseksi näkymäksi sisäänkirjautumisen.
+     */
     public Paaikkuna() {
         initComponents();
         setTitle("Majavalukkari");
+        setResizable(false);
         paneeliPino = new Stack<JPanel>();
-        vaihdaPaneeli(new KirjautumisPaneeli(this));
+        vaihdaPaneeli(new Kirjautuminen(this));
     }
-
-    public void kirjaudu(Kayttajatunnus k) {
-        setJMenuBar(new Menupalkki(this, k));
-        if (k.getOppilas() != null) {
-            edellinenPaneeli();
-            vaihdaPaneeli(new AlmightyLukkariPaneeli(k.getOppilas().getRyhma()));
-        } else {
-            edellinenPaneeli();
-        }
-    }
-
+    
+    /**
+     * Vaihtaa ja päivittää pääikkunassa näytettävän näkymän.
+     * @param uusiPaneeli näkymään avautuva paneeli.
+     */
     public void vaihdaPaneeli(JPanel uusiPaneeli) {
         paneeliPino.push(uusiPaneeli);
         setContentPane(uusiPaneeli);
         revalidate();
     }
-
+    
+    /**
+     * Poistaa nykyisen näkymän ja vaihtaa sen edelliseen.
+     */
     public void edellinenPaneeli() {
         try {
             paneeliPino.pop();
@@ -57,9 +54,12 @@ public class Paaikkuna extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Kirjaa käyttäjän ulos ohjelmasta.
+     */
     public void kirjaaUlos(){
         paneeliPino.clear();
-        vaihdaPaneeli(new KirjautumisPaneeli(this));
+        vaihdaPaneeli(new Kirjautuminen(this));
         this.setJMenuBar(null);
         revalidate();
     }
@@ -85,6 +85,7 @@ public class Paaikkuna extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     /**
+     * Ohjelman käynnistävä päämetodi.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

@@ -13,6 +13,9 @@ import fi.majavapaja.lukkari.Oppilas;
 import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
+/**
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class LisaaKayttaja extends JPanel implements ActionListener {
 	private JLabel lblKayttajatunnus = new JLabel("Käyttäjätunnus:");
@@ -29,34 +32,32 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 	private JPasswordField pfSalasanaUudestaan;
 	private JRadioButton rdbtnOppilas = new JRadioButton("Oppilas");
 	private JRadioButton rdbtnYllpito = new JRadioButton("Ylläpito");
-	private int Oikeudet = 0;
-	private Ryhma[] stuff;
-	private JComboBox<Ryhma> comboBox;
+	private Ryhma[] ryhmaData;
+	private JComboBox<Ryhma> cbRyhma;
 	private JButton btnLis = new JButton("Lisää");
 	private JButton btnPalaa = new JButton("Takaisin");
-	private Paaikkuna paaikkuna = new Paaikkuna();;
+	private Paaikkuna paaikkuna = new Paaikkuna();
 
 	/**
-	 * Create the panel.
+	 * Luo paneelin.
+	 * @param paaikkuna
 	 */
-
 	public LisaaKayttaja(Paaikkuna paaikkuna) {
 
-		KeyAdapter endderii =  new KeyAdapter() {
+		KeyAdapter enterListener =  new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-					doStuff();
+					addUser();
 				}
 			}
 		};
-		
 		this.paaikkuna = paaikkuna;
 		
 		setSize(800, 600);
 
 		tfKayttajatunnus = new JTextField();
 		tfKayttajatunnus.setColumns(10);
-		tfKayttajatunnus.addKeyListener(endderii);
+		tfKayttajatunnus.addKeyListener(enterListener);
 
 		ButtonGroup bg = new ButtonGroup();
 
@@ -73,11 +74,11 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 
 		tfEtunimi = new JTextField();
 		tfEtunimi.setColumns(10);
-		tfEtunimi.addKeyListener(endderii);
+		tfEtunimi.addKeyListener(enterListener);
 
 		tfSukunimi = new JTextField();
 		tfSukunimi.setColumns(10);
-		tfSukunimi.addKeyListener(endderii);
+		tfSukunimi.addKeyListener(enterListener);
 
 		btnLis.setFocusable(false);
 		btnLis.addActionListener(this);
@@ -86,14 +87,15 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		btnPalaa.addActionListener(this);
 
 		pfSalasana = new JPasswordField();
-		pfSalasana.addKeyListener(endderii);
+		pfSalasana.addKeyListener(enterListener);
 
 		pfSalasanaUudestaan = new JPasswordField();
-		pfSalasanaUudestaan.addKeyListener(endderii);
+		pfSalasanaUudestaan.addKeyListener(enterListener);
 
-		stuff = Database.getRyhmat().toArray(new Ryhma[Database.getRyhmat().size()]);
-		comboBox = new JComboBox<Ryhma>(stuff);
-		comboBox.setFocusable(false);
+		ryhmaData = Database.getRyhmat().toArray(new Ryhma[Database.getRyhmat().size()]);
+		
+		cbRyhma = new JComboBox<Ryhma>(ryhmaData);
+		cbRyhma.setFocusable(false);
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -124,7 +126,7 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 						.addComponent(tfSukunimi, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
 						.addComponent(pfSalasana, 221, 250, Short.MAX_VALUE)
 						.addComponent(pfSalasanaUudestaan, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-						.addComponent(comboBox, 0, 250, Short.MAX_VALUE)
+						.addComponent(cbRyhma, 0, 250, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnLis, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 							.addGap(64)
@@ -168,7 +170,7 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblRyhm)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(cbRyhma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnPalaa)
@@ -180,6 +182,9 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 
 	}
 	
+	/**
+	 * Värjää virheellisen kentän labelin punaiseksi ja näyttää virhesanoman.
+	 */
 	private void checkTextFields() {
 		if (tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15) lblKayttajatunnus.setForeground(Color.RED);
 		if (pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30) lblSalasana.setForeground(Color.RED);
@@ -201,8 +206,11 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		
 	}
 	
-	private void doStuff() {
-		resetTextFieldColors();
+	/**
+	 * Lisää käyttäjän ja tarkistaa kenttien tiedot.
+	 */
+	private void addUser() {
+		resetLabelColors();
 		if (rdbtnOppilas.isSelected() && (tfEtunimi.getText().equals("") || tfEtunimi.getText().length() > 20 || tfSukunimi.getText().equals("") || tfSukunimi.getText().length() > 30 || tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15 || pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30 || pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30)) {
 			checkTextFields();
 		} else if (rdbtnYllpito.isSelected() && (tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15 || pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30 || pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30)) {
@@ -210,12 +218,12 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		} else {
 			if (ripoffPassword(pfSalasana.getPassword()).equals(ripoffPassword(pfSalasanaUudestaan.getPassword()))) {
 				if (rdbtnOppilas.isSelected()) {
-					Oppilas o = new Oppilas(tfEtunimi.getText(), tfSukunimi.getText(), (Ryhma)comboBox.getSelectedItem());
-					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet, o);
+					Oppilas o = new Oppilas(tfEtunimi.getText(), tfSukunimi.getText(), (Ryhma)cbRyhma.getSelectedItem());
+					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), o);
 					Database.lisaaKayttajatunnus(k, o);
 					clearTextFields();
 				} else if (rdbtnYllpito.isSelected()) {
-					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet);
+					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), null);
 					Database.lisaaKayttajatunnus(k);
 					clearTextFields();
 				}
@@ -227,6 +235,9 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Tyhjentää kentät.
+	 */
 	private void clearTextFields() {
 		tfEtunimi.setText("");
 		tfSukunimi.setText("");
@@ -235,7 +246,10 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		pfSalasanaUudestaan.setText("");
 	}
 	
-	private void resetTextFieldColors() {
+	/**
+	 * Resetoi labeleitten värit.
+	 */
+	private void resetLabelColors() {
 		lblKayttajatunnus.setForeground(Color.BLACK);
 		lblSalasana.setForeground(Color.BLACK);
 		lblSalasanaUudestaan.setForeground(Color.BLACK);
@@ -243,34 +257,36 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		lblSukunimi.setForeground(Color.BLACK);
 	}
 	
+	/**
+	 * Hakee salasanan char taulukkoon salasana kentistä ja tekee siitä stringin.
+	 * @return palauttaa salasanan
+	 */
 	private String ripoffPassword(char[] password) {
-		String jotain = "";
+		String pw = "";
 		for (int i = 0; i < password.length; i++) {
-			jotain += password[i];
+			pw += password[i];
 		}
-		return jotain;
+		return pw;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (rdbtnOppilas == e.getSource()) {
 			tfEtunimi.setVisible(true);
 			tfSukunimi.setVisible(true);
-			comboBox.setVisible(true);
+			cbRyhma.setVisible(true);
 			lblEtunimi.setVisible(true);
 			lblSukunimi.setVisible(true);
 			lblRyhm.setVisible(true);
-			Oikeudet = 0;
 		} else if (rdbtnYllpito == e.getSource()) {
 			tfEtunimi.setVisible(false);
 			tfSukunimi.setVisible(false);
-			comboBox.setVisible(false);
+			cbRyhma.setVisible(false);
 			lblEtunimi.setVisible(false);
 			lblSukunimi.setVisible(false);
 			lblRyhm.setVisible(false);
-			Oikeudet = 1;
 		} else if (btnLis == e.getSource()) {
-			doStuff();
+			addUser();
 		} else if (btnPalaa == e.getSource()) {
 			paaikkuna.edellinenPaneeli();
 		}
