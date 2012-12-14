@@ -1,6 +1,6 @@
 package fi.majavapaja.lukkari;
 
-import fi.majavapaja.lukkari.paneelipaketti.KirjautumisPaneeli;
+import fi.majavapaja.lukkari.paneelipaketti.Kirjautuminen;
 import java.awt.Dimension;
 import java.util.EmptyStackException;
 import java.util.Stack;
@@ -24,7 +24,7 @@ public class Paaikkuna extends javax.swing.JFrame {
         initComponents();
         setTitle("Majavalukkari");
         paneeliPino = new Stack<JPanel>();
-        vaihdaPaneeli(new KirjautumisPaneeli(this));
+        vaihdaPaneeli(new Kirjautuminen(this));
     }
     
     /**
@@ -58,7 +58,7 @@ public class Paaikkuna extends javax.swing.JFrame {
      */
     public void kirjaaUlos(){
         paneeliPino.clear();
-        vaihdaPaneeli(new KirjautumisPaneeli(this));
+        vaihdaPaneeli(new Kirjautuminen(this));
         this.setJMenuBar(null);
         revalidate();
     }
