@@ -123,7 +123,7 @@ public class Menupalkki extends JMenuBar implements ActionListener {
         } else if (e.getActionCommand().equals("Hallinnoi ryhmiä")) {
             ikkuna.vaihdaPaneeli(new EtsiRyhma(ikkuna));
         } else if (e.getActionCommand().equals("Hallinnoi lukujärjestyksiä")) {
-//            paaikkuna.vaihdaPaneeli(new EtsiLukkari());
+            ikkuna.vaihdaPaneeli(new EtsiLukkari(ikkuna));
         }
     }
 }
