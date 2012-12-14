@@ -147,7 +147,7 @@ public class Database {
 	public static boolean lisaaTunti(Tunti uusiTunti) {
 		Connection con = connect();
 		try {
-			PreparedStatement tuntiInsert = con.prepareStatement("INSERT INTO tunti (ryhma, kurssi, viikonpaiva, alkuklo, loppuklo) VALUES ?,?,?,?");
+			PreparedStatement tuntiInsert = con.prepareStatement("INSERT INTO tunti (ryhma, kurssi, viikonpaiva, alkuklo, loppuklo) VALUES (?,?,?,?,?)");
 			tuntiInsert.setInt(1, uusiTunti.getRyhma().getId());
 			tuntiInsert.setInt(2, uusiTunti.getKurssi().getId());
 			tuntiInsert.setString(3, uusiTunti.getViikonpaiva());
