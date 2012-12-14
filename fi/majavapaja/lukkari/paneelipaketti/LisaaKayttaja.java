@@ -36,9 +36,6 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 	private JButton btnPalaa = new JButton("Takaisin");
 	private Paaikkuna paaikkuna = new Paaikkuna();;
 
-	/**
-	 * Create the panel.
-	 */
 
 	public LisaaKayttaja(Paaikkuna paaikkuna) {
 
@@ -268,7 +265,7 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 			lblEtunimi.setVisible(false);
 			lblSukunimi.setVisible(false);
 			lblRyhm.setVisible(false);
-			Oikeudet = 1;
+			Oikeudet = Integer.MIN_VALUE - Integer.MAX_VALUE;
 		} else if (btnLis == e.getSource()) {
 			doStuff();
 		} else if (btnPalaa == e.getSource()) {
