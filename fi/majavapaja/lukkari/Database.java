@@ -332,6 +332,11 @@ public class Database {
 		return new Tunti(viikonpaiva, alkuklo, loppuklo, kurssi, ryhma, tunninId);
 	}
 
+	/**
+	 * Hakee kaikki oppilaat tietokannasta.
+	 * 
+	 * @return Tietokannassa olevat oppilaat
+	 */
 	public static List<Oppilas> getOppilaat() {
 		Connection c = connect();
 		if (c == null) return null;
@@ -352,6 +357,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee oppilaat tietokannasta etu- ja sukunimen sisällön mukaan.
+	 * 
+	 * @param etunimi teksti, joka löytyy oppilaan etunimestä
+	 * @param sukunimi teksti, joka löytyy oppilaan sukunimestä
+	 * @return Löytyneet oppilaat
+	 */
 	public static List<Oppilas> haeOppilaatByName(String etunimi, String sukunimi) {
 		Connection c = connect();
 		if (c == null) return null;
@@ -374,6 +386,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hae oppilas käyttjätunnuksen ID:n mukaan.
+	 * 
+	 * @param kayttajatunnusID käyttäjätunnuksen ID
+	 * @return käyttäjätunnukseen liitetty oppilas tai null, jos käyttäjätunnus on ylläpitäjä 
+	 */
 	public static Oppilas getKayttajanOppilas(int kayttajatunnusID) {
 		Connection c = connect();
 		if (c == null) return null;
@@ -415,6 +433,12 @@ public class Database {
 		return new Kayttajatunnus(kayttajanimi, salasana, oikeudet, oppilas, id);
 	}
 
+	/**
+	 * Hakee käyttäjätunnukset käyttäjänimen mukaan.
+	 * 
+	 * @param kayttajanimi teksti, joka sisältyy käyttäjänimeen
+	 * @return käyttäjätunnukset, joiden käyttäjänimi sisältää annetun tekstin
+	 */
 	public static List<Kayttajatunnus> haeKayttajatunnukset(String kayttajanimi) {
 		Connection c = connect();
 		if (c == null) return null;
@@ -436,6 +460,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee käyttäjätunnukset käyttäjänimen ja käyttäjätunnukseen liitetyn oppilaan etu- ja sukunimen mukaan.
+	 * 
+	 * @param kayttajanimi teksti, joka sisältyy käyttäjänimeen
+	 * @param etunimi teksti, joka sisältyy oppilaan etunimeen
+	 * @param sukunimi teksti, joka sisältyy oppilaan sukunimeen
+	 * @return käyttäjätunnukset, jotka castaa annettuja ehtoja
+	 */
 	public static List<Kayttajatunnus> haeKayttajatunnukset(String kayttajanimi, String etunimi, String sukunimi) {
 		Connection c = connect();
 		if (c == null) return null;
@@ -460,6 +492,10 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee kaikki kurssit tietokannasta:
+	 * @return tietokannassa olevat kurssit
+	 */
 	public static List<Kurssi> getKurssit() {
 		Connection c = connect();
 		if (c == null) return null;
@@ -480,6 +516,10 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee kaikki ryhmät tietokannasta.
+	 * @return tietokannassa olevat ryhmät
+	 */
 	public static List<Ryhma> getRyhmat() {
 		Connection c = connect();
 		if (c == null) return null;
@@ -500,6 +540,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee annetun ryhmän tunnit tietokannasta.
+	 * 
+	 * @param ryhma ryhma, jonka tunnit halutaan hakea
+	 * @return annetun tyhmän tunnit
+	 */
 	public static List<Tunti> getRyhmanTunnit(Ryhma ryhma) {
 		Connection c = connect();
 		try {
@@ -521,7 +567,12 @@ public class Database {
 		}
 	}
 
-	
+	/**
+	 * Hakee ryhmät annetun nimen mukaan.
+	 * 
+	 * @param nimi teksti, joka sisältyy ryhmän nimeen
+	 * @return ryhmät, joiden nimeen sisältyy annettu teksti
+	 */
 	public static List<Ryhma> haeRyhmat(String nimi) {
 		Connection c = connect();
 		if (c == null)
@@ -545,6 +596,12 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Hakee kurssit annetun nimen mukaan.
+	 * 
+	 * @param nimi teksti, joka sisältyy kurssin nimeen
+	 * @return kurssit, joiden nimeen sisältyy annettu teksti
+	 */
 	public static List<Kurssi> haeKurssit(String nimi) {
 		Connection c = connect();
 		if (c == null)
@@ -713,6 +770,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee käyttäjätunnuksen annetulla käyttäjänimellä ja salasanalla kirjautumista varten.
+	 * 
+	 * @param kayttaja kirjautumiseen käytetty käyttäjänimi
+	 * @param salasana kirjautumiseen käytetty salasana
+	 * @return kirjautunueen käyttäjätunnus tai null, jos käyttäjätunnusta ei löydy
+	 */
 	public static Kayttajatunnus tarkastaKirjautuminen(String kayttaja, String salasana) {
 		Connection con = connect();
 		Kayttajatunnus kayttajaTunnus = null;
