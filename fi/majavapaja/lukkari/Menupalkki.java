@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.majavapaja.lukkari;
 
 import fi.majavapaja.lukkari.paneelipaketti.*;
@@ -12,17 +8,25 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- *
+ * Menupalkissa tapahtuu näkymien valinta ja luonti.
+ * Menupalkin sisältö määräytyy käyttäjän oikeuksien mukaan.
+ * 
  * @author s1001069
  */
 @SuppressWarnings("serial")
 public class Menupalkki extends JMenuBar implements ActionListener {
 
     private Paaikkuna ikkuna;
-
+    
+    /**
+     * Luo menupalkin käyttäjän tunnuksien mukaan.
+     * 
+     * @param ikkuna pääikkuna, johon menupalkki sijoitetaan.
+     * @param ktunnus sisäänkirjautuneen käyttäjän tunnukset.
+     */
     public Menupalkki(Paaikkuna ikkuna, Kayttajatunnus ktunnus) {
+        this.ikkuna = ikkuna;
         if (ktunnus.getOppilas() == null) {
-            this.ikkuna = ikkuna;
             luoTiedostoMenu();
             luoLisaaMenu();
             luoNaytaMenu();
@@ -101,7 +105,12 @@ public class Menupalkki extends JMenuBar implements ActionListener {
 
         this.add(naytaMenu);
     }
-
+    
+    /**
+     * Vaihtaa pääikkunan näkymän valikosta tehdyn kutsun mukaisesti.
+     * 
+     * @param e kutsuva komponentti
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Tulosta lukkari")) {
@@ -123,7 +132,7 @@ public class Menupalkki extends JMenuBar implements ActionListener {
         } else if (e.getActionCommand().equals("Hallinnoi ryhmiä")) {
             ikkuna.vaihdaPaneeli(new EtsiRyhma(ikkuna));
         } else if (e.getActionCommand().equals("Hallinnoi lukujärjestyksiä")) {
-//            paaikkuna.vaihdaPaneeli(new EtsiLukkari());
+            ikkuna.vaihdaPaneeli(new EtsiLukkari(ikkuna));
         }
     }
 }
