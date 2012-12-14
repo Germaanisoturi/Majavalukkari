@@ -32,7 +32,6 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 	private JPasswordField pfSalasanaUudestaan;
 	private JRadioButton rdbtnOppilas = new JRadioButton("Oppilas");
 	private JRadioButton rdbtnYllpito = new JRadioButton("Ylläpito");
-	private int Oikeudet = 0;
 	private Ryhma[] ryhmaData;
 	private JComboBox<Ryhma> cbRyhma;
 	private JButton btnLis = new JButton("Lisää");
@@ -220,11 +219,11 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 			if (ripoffPassword(pfSalasana.getPassword()).equals(ripoffPassword(pfSalasanaUudestaan.getPassword()))) {
 				if (rdbtnOppilas.isSelected()) {
 					Oppilas o = new Oppilas(tfEtunimi.getText(), tfSukunimi.getText(), (Ryhma)cbRyhma.getSelectedItem());
-					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet, o);
+					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), o);
 					Database.lisaaKayttajatunnus(k, o);
 					clearTextFields();
 				} else if (rdbtnYllpito.isSelected()) {
-					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), Oikeudet);
+					Kayttajatunnus k = new Kayttajatunnus(tfKayttajatunnus.getText(), ripoffPassword(pfSalasana.getPassword()), null);
 					Database.lisaaKayttajatunnus(k);
 					clearTextFields();
 				}
@@ -279,7 +278,6 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 			lblEtunimi.setVisible(true);
 			lblSukunimi.setVisible(true);
 			lblRyhm.setVisible(true);
-			Oikeudet = 0;
 		} else if (rdbtnYllpito == e.getSource()) {
 			tfEtunimi.setVisible(false);
 			tfSukunimi.setVisible(false);
@@ -287,7 +285,6 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 			lblEtunimi.setVisible(false);
 			lblSukunimi.setVisible(false);
 			lblRyhm.setVisible(false);
-			Oikeudet = 1;
 		} else if (btnLis == e.getSource()) {
 			addUser();
 		} else if (btnPalaa == e.getSource()) {

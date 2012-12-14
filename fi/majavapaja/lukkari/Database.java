@@ -422,7 +422,6 @@ public class Database {
 	private static Kayttajatunnus kayttajatunnusResultSetista(ResultSet rs) throws SQLException {
 		String kayttajanimi = rs.getString("kayttajanimi");
 		String salasana = rs.getString("salasana");
-		int oikeudet = rs.getInt("oikeudet");
 		int id = rs.getInt("kayttajatunnusID");
 		Oppilas oppilas;
 		try {
@@ -430,7 +429,7 @@ public class Database {
 		} catch (SQLException e) {
 			oppilas = getKayttajanOppilas(id);
 		}
-		return new Kayttajatunnus(kayttajanimi, salasana, oikeudet, oppilas, id);
+		return new Kayttajatunnus(kayttajanimi, salasana, oppilas, id);
 	}
 
 	/**
