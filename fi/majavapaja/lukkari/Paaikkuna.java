@@ -24,6 +24,7 @@ public class Paaikkuna extends javax.swing.JFrame {
     public Paaikkuna() {
         initComponents();
         setTitle("Majavalukkari");
+        setResizable(false);
         paneeliPino = new Stack<JPanel>();
         vaihdaPaneeli(new KirjautumisPaneeli(this));
     }
