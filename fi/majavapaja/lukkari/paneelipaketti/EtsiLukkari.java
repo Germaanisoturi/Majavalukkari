@@ -22,8 +22,10 @@ import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
 /**
+ * EtsiLukkari paneelissa etsitään ryhmän lukujärjestys
+ * muokkaamista varten.
  *
- * @author s1001069
+ * @author Majavapaja
  */
 @SuppressWarnings("serial")
 public class EtsiLukkari extends javax.swing.JPanel {

@@ -22,6 +22,11 @@ import fi.majavapaja.lukkari.Oppilas;
 import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
+/**
+ * MuokkaaOppilasta paneelissa muokataan oppilasta.
+ * 
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class MuokkaaOppilasta extends JPanel {
 	private Paaikkuna paaikkuna;

@@ -25,6 +25,12 @@ import fi.majavapaja.lukkari.Kayttajatunnus;
 import fi.majavapaja.lukkari.Oppilas;
 import fi.majavapaja.lukkari.Paaikkuna;
 
+/**
+ * EtsiOppilas paneelissa etsitään oppilas nimen ja käyttäjätunnuksen
+ * avulla muokkaamista varten.
+ *
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class EtsiOppilas extends JPanel {
 	private JTextField etunimiField;

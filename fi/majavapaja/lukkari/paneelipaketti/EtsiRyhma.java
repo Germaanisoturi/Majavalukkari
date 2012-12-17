@@ -20,6 +20,11 @@ import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
+/**
+ * EtsiRyhma paneelissa etsitään ryhmä muokkaamista varten.
+ *
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class EtsiRyhma extends JPanel {
 	private JTextField ryhmanNimiField;

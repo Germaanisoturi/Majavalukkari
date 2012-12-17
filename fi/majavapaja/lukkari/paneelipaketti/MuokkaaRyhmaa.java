@@ -16,6 +16,11 @@ import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
+/**
+ * MuokkaaRyhmaa paneelissa muokataan ryhmää.
+ * 
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class MuokkaaRyhmaa extends JPanel {
 	private JTextField ryhmanNimiField;

@@ -23,6 +23,11 @@ import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Kurssi;
 import fi.majavapaja.lukkari.Paaikkuna;
 
+/**
+ * EtsiKurssi paneelissa etsitään ryhmän kurssi muokkaamista varten.
+ *
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class EtsiKurssi extends JPanel {
 	private JTextField kurssinNimiField;
