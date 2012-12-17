@@ -5,17 +5,64 @@
 package fi.majavapaja.lukkari;
 
 /**
- *
- * @author s1001069
+ * Käyttäjätunnus toimii tiedonvälittäjänä käyttäjien tietoja varten.
+ * 
+ * @author Majavapaja
  */
 public class Ryhma {
-    @Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((nimi == null) ? 0 : nimi.hashCode());
-		return result;
+	private String nimi;
+    private int id;
+    
+    /**
+     * Luo uuden ryhmän ilman ID:tä.
+     * 
+     * @param nimi ryhmän nimi
+     */
+    public Ryhma(String nimi) {
+    	this(nimi, -1);
+    }
+    
+    /**
+     * Luo uuden ryhmän.
+     * 
+     * @param nimi ryhmän nimi
+     * @param id ryhmän ID
+     */
+    public Ryhma(String nimi, int id) {
+    	this.nimi = nimi;
+    	this.id = id;
 	}
+
+    /**
+     * Palauttaa ryhmän nimen.
+     * 
+     * @return ryhmän nimi
+     */
+	public String getNimi(){
+        return nimi;
+    }
+	
+	/**
+	 * Asettaa ryhmän nimen.
+	 * 
+	 * @param nimi ryhmän nimi
+	 */
+	public void setNimi(String nimi) {
+		this.nimi = nimi;
+	}
+    
+	/**
+	 * Palauttaa ryhmän ID:n
+	 * 
+	 * @return ryhmän ID
+	 */
+    public int getId(){
+        return id;
+    }
+    
+    public String toString() {
+    	return nimi;
+    }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -33,32 +80,4 @@ public class Ryhma {
 			return false;
 		return true;
 	}
-
-	private String nimi;
-    private int id;
-    
-    public Ryhma(String nimi) {
-    	this(nimi, -1);
-    }
-    
-    public Ryhma(String nimi, int id) {
-    	this.nimi = nimi;
-    	this.id = id;
-	}
-
-	public String getNimi(){
-        return nimi;
-    }
-	
-	public void setNimi(String nimi) {
-		this.nimi = nimi;
-	}
-    
-    public int getId(){
-        return id;
-    }
-    
-    public String toString() {
-    	return nimi;
-    }
 }
