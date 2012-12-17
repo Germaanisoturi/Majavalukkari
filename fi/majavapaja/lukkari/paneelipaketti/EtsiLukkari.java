@@ -31,6 +31,11 @@ import fi.majavapaja.lukkari.Ryhma;
 public class EtsiLukkari extends javax.swing.JPanel {
 	private Paaikkuna ikkuna;
     
+	/**
+	 * Luo lukkarinhakunäkymän.
+	 * 
+	 * @param ikkuna Paaikkuna, johon paneeli sijoitetaan
+	 */
     public EtsiLukkari(Paaikkuna ikkuna) {
     	this.ikkuna = ikkuna;
     	
@@ -112,6 +117,10 @@ public class EtsiLukkari extends javax.swing.JPanel {
 		etsiActionPerformed();
     }
 
+    /**
+     * Vaihtaa näkymäksi uuden AlmightyLukkariPaneeli paneelin,
+     * jos hakutuloksista on valittuna ryhmä.
+     */
     protected void muokkaaActionPerformed() {
 		int i = ryhmaList.getSelectedIndex();
 		if (i == -1)
@@ -120,10 +129,17 @@ public class EtsiLukkari extends javax.swing.JPanel {
 		ikkuna.vaihdaPaneeli(new AlmightyLukkariPaneeli(ryhma));
 	}
 
+    /**
+     * Pyytää pääikkunaa palaamaan edelliseen paneeliin.
+     */
 	protected void takaisinActionPerformed() {
 		ikkuna.edellinenPaneeli();
 	}
 
+	/**
+	 * Hakee tietokannasta syötettyä nimeä vastaavat ryhmät ja
+	 * lisää ne hakutulosten listaan.
+	 */
 	protected void etsiActionPerformed() {
 		String nimi = ryhmanNimiField.getText().trim();
 		
