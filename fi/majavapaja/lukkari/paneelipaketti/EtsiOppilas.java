@@ -40,6 +40,11 @@ public class EtsiOppilas extends JPanel {
 	private Paaikkuna paaikkuna;
 	private JTextField kayttajatunnusField;
 
+	/**
+	 * Luo oppilaanhakunäkymän.
+	 * 
+	 * @param paaikkuna Paaikkuna, johon paneeli sijoitetaan
+	 */
 	public EtsiOppilas(Paaikkuna paaikkuna) {
 		this.paaikkuna = paaikkuna;
 		setSize(800, 600);
@@ -48,7 +53,7 @@ public class EtsiOppilas extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					etsiActionPerformed(null);
+					etsiActionPerformed();
 				}
 			}
 		};
@@ -70,14 +75,14 @@ public class EtsiOppilas extends JPanel {
 		JButton btnEtsi = new JButton("Etsi");
 		btnEtsi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				etsiActionPerformed(e);
+				etsiActionPerformed();
 			}
 		});
 		
 		JButton btnTakaisin = new JButton("Takaisin");
 		btnTakaisin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				takaisinActionPerformed(e);
+				takaisinActionPerformed();
 			}
 		});
 		
@@ -90,7 +95,7 @@ public class EtsiOppilas extends JPanel {
 		JButton btnNewButton = new JButton("Muokkaa oppilasta");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				muokkaaOppilastaActionPerformed(e);
+				muokkaaOppilastaActionPerformed();
 			}
 		});
 		
@@ -169,7 +174,11 @@ public class EtsiOppilas extends JPanel {
 		setLayout(groupLayout);
 	}
 
-	private void etsiActionPerformed(ActionEvent e) {
+	/**
+	 * Hakee tietokannasta syötettyjä tietoja vastaavat oppilaat ja
+	 * lisää ne hakutulosten listaan.
+	 */
+	private void etsiActionPerformed() {
 		String kayttajanimi = kayttajatunnusField.getText().trim();
 		String etunimi = etunimiField.getText().trim();
 		String sukunimi = sukunimiField.getText().trim();
@@ -190,7 +199,10 @@ public class EtsiOppilas extends JPanel {
 		kayttajatunnuksetList.setListData(kayttajatunnukset.toArray(new Kayttajatunnus[0]));
 	}
 	
-	
+	/**
+	 * Näyttää oppilaan tiedot tekstikentässä, kun oppilas valitaan
+	 * hakutulosten listasta.
+	 */
 	private void oppilaatListSelectionChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting())
 			return;
@@ -218,12 +230,18 @@ public class EtsiOppilas extends JPanel {
 		
 	}
 	
-	private void takaisinActionPerformed(ActionEvent e) {
+	/**
+	 * Pyytää pääikkunaa palaamaan edelliseen paneeliin.
+	 */
+	private void takaisinActionPerformed() {
 		paaikkuna.edellinenPaneeli();
 	}
 	
-	
-	private void muokkaaOppilastaActionPerformed(ActionEvent e) {
+	/**
+	 * Vaihtaa näkymäksi uuden MuokkaaOppilasta paneelin, jos
+	 * hakutuloksista on valittuna oppilas.
+	 */
+	private void muokkaaOppilastaActionPerformed() {
 		int i = kayttajatunnuksetList.getSelectedIndex();
 		if (i == -1)
 			return;
