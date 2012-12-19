@@ -1,10 +1,12 @@
 package fi.majavapaja.lukkari;
 
-import fi.majavapaja.lukkari.paneelipaketti.Kirjautuminen;
 import java.awt.Dimension;
 import java.util.EmptyStackException;
 import java.util.Stack;
+
 import javax.swing.JPanel;
+
+import fi.majavapaja.lukkari.paneelipaketti.Kirjautuminen;
 
 /**
  * Pääikkunassa näytetään ja selataan kaikkia ohjelman paneeleita. Pääikkunan näkymä määräytyy sisäänkirjautujan oikeuksien mukaan.
@@ -72,8 +74,9 @@ public class Paaikkuna extends javax.swing.JFrame {
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 800, Short.MAX_VALUE));
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 600, Short.MAX_VALUE));
-
+		
 		pack();
+		setLocationRelativeTo(null);
 	}
 
 	/**
