@@ -14,7 +14,7 @@ import javax.swing.*;
  *
  * @author Majavapaja
  */
-public class LisaaRyhma extends javax.swing.JPanel {
+public class LisaaRyhma extends JPanel {
 
     private Paaikkuna ikkuna;
     private JLabel jLabel1;
@@ -63,19 +63,23 @@ public class LisaaRyhma extends javax.swing.JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(290, 290, 290).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(ryhmaField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(jLabel1)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lisaaButton).addComponent(takaisinButton)).addContainerGap(261, Short.MAX_VALUE)));
     }                      
 
-    private void lisaaButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void lisaaButtonActionPerformed(ActionEvent evt) {
         if (!ryhmaField.equals("")) {
-            Ryhma uusiRyhma = new Ryhma(ryhmaField.getText());
-            if (Database.lisaaRyhma(uusiRyhma)) {
+        	if (ryhmaField.getText().length() > 30) {
+            	JOptionPane.showMessageDialog(this, "Ryhman nimi voi olla enintään 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+        	} else {
+        		Ryhma uusiRyhma = new Ryhma(ryhmaField.getText());
+        		if (Database.lisaaRyhma(uusiRyhma)) {
                 ryhmaField.setText("");
-            } else {
+        		}
+        	}
+        } else {
                 String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
                 JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
-            }
         }
     }
 
-    private void takaisinButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void takaisinButtonActionPerformed(ActionEvent evt) {
         ikkuna.edellinenPaneeli();
     }
 }
