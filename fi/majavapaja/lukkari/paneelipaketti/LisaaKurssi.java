@@ -1,5 +1,9 @@
 package fi.majavapaja.lukkari.paneelipaketti;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -43,22 +47,22 @@ public class LisaaKurssi extends JPanel {
         takaisinButton = new JButton();
         jLabel1 = new JLabel();
 
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new Dimension(800, 600));
 
         lisaaButton.setText("Lisää");
-        lisaaButton.addActionListener(new java.awt.event.ActionListener() {
+        lisaaButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 lisaaButtonActionPerformed(evt);
             }
         });
 
         takaisinButton.setText("Takaisin");
-        takaisinButton.addActionListener(new java.awt.event.ActionListener() {
+        takaisinButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 takaisinButtonActionPerformed(evt);
             }
         });
@@ -73,19 +77,23 @@ public class LisaaKurssi extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(290, 290, 290).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(kurssiField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(jLabel1)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lisaaButton).addComponent(takaisinButton)).addContainerGap(261, Short.MAX_VALUE)));
     }               
 
-    private void lisaaButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void lisaaButtonActionPerformed(ActionEvent evt) {
         if (!kurssiField.getText().equals("")) {
-            Kurssi uusiKurssi = new Kurssi(kurssiField.getText());
-            if (Database.lisaaKurssi(uusiKurssi)) {
-                kurssiField.setText("");
-            } else {
-                String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
-                JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
-            }
+        	if (kurssiField.getText().length() > 50) {
+            	JOptionPane.showMessageDialog(this, "Kurssin nimi voi olla enintään 50 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+        	} else {
+        		Kurssi uusiKurssi = new Kurssi(kurssiField.getText());
+        		if (Database.lisaaKurssi(uusiKurssi)) {
+        			kurssiField.setText("");
+        		}
+        	}
+        } else {
+        	String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
+        	JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void takaisinButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void takaisinButtonActionPerformed(ActionEvent evt) {
         ikkuna.edellinenPaneeli();
     }
 }
