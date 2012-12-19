@@ -180,7 +180,6 @@ public class Database {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException ex) {
-			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 			return false;
 		} finally {
 			closeConnection(con);
