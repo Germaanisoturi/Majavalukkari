@@ -13,7 +13,7 @@ import javax.swing.*;
  *
  * @author Majavapaja
  */
-public class MuokkaaOppilasta extends JPanel {
+public class MuokkaaKayttajaa extends JPanel {
 
     private Paaikkuna paaikkuna;
     private Kayttajatunnus kayttajatunnus;
@@ -29,7 +29,7 @@ public class MuokkaaOppilasta extends JPanel {
      * @param paaikkuna pääikkuna, johonka paneeli tulee näkyviin.
      * @param kayttajatunnus muokattan käyttäjän tiedot.
      */
-    public MuokkaaOppilasta(Paaikkuna paaikkuna, Kayttajatunnus kayttajatunnus) {
+    public MuokkaaKayttajaa(Paaikkuna paaikkuna, Kayttajatunnus kayttajatunnus) {
         this.paaikkuna = paaikkuna;
         this.kayttajatunnus = kayttajatunnus;
 

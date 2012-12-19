@@ -26,13 +26,13 @@ import fi.majavapaja.lukkari.Oppilas;
 import fi.majavapaja.lukkari.Paaikkuna;
 
 /**
- * EtsiOppilas paneelissa etsitään oppilas nimen ja käyttäjätunnuksen
+ * EtsiKayttaja paneelissa etsitään oppilas nimen ja käyttäjätunnuksen
  * avulla muokkaamista varten.
  *
  * @author Majavapaja
  */
 @SuppressWarnings("serial")
-public class EtsiOppilas extends JPanel {
+public class EtsiKayttaja extends JPanel {
 	private JTextField etunimiField;
 	private JTextField sukunimiField;
 	private JList<Kayttajatunnus> kayttajatunnuksetList;
@@ -45,7 +45,7 @@ public class EtsiOppilas extends JPanel {
 	 * 
 	 * @param paaikkuna Paaikkuna, johon paneeli sijoitetaan
 	 */
-	public EtsiOppilas(Paaikkuna paaikkuna) {
+	public EtsiKayttaja(Paaikkuna paaikkuna) {
 		this.paaikkuna = paaikkuna;
 		setSize(800, 600);
 		
@@ -92,7 +92,7 @@ public class EtsiOppilas extends JPanel {
 		oppilasInfoTextArea.setLineWrap(true);
 		oppilasInfoTextArea.setEditable(false);
 		
-		JButton btnNewButton = new JButton("Muokkaa oppilasta");
+		JButton btnNewButton = new JButton("Muokkaa tietoja");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				muokkaaOppilastaActionPerformed();
@@ -238,7 +238,7 @@ public class EtsiOppilas extends JPanel {
 	}
 	
 	/**
-	 * Vaihtaa näkymäksi uuden MuokkaaOppilasta paneelin, jos
+	 * Vaihtaa näkymäksi uuden MuokkaaKayttajaa paneelin, jos
 	 * hakutuloksista on valittuna oppilas.
 	 */
 	private void muokkaaOppilastaActionPerformed() {
@@ -246,6 +246,6 @@ public class EtsiOppilas extends JPanel {
 		if (i == -1)
 			return;
 		Kayttajatunnus oppilas = (Kayttajatunnus) kayttajatunnuksetList.getModel().getElementAt(i);
-		paaikkuna.vaihdaPaneeli(new MuokkaaOppilasta(paaikkuna, oppilas));
+		paaikkuna.vaihdaPaneeli(new MuokkaaKayttajaa(paaikkuna, oppilas));
 	}
 }

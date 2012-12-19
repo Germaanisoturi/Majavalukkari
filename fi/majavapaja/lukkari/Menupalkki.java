@@ -132,7 +132,7 @@ public class Menupalkki extends JMenuBar implements ActionListener {
                 ikkuna.vaihdaPaneeli(new LisaaKurssi(ikkuna));
                 break;
             case "Hallinnoi oppilaita/käyttäjiä":
-                ikkuna.vaihdaPaneeli(new EtsiOppilas(ikkuna));
+                ikkuna.vaihdaPaneeli(new EtsiKayttaja(ikkuna));
                 break;
             case "Hallinnoi kursseja":
                 ikkuna.vaihdaPaneeli(new EtsiKurssi(ikkuna));
