@@ -115,7 +115,7 @@ public class EtsiLukkari extends javax.swing.JPanel {
 		if (i == -1)
 			return;
 		Ryhma ryhma = (Ryhma) ryhmaList.getModel().getElementAt(i);
-		ikkuna.vaihdaPaneeli(new AlmightyLukkariPaneeli(ryhma));
+		ikkuna.vaihdaPaneeli(new MuokkaaLukkaria(ryhma));
 	}
 
 	protected void takaisinActionPerformed() {
