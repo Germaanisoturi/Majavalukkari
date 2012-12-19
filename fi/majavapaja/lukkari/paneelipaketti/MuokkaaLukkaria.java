@@ -11,8 +11,14 @@ import javax.swing.border.Border;
 
 import fi.majavapaja.lukkari.*;
 
+/**
+ * Lukujärjestyksen näyttämiseen tenhty paneeli.
+ * 
+ * @author s1001086
+ * 
+ */
 @SuppressWarnings("serial")
-public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
+public class MuokkaaLukkaria extends JPanel implements MouseListener {
 	// PERSE
 
 	private static final int RIVI = 9;
@@ -28,8 +34,15 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 	private List<Tunti> tunnit;
 	private List<JLabel> valikoidutTunnit = new ArrayList<JLabel>();
 	private Ryhma ryhma;
+	private static final Kurssi poistaTunti = new Kurssi("*** Poista Tunti ***", -9001);
 
-	public AlmightyLukkariPaneeli(Ryhma ryhma) {
+	/**
+	 * Tekee uuden lukkarin paneelin.
+	 * 
+	 * @param ryhma
+	 *            ryhmä jonka lukujärjestys ladataan.
+	 */
+	public MuokkaaLukkaria(Ryhma ryhma) {
 		this.ryhma = ryhma;
 		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BorderLayout());
@@ -49,10 +62,10 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 	}
 
 	private void taulukonAlustus() {
-		if(vkpaivatPaneeli != null) vkpaivatPaneeli.removeAll();
-		if(kellonajatPaneeli != null) kellonajatPaneeli.removeAll();
-		if(sisaltoPaneeli != null) sisaltoPaneeli.removeAll();
-		
+		if (vkpaivatPaneeli != null) vkpaivatPaneeli.removeAll();
+		if (kellonajatPaneeli != null) kellonajatPaneeli.removeAll();
+		if (sisaltoPaneeli != null) sisaltoPaneeli.removeAll();
+
 		vkpaivat = new JLabel[SARA];
 		kellonajat = new JLabel[RIVI];
 
@@ -103,20 +116,26 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 		for (int i = 0; i < tunnit.size(); i++) {
 			for (int paiva = 0; paiva < vkpaivat.length; paiva++) {
 				if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(vkpaivat[paiva].getName())) {
-					int alkuklo = tunnit.get(i).getAlkuklo();
-					int loppuklo = tunnit.get(i).getLoppuklo();
+					int alkuklo = tunnit.get(i).getAlkuklo() - 8;
+					int loppuklo = tunnit.get(i).getLoppuklo() - 8;
+
 					for (int klo = alkuklo; klo <= loppuklo; klo++) {
-						sisalto[klo - 8][paiva - 1].setText(tunnit.get(i).getKurssi().getNimi());
-						if (klo + 1 < tunnit.get(i).getLoppuklo()) {
-							sisalto[klo - 8][paiva - 1].setBorder(BorderFactory.createMatteBorder(1, 1, 0, 1, Color.BLACK));
-						} else if (klo + 1 == loppuklo && alkuklo + 1 < loppuklo) {
-							sisalto[klo - 8][paiva - 1].setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, Color.BLACK));
+						sisalto[klo][paiva - 1].setText(tunnit.get(i).getKurssi().getNimi());
+
+						if (alkuklo == loppuklo) {
+							sisalto[klo][paiva - 1].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+						} else if (klo == alkuklo) {
+							sisalto[klo][paiva - 1].setBorder(BorderFactory.createMatteBorder(1, 1, 0, 1, Color.BLACK));
+						} else if (klo == loppuklo) {
+							sisalto[klo][paiva - 1].setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, Color.BLACK));
+						} else {
+							sisalto[klo][paiva - 1].setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.BLACK));
 						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < sisalto.length; i++) {
 			for (int j = 0; j < sisalto[i].length; j++) {
 				sisaltoPaneeli.add(sisalto[i][j]);
@@ -130,7 +149,7 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 		for (int i = 0; i < kellonajat.length; i++) {
 			kellonajatPaneeli.add(kellonajat[i]);
 		}
-		
+
 		for (int i = 0; i < vkpaivat.length; i++) {
 			if (i == 0) {
 				vkpaivat[i].setPreferredSize(new Dimension(100, 20));
@@ -161,13 +180,6 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 		return true;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {}
-
-	// private boolean hiiriPohjassa;
-	// private JLabel kaikenAlkuJaLoppu;
-	// private int viimePalikka;
-
 	private void tyhjennaValikoidutTunnit() {
 		for (int j = 0; j < valikoidutTunnit.size(); j++) {
 			valikoidutTunnit.get(j).setBackground(Color.WHITE);
@@ -175,12 +187,110 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 		valikoidutTunnit.clear();
 	}
 
+	private void tiivistaTunnit(JLabel source) {
+		int[] ajat = new int[valikoidutTunnit.size()];
+
+		int vkpaiva = Integer.parseInt(valikoidutTunnit.get(0).getName().split("#")[1]);
+		int aloitusAika = 8;
+		int lopetusAika = -1;
+
+		for (int i = 0; i < valikoidutTunnit.size(); i++) {
+			ajat[i] = Integer.parseInt(valikoidutTunnit.get(i).getName().split("#")[0]);
+			if (ajat[i] < aloitusAika) aloitusAika = ajat[i];
+			if (ajat[i] > lopetusAika) lopetusAika = ajat[i];
+		}
+
+		for (int klo = aloitusAika; klo < lopetusAika; klo++) {
+			if (klo > aloitusAika && klo < lopetusAika) {
+				if (source == sisalto[klo][vkpaiva]) {
+					tyhjennaValikoidutTunnit();
+					return;
+				}
+				boolean loytyy = false;
+				for (int i = 0; i < valikoidutTunnit.size(); i++) {
+					if (valikoidutTunnit.get(i) == sisalto[klo][vkpaiva]) {
+						loytyy = true;
+						break;
+					}
+				}
+				if (!loytyy) valitseTunti(sisalto[klo][vkpaiva]);
+			}
+		}
+	}
+
+	private void luoTunti() {
+		int[] ajat = new int[valikoidutTunnit.size()];
+		for (int i = 0; i < valikoidutTunnit.size(); i++) {
+			ajat[i] = Integer.parseInt(valikoidutTunnit.get(i).getName().split("#")[0]);
+		}
+
+		int aloitusAika = 16;
+		int lopetusAika = 0;
+
+		for (int i = 0; i < ajat.length; i++) {
+			if (ajat[i] < aloitusAika) aloitusAika = ajat[i];
+			if (ajat[i] > lopetusAika) lopetusAika = ajat[i];
+		}
+
+		int vkpaiva = Integer.parseInt(valikoidutTunnit.get(0).getName().split("#")[1]);
+		String valittuViikonpaiva = vkpaivatTxt[vkpaiva + 1].substring(0, 2);
+
+		aloitusAika = Integer.parseInt(kellonajatTxt[aloitusAika]);
+		lopetusAika = Integer.parseInt(kellonajatTxt[lopetusAika]);
+
+		Tunti poistettavaTunti = null;
+
+		for (int i = 0; i < tunnit.size(); i++) {
+			if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(valittuViikonpaiva)) {
+				if (tunnit.get(i).getAlkuklo() == aloitusAika && tunnit.get(i).getLoppuklo() == lopetusAika) {
+					poistettavaTunti = tunnit.get(i);
+					break;
+				}
+			}
+		}
+
+		List<Kurssi> k = Database.getKurssit();
+		if (poistettavaTunti != null) k.add(0, poistaTunti);
+
+		JComboBox<Kurssi> compo = new JComboBox<Kurssi>(k.toArray(new Kurssi[k.size()]));
+		int vastaus = JOptionPane.showConfirmDialog(null, compo, "Valitse kurssi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (vastaus == JOptionPane.OK_OPTION) {
+			Kurssi kurssi = (Kurssi) compo.getSelectedItem();
+			Tunti tunti = new Tunti(valittuViikonpaiva, aloitusAika, lopetusAika, kurssi, ryhma);
+
+			if (kurssi == poistaTunti) {
+				int input = JOptionPane.showConfirmDialog(this, "Oletko varma että haluat poistaa tämän tunnin?", "Varmista poisto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (input == JOptionPane.OK_OPTION) {
+					Database.poistaTunti(poistettavaTunti);
+				}
+			} else {
+				for (int i = 0; i < tunnit.size(); i++) {
+					if (tunnit.get(i).getViikonpaiva().equalsIgnoreCase(tunti.getViikonpaiva())) {
+						for (int klo = tunnit.get(i).getAlkuklo(); klo <= tunnit.get(i).getLoppuklo(); klo++) {
+							if (klo >= aloitusAika && klo <= lopetusAika) {
+								Database.poistaTunti(tunnit.get(i));
+							}
+						}
+					}
+				}
+				Database.lisaaTunti(tunti);
+			}
+			tunnit = Database.getRyhmanTunnit(ryhma);
+			taulukonAlustus();
+			this.revalidate();
+			valikoidutTunnit.clear();
+		}
+	}
+
+	/**
+	 * Invoked when a mouse button has been pressed on a component.
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (MouseEvent.BUTTON1 == e.getButton()) {
-			// if(!e.isControlDown())tyhjennaValikoidutTunnit();
 			JLabel source = (JLabel) e.getSource();
 			valitseTunti(source);
+			if (!valikoidutTunnit.isEmpty()) tiivistaTunnit(source);
 		} else if (MouseEvent.BUTTON3 == e.getButton()) {
 			if (!valikoidutTunnit.isEmpty()) {
 				luoTunti();
@@ -188,62 +298,27 @@ public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 		}
 	}
 
+	/**
+	 * Invoked when a mouse button has been released on a component.
+	 */
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// if (MouseEvent.BUTTON1 == e.getButton()) hiiriPohjassa = false;
-	}
+	public void mouseReleased(MouseEvent e) {}
 
+	/**
+	 * Invoked when the mouse enters a component.
+	 */
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		/*
-		 * if (hiiriPohjassa) { JLabel source = (JLabel) e.getSource(); valitseTunti(source); }
-		 */
-	}
+	public void mouseEntered(MouseEvent e) {}
 
-	public void luoTunti() {
-		List<Kurssi> k = Database.getKurssit();
-		JComboBox<Kurssi> compo = new JComboBox<Kurssi>(k.toArray(new Kurssi[k.size()]));
-		int vastaus = JOptionPane.showConfirmDialog(null, compo, "Valitse kurssi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-		if (vastaus == JOptionPane.OK_OPTION) {
-			Kurssi kurssi = (Kurssi) compo.getSelectedItem();
-			int[] ajat = new int[valikoidutTunnit.size()];
-			for (int i = 0; i < valikoidutTunnit.size(); i++) {
-				ajat[i] = Integer.parseInt(valikoidutTunnit.get(i).getName().split("#")[0]);
-			}
-			int aloitusAika = 16;
-			int lopetusAika = 0;
-
-			for (int i = 0; i < ajat.length; i++) {
-				if (ajat[i] < aloitusAika) aloitusAika = ajat[i];
-				if (ajat[i] > lopetusAika) lopetusAika = ajat[i];
-			}
-
-			aloitusAika = Integer.parseInt(kellonajatTxt[aloitusAika]);
-			lopetusAika = Integer.parseInt(kellonajatTxt[lopetusAika]);
-
-			int vkpaiva = Integer.parseInt(valikoidutTunnit.get(0).getName().split("#")[1]);
-			String valittuViikonpaiva = vkpaivatTxt[vkpaiva + 1].substring(0, 2);
-
-			Tunti tunti = new Tunti(valittuViikonpaiva, aloitusAika, lopetusAika, kurssi, ryhma);
-			Database.lisaaTunti(tunti);
-			System.out.println(tunti.toString());
-			tunnit = Database.getRyhmanTunnit(ryhma);
-			taulukonAlustus();
-			this.revalidate();
-		}
-	}
-
+	/**
+	 * Invoked when the mouse exits a component.
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {}
 
-	public static void main(String[] args) {
-		AlmightyLukkariPaneeli lukkari = new AlmightyLukkariPaneeli(Database.getRyhmat().get(2));
-		JFrame frame = new JFrame("");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.add(lukkari);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-	}
+	/**
+	 * Invoked when the mouse button has been clicked (pressed and released) on a component.
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {}
 }

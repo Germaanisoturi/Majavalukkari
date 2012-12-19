@@ -112,7 +112,7 @@ public class Kirjautuminen extends JPanel {
         ikkuna.setJMenuBar(new Menupalkki(ikkuna, ktunnus));
         if (ktunnus.getOppilas() != null) {
             ikkuna.edellinenPaneeli();
-            ikkuna.vaihdaPaneeli(new AlmightyLukkariPaneeli(ktunnus.getOppilas().getRyhma()));
+            ikkuna.vaihdaPaneeli(new MuokkaaLukkaria(ktunnus.getOppilas().getRyhma()));
         } else {
             ikkuna.edellinenPaneeli();
         }
