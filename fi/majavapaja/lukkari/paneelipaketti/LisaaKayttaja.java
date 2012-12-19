@@ -1,10 +1,23 @@
 package fi.majavapaja.lukkari.paneelipaketti;
 
 import java.awt.Color;
-import java.awt.event.*;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import fi.majavapaja.lukkari.Database;
@@ -54,7 +67,7 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		};
 		this.paaikkuna = paaikkuna;
 		
-		setSize(800, 600);
+		setPreferredSize(new Dimension(800, 600));
 
 		tfKayttajatunnus = new JTextField();
 		tfKayttajatunnus.setColumns(10);
