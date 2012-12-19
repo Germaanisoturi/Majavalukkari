@@ -53,7 +53,7 @@ public class LisaaRyhma extends JPanel {
             }
         });
 
-        jLabel1.setText("Ryhman nimi:");
+        jLabel1.setText("Ryhmän nimi:");
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -66,7 +66,7 @@ public class LisaaRyhma extends JPanel {
     private void lisaaButtonActionPerformed(ActionEvent evt) {
         if (!ryhmaField.equals("")) {
         	if (ryhmaField.getText().length() > 30) {
-            	JOptionPane.showMessageDialog(this, "Ryhman nimi voi olla enintään 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+            	JOptionPane.showMessageDialog(this, "Ryhmän nimi voi olla enintään 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
         	} else {
         		Ryhma uusiRyhma = new Ryhma(ryhmaField.getText());
         		if (Database.lisaaRyhma(uusiRyhma)) {
