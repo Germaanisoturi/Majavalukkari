@@ -39,11 +39,6 @@ public class Menupalkki extends JMenuBar implements ActionListener {
         JMenu tiedostoMenu = new JMenu("Tiedosto");
         tiedostoMenu.setMnemonic('T');
 
-        JMenuItem tulosta = new JMenuItem("Tulosta lukkari");
-        tulosta.setMnemonic('T');
-        tulosta.addActionListener(this);
-        tiedostoMenu.add(tulosta);
-
         JMenuItem kirjaaulos = new JMenuItem("Kirjaudu ulos");
         kirjaaulos.setMnemonic('K');
         kirjaaulos.addActionListener(this);
@@ -114,8 +109,6 @@ public class Menupalkki extends JMenuBar implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Tulosta lukkari":
-                break;
             case "Lopeta":
                 System.exit(0);
                 break;
