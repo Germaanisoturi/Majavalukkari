@@ -126,14 +126,25 @@ public class MuokkaaKayttajaa extends JPanel {
             String sukunimi = sukunimiField.getText().trim();
             Ryhma ryhma = (Ryhma) ryhmaComboBox.getModel().getSelectedItem();
 
-            // TODO: Käsittele kunnolla
             if ("".equals(etunimi)) {
+				JOptionPane.showMessageDialog(this, "Etunimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (etunimi.length() > 20) {
+				JOptionPane.showMessageDialog(this, "Etunimi ei voi olla yli 20 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if ("".equals(sukunimi)) {
+				JOptionPane.showMessageDialog(this, "Sukunimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (sukunimi.length() > 30) {
+				JOptionPane.showMessageDialog(this, "Sukunimi ei voi olla yli 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (ryhma == null) {
+            	// Onko tää edes mahdollista? Tarkistetaan enivei.
+				JOptionPane.showMessageDialog(this, "Oppilaalla pitää olla ryhmä.", "Virhe", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -147,10 +158,20 @@ public class MuokkaaKayttajaa extends JPanel {
         String salasana = salasanaField.getText().trim();
 
         if ("".equals(kayttajanimi)) {
-            return;
+			JOptionPane.showMessageDialog(this, "Käyttäjänimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
+        }
+        if (kayttajanimi.length() > 15) {
+			JOptionPane.showMessageDialog(this, "Käyttäjänimi ei voi olla yli 15 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
         }
         if ("".equals(salasana)) {
-            return;
+			JOptionPane.showMessageDialog(this, "Salasana ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
+        }
+        if (salasana.length() > 30) {
+			JOptionPane.showMessageDialog(this, "Salasana ei voi olla yli 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
         }
 
         kayttajatunnus.setKayttajanimi(kayttajanimi);

@@ -13,6 +13,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -154,13 +155,13 @@ public class EtsiKurssi extends JPanel {
 	protected void haeActionPerformed() {
 		String nimi = kurssinNimiField.getText().trim();
 		
-		List<Kurssi> ryhmat = Database.haeKurssit(nimi);
+		List<Kurssi> kurssit = Database.haeKurssit(nimi);
 		
-		if (ryhmat == null) {
-			System.out.println("LOOOOL NULLL");
+		if (kurssit == null) {
+			JOptionPane.showMessageDialog(this, "Virhe haettaessa kursseja tietokannasta", "Virhe", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
-		kurssiList.setListData(ryhmat.toArray(new Kurssi[0]));
+		kurssiList.setListData(kurssit.toArray(new Kurssi[0]));
 	}
 }

@@ -14,6 +14,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -146,7 +147,7 @@ public class EtsiLukkari extends javax.swing.JPanel {
 		List<Ryhma> ryhmat = Database.haeRyhmat(nimi);
 		
 		if (ryhmat == null) {
-			System.out.println("LOOOOL NULLL");
+			JOptionPane.showMessageDialog(this, "Virhe haettaessa ryhmiä tietokannasta", "Virhe", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
