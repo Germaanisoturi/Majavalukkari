@@ -65,13 +65,17 @@ public class LisaaRyhma extends JPanel {
 
     private void lisaaButtonActionPerformed(ActionEvent evt) {
         if (!ryhmaField.equals("")) {
-            Ryhma uusiRyhma = new Ryhma(ryhmaField.getText());
-            if (Database.lisaaRyhma(uusiRyhma)) {
+        	if (ryhmaField.getText().length() > 30) {
+            	JOptionPane.showMessageDialog(this, "Ryhman nimi voi olla enintään 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+        	} else {
+        		Ryhma uusiRyhma = new Ryhma(ryhmaField.getText());
+        		if (Database.lisaaRyhma(uusiRyhma)) {
                 ryhmaField.setText("");
-            } else {
+        		}
+        	}
+        } else {
                 String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
                 JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
-            }
         }
     }
 

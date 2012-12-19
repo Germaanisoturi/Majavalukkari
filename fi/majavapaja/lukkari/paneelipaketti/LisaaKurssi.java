@@ -79,13 +79,17 @@ public class LisaaKurssi extends JPanel {
 
     private void lisaaButtonActionPerformed(ActionEvent evt) {
         if (!kurssiField.getText().equals("")) {
-            Kurssi uusiKurssi = new Kurssi(kurssiField.getText());
-            if (Database.lisaaKurssi(uusiKurssi)) {
-                kurssiField.setText("");
-            } else {
-                String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
-                JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
-            }
+        	if (kurssiField.getText().length() > 50) {
+            	JOptionPane.showMessageDialog(this, "Kurssin nimi voi olla enintään 50 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+        	} else {
+        		Kurssi uusiKurssi = new Kurssi(kurssiField.getText());
+        		if (Database.lisaaKurssi(uusiKurssi)) {
+        			kurssiField.setText("");
+        		}
+        	}
+        } else {
+        	String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
+        	JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
         }
     }
 
