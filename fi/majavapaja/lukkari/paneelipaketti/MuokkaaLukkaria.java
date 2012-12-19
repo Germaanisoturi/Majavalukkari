@@ -34,6 +34,7 @@ public class MuokkaaLukkaria extends JPanel implements MouseListener {
 	private List<Tunti> tunnit;
 	private List<JLabel> valikoidutTunnit = new ArrayList<JLabel>();
 	private Ryhma ryhma;
+	private int oikeudet;
 	private static final Kurssi poistaTunti = new Kurssi("*** Poista Tunti ***", -9001);
 
 	/**
@@ -41,8 +42,11 @@ public class MuokkaaLukkaria extends JPanel implements MouseListener {
 	 * 
 	 * @param ryhma
 	 *            ryhmä jonka lukujärjestys ladataan.
+	 * @param oikeudet
+	 *            kertoo millä oikeuksilla lukkari ladattiin.
 	 */
-	public MuokkaaLukkaria(Ryhma ryhma) {
+	public MuokkaaLukkaria(Ryhma ryhma, int oikeudet) {
+		this.oikeudet = oikeudet;
 		this.ryhma = ryhma;
 		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BorderLayout());
@@ -107,7 +111,7 @@ public class MuokkaaLukkaria extends JPanel implements MouseListener {
 					sisalto[i][j].setBorder(reunat);
 					sisalto[i][j].setOpaque(true);
 					sisalto[i][j].setBackground(Color.WHITE);
-					sisalto[i][j].addMouseListener(this);
+					if (oikeudet == Kayttajatunnus.YLLAPITAJA) sisalto[i][j].addMouseListener(this);
 					sisalto[i][j].setName(i + "#" + j);
 				}
 			}

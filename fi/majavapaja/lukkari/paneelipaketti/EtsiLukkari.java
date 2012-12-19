@@ -18,9 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import fi.majavapaja.lukkari.Database;
-import fi.majavapaja.lukkari.Paaikkuna;
-import fi.majavapaja.lukkari.Ryhma;
+import fi.majavapaja.lukkari.*;
 
 /**
  * EtsiLukkari paneelissa etsitään ryhmän lukujärjestys
@@ -127,7 +125,7 @@ public class EtsiLukkari extends javax.swing.JPanel {
 		if (i == -1)
 			return;
 		Ryhma ryhma = (Ryhma) ryhmaList.getModel().getElementAt(i);
-		ikkuna.vaihdaPaneeli(new MuokkaaLukkaria(ryhma));
+		ikkuna.vaihdaPaneeli(new MuokkaaLukkaria(ryhma, Kayttajatunnus.YLLAPITAJA));
 	}
 
     /**
