@@ -64,7 +64,7 @@ public class LisaaRyhma extends JPanel {
     }                      
 
     private void lisaaButtonActionPerformed(ActionEvent evt) {
-        if (!ryhmaField.equals("")) {
+        if (!ryhmaField.getText().equals("")) {
         	if (ryhmaField.getText().length() > 30) {
             	JOptionPane.showMessageDialog(this, "Ryhmän nimi voi olla enintään 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
         	} else {
