@@ -267,50 +267,6 @@ public class Database {
 	}
 
 	/**
-	 * Poistetaan oppilas tietokannasta.
-	 * 
-	 * @param poistettavaOppilas
-	 *            Poistettava oppilas.
-	 * @return true tai false operaation onnistumisen mukaan.
-	 */
-	public static boolean poistaKayttajatunnus(Oppilas poistettavaOppilas) {
-		Connection con = connect();
-		try {
-			PreparedStatement ps = con.prepareStatement("DELETE FROM oppilas WHERE oppilasID=?");
-			ps.setInt(1, poistettavaOppilas.getId());
-			ps.executeUpdate();
-			return true;
-		} catch (SQLException ex) {
-			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-			return false;
-		} finally {
-			closeConnection(con);
-		}
-	}
-
-	/**
-	 * Poistetaan käyttäjätunnus tietokannasta.
-	 * 
-	 * @param tunnus
-	 *            Poistettavan käyttäjätunnuksen ID.
-	 * @return true tai false operaation onnistumisen mukaan.
-	 */
-	public static boolean poistaKayttajatunnus(int tunnus) {
-		Connection con = connect();
-		try {
-			PreparedStatement ps = con.prepareStatement("DELETE FROM kayttajatunnus WHERE kayttajatunnusID=?");
-			ps.setInt(1, tunnus);
-			ps.executeUpdate();
-			return true;
-		} catch (SQLException ex) {
-			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-			return false;
-		} finally {
-			closeConnection(con);
-		}
-	}
-
-	/**
 	 * Luo Ryhma objektin annetun ResultSetin sisällöstä.
 	 * 
 	 * @param rs
