@@ -230,6 +230,41 @@ public class Database {
 			closeConnection(con);
 		}
 	}
+	
+	/**
+	 * Poistetaan käyttäjätunnus ja siihen liitetty oppilas tietokannasta.
+	 * 
+	 * @param kayttajatunnus
+	 *            Poistettava kayttajatunnus
+	 * @return true tai false operaation onnistumisen mukaan.
+	 */
+	public static boolean poistaKayttajatunnus(Kayttajatunnus kayttajatunnus) {
+		Connection con = connect();
+		try {
+			con.setAutoCommit(false);
+			
+			PreparedStatement ps = null;
+			
+			if (kayttajatunnus.getOppilas() != null) {
+				ps = con.prepareStatement("DELETE FROM oppilas WHERE oppilasID = ?");
+				ps.setInt(1, kayttajatunnus.getOppilas().getId());
+				ps.executeUpdate();
+			}
+			
+			ps = con.prepareStatement("DELETE FROM kayttajatunnus WHERE kayttajatunnusID = ?");
+			ps.setInt(1, kayttajatunnus.getId());
+			ps.executeUpdate();
+			
+			
+			con.commit();
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		} finally {
+			closeConnection(con);
+		}
+	}
 
 	/**
 	 * Poistetaan oppilas tietokannasta.

@@ -107,6 +107,13 @@ public class EtsiKayttaja extends JPanel {
 		kayttajatunnusField.setColumns(10);
 		kayttajatunnusField.addKeyListener(enterAdapter);
 		
+		JButton btnPoistaOppilas = new JButton("Poista oppilas");
+		btnPoistaOppilas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				poistaActionPerformed();
+			}
+		});
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -115,13 +122,16 @@ public class EtsiKayttaja extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-								.addComponent(btnEtsi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+								.addComponent(btnEtsi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnTakaisin, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-								.addComponent(oppilasInfoTextArea)
-								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnPoistaOppilas, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+								.addComponent(oppilasInfoTextArea)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
@@ -132,7 +142,7 @@ public class EtsiKayttaja extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(etunimiField, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
 								.addComponent(sukunimiField, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
-								.addComponent(kayttajatunnusField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))))
+								.addComponent(kayttajatunnusField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -155,12 +165,14 @@ public class EtsiKayttaja extends JPanel {
 						.addComponent(btnEtsi)
 						.addComponent(btnTakaisin))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(oppilasInfoTextArea, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnPoistaOppilas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		
@@ -173,6 +185,24 @@ public class EtsiKayttaja extends JPanel {
 		});
 		scrollPane.setViewportView(kayttajatunnuksetList);
 		setLayout(groupLayout);
+	}
+
+	/**
+	 * Poistaa valitun oppilaan tietokannasta ja listasta.
+	 */
+	private void poistaActionPerformed() {
+		int i = kayttajatunnuksetList.getSelectedIndex();
+		if (i == -1)
+			return;
+		
+		Kayttajatunnus kt = (Kayttajatunnus) kayttajatunnuksetList.getModel().getElementAt(i);
+		boolean onnistui = Database.poistaKayttajatunnus(kt);
+		if (!onnistui) {
+			JOptionPane.showMessageDialog(this, "Käyttäjätunnuksen poistaminen epäonnistui", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		etsiActionPerformed();
 	}
 
 	/**
