@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.majavapaja.lukkari;
 
 /**
+ * Tunti toimii tiedonvälittäjänä tuntien tietoja varten.
  * 
- * @author SAMI
+ * @author Majavapaja
  */
 public class Tunti {
 	private String viikonpaiva;
@@ -27,6 +24,8 @@ public class Tunti {
 	 *            Tunnin loppuaika.
 	 * @param kurssi
 	 *            Tämän tunnin kurssi.
+	 * @param ryhma
+	 *            Ryhmä, jolla tunti on.
 	 */
 	public Tunti(String viikonpaiva, int alkuklo, int loppuklo, Kurssi kurssi, Ryhma ryhma) {
 		this(viikonpaiva, alkuklo, loppuklo, kurssi, ryhma, -1);
@@ -43,6 +42,8 @@ public class Tunti {
 	 *            Tunnin loppuaika.
 	 * @param kurssi
 	 *            Tämän tunnin kurssi.
+	 * @param ryhma
+	 *            Ryhmä, jolla tunti on.
 	 * @param id
 	 *            Tunnin ID.
 	 */

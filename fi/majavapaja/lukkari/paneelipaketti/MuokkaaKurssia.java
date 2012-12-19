@@ -16,6 +16,11 @@ import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Kurssi;
 import fi.majavapaja.lukkari.Paaikkuna;
 
+/**
+ * MuokkaaKurssia paneelissa muokataan kurssia.
+ * 
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class MuokkaaKurssia extends JPanel {
 	private JTextField kurssinNimiField;

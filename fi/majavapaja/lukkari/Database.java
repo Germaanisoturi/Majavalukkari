@@ -7,8 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Database luokka toimii tiedon välittjänä tietokannan ja
+ * itse ohjelman välillä.
  * 
- * @author s1001069
+ * @author Majavapaja
  */
 public class Database {
 	private static String driver = "com.mysql.jdbc.Driver";
@@ -234,7 +236,7 @@ public class Database {
 	 * 
 	 * @param poistettavaOppilas
 	 *            Poistettava oppilas.
-	 * @returntrue tai false operaation onnistumisen mukaan.
+	 * @return true tai false operaation onnistumisen mukaan.
 	 */
 	public static boolean poistaKayttajatunnus(Oppilas poistettavaOppilas) {
 		Connection con = connect();
@@ -390,7 +392,7 @@ public class Database {
 	 * Hae oppilas käyttjätunnuksen ID:n mukaan.
 	 * 
 	 * @param kayttajatunnusID käyttäjätunnuksen ID
-	 * @return käyttäjätunnukseen liitetty oppilas tai null, jos käyttäjätunnus on ylläpitäjä 
+	 * @return käyttäjätunnukseen liitetty oppilas tai null, jos käyttäjätunnus on ylläpitäjä
 	 */
 	public static Oppilas getKayttajanOppilas(int kayttajatunnusID) {
 		Connection c = connect();

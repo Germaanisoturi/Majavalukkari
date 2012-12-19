@@ -23,12 +23,22 @@ import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Kurssi;
 import fi.majavapaja.lukkari.Paaikkuna;
 
+/**
+ * EtsiKurssi paneelissa etsitään ryhmän kurssi muokkaamista varten.
+ *
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class EtsiKurssi extends JPanel {
 	private JTextField kurssinNimiField;
 	private Paaikkuna ikkuna;
 	private JList<Kurssi> kurssiList;
 	
+	/**
+	 * Luo kurssinhakunäkymän.
+	 * 
+	 * @param ikkuna Paaikkuna, johon paneeli sijoitetaan.
+	 */
 	public EtsiKurssi(Paaikkuna ikkuna) {
 		this.ikkuna = ikkuna;
 		setPreferredSize(new Dimension(800, 600));
@@ -118,6 +128,10 @@ public class EtsiKurssi extends JPanel {
 		setLayout(groupLayout);
 	}
 	
+	/**
+	 * Vaihtaa näkymäksi uuden MuokkaaKurssia paneelin, jos
+	 * hakutuloksista on valittuna ryhmä.
+	 */
 	protected void muokkaaActionPerformed() {
 		int i = kurssiList.getSelectedIndex();
 		if (i == -1)
@@ -126,10 +140,17 @@ public class EtsiKurssi extends JPanel {
 		ikkuna.vaihdaPaneeli(new MuokkaaKurssia(ikkuna, kurssi));
 	}
 	
+	/**
+	 * Pyytää pääikkunaa palaamaan edelliseen paneeliin.
+	 */
 	protected void takaisinActionPerformed() {
 		ikkuna.edellinenPaneeli();
 	}
 	
+	/**
+	 * Hakee tietokannasta syötettyä nimeä vastaavat kurssit ja
+	 * lisää ne hakutulosten listaan.
+	 */
 	protected void haeActionPerformed() {
 		String nimi = kurssinNimiField.getText().trim();
 		

@@ -20,12 +20,22 @@ import fi.majavapaja.lukkari.Database;
 import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
+/**
+ * EtsiRyhma paneelissa etsitään ryhmä muokkaamista varten.
+ *
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
 public class EtsiRyhma extends JPanel {
 	private JTextField ryhmanNimiField;
 	private JList<Ryhma> ryhmaList;
 	private Paaikkuna ikkuna;
 	
+	/**
+	 * Luo ryhmänhakunäkymän.
+	 * 
+	 * @param ikkuna Paaikkuna, johon paneeli sijoitetaan.
+	 */
 	public EtsiRyhma(Paaikkuna ikkuna) {
 		this.ikkuna = ikkuna;
 		setSize(800, 600);
@@ -113,6 +123,10 @@ public class EtsiRyhma extends JPanel {
 		setLayout(groupLayout);
 	}
 
+	/**
+	 * Vaihtaa näkymäksi uuden MuokkaaRyhmaa paneelin, jos
+	 * hakutuloksista on valittuna ryhmä.
+	 */
 	protected void muokkaaActionPerformed() {
 		int i = ryhmaList.getSelectedIndex();
 		if (i == -1)
@@ -121,7 +135,11 @@ public class EtsiRyhma extends JPanel {
 		ikkuna.vaihdaPaneeli(new MuokkaaRyhmaa(ikkuna, ryhma));
 	}
 
-	private void etsiActionPerformed() {
+	/**
+	 * Hakee tietokannasta syötettyä nimeä vastaavat ryhmät ja
+	 * lisää ne hakutulosten listaan.
+	 */
+	protected void etsiActionPerformed() {
 		String nimi = ryhmanNimiField.getText().trim();
 		
 		List<Ryhma> ryhmat = Database.haeRyhmat(nimi);
@@ -134,7 +152,10 @@ public class EtsiRyhma extends JPanel {
 		ryhmaList.setListData(ryhmat.toArray(new Ryhma[0]));
 	}
 
-	private void takaisinActionPerformed() {
+	/**
+	 * Pyytää pääikkunaa palaamaan edelliseen paneeliin.
+	 */
+	protected void takaisinActionPerformed() {
 		ikkuna.edellinenPaneeli();
 	}
 }
