@@ -14,6 +14,7 @@ import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
 /**
+ * 
  * @author Majavapaja
  */
 @SuppressWarnings("serial")
@@ -98,86 +99,8 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		cbRyhma.setFocusable(false);
 		
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(224)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblRyhm)
-								.addComponent(lblSukunimi)
-								.addComponent(lblEtunimi))
-							.addGap(44))
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addComponent(lblKayttajatunnus)
-							.addComponent(lblSalasana, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblSalasanaUudestaan, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblOikeudet)))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(tfKayttajatunnus, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-						.addComponent(tfEtunimi, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(rdbtnOppilas)
-							.addGap(18)
-							.addComponent(rdbtnYllpito))
-						.addComponent(tfSukunimi, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-						.addComponent(pfSalasana, 221, 250, Short.MAX_VALUE)
-						.addComponent(pfSalasanaUudestaan, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-						.addComponent(cbRyhma, 0, 250, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnLis, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-							.addGap(64)
-							.addComponent(btnPalaa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addGap(259))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addContainerGap(738, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(134)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(tfKayttajatunnus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblKayttajatunnus))
-					.addGap(14)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(pfSalasana, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSalasana))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(pfSalasanaUudestaan, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSalasanaUudestaan))
-					.addGap(40)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(rdbtnOppilas)
-							.addComponent(lblOikeudet))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(rdbtnYllpito)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGap(24)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(tfEtunimi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEtunimi))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(tfSukunimi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSukunimi))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblRyhm)
-						.addComponent(cbRyhma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnPalaa)
-						.addComponent(btnLis))
-					.addPreferredGap(ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addGap(224).addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout.createSequentialGroup().addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblRyhm).addComponent(lblSukunimi).addComponent(lblEtunimi)).addGap(44)).addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblKayttajatunnus).addComponent(lblSalasana, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE).addComponent(lblSalasanaUudestaan, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE).addComponent(lblOikeudet))).addGap(18).addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(tfKayttajatunnus, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE).addComponent(tfEtunimi, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE).addGroup(groupLayout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED).addComponent(rdbtnOppilas).addGap(18).addComponent(rdbtnYllpito)).addComponent(tfSukunimi, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE).addComponent(pfSalasana, 221, 250, Short.MAX_VALUE).addComponent(pfSalasanaUudestaan, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE).addComponent(cbRyhma, 0, 250, Short.MAX_VALUE).addGroup(groupLayout.createSequentialGroup().addComponent(btnLis, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE).addGap(64).addComponent(btnPalaa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))).addGap(259)).addGroup(groupLayout.createSequentialGroup().addContainerGap().addContainerGap(738, Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addGap(134).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(tfKayttajatunnus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblKayttajatunnus)).addGap(14).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(pfSalasana, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblSalasana)).addPreferredGap(ComponentPlacement.UNRELATED).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(pfSalasanaUudestaan, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblSalasanaUudestaan)).addGap(40).addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(rdbtnOppilas).addComponent(lblOikeudet)).addGroup(groupLayout.createSequentialGroup().addComponent(rdbtnYllpito).addPreferredGap(ComponentPlacement.RELATED))).addGap(24).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(tfEtunimi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblEtunimi)).addPreferredGap(ComponentPlacement.UNRELATED).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(tfSukunimi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblSukunimi)).addPreferredGap(ComponentPlacement.UNRELATED).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblRyhm).addComponent(cbRyhma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addGap(18).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnPalaa).addComponent(btnLis)).addPreferredGap(ComponentPlacement.RELATED, 88, Short.MAX_VALUE).addContainerGap()));
 		setLayout(groupLayout);
 
 	}
@@ -189,8 +112,8 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		if (tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15) lblKayttajatunnus.setForeground(Color.RED);
 		if (pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30) lblSalasana.setForeground(Color.RED);
 		if (pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30) lblSalasanaUudestaan.setForeground(Color.RED);
-		if (tfEtunimi.getText().equals("") || tfEtunimi.getText().length() > 20) lblEtunimi.setForeground(Color.RED);
-		if (tfSukunimi.getText().equals("") || tfSukunimi.getText().length() > 30) lblSukunimi.setForeground(Color.RED);
+		if (tfEtunimi.getText().isEmpty() || tfEtunimi.getText().length() > 20) lblEtunimi.setForeground(Color.RED);
+		if (tfSukunimi.getText().isEmpty() || tfSukunimi.getText().length() > 30) lblSukunimi.setForeground(Color.RED);
 		
 		if (tfKayttajatunnus.getText().length() > 15) JOptionPane.showMessageDialog(this, "Käyttäjätunnus voi olla enintään 15 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
 		else if (pfSalasana.getPassword().length > 30) JOptionPane.showMessageDialog(this, "Salasana voi olla enintään 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
@@ -201,8 +124,8 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 		else if (tfKayttajatunnus.getText().length() < 5) JOptionPane.showMessageDialog(this, "Käyttäjätunnus pitää olla vähintään 5 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
 		else if (pfSalasana.getPassword().length < 5) JOptionPane.showMessageDialog(this, "Salasana pitää olla vähintään 5 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
 		else if (pfSalasanaUudestaan.getPassword().length < 5) JOptionPane.showMessageDialog(this, "Salasana pitää olla vähintään 5 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
-		else if (tfEtunimi.getText().equals("")) JOptionPane.showMessageDialog(this, "Etunimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
-		else if (tfSukunimi.getText().equals("")) JOptionPane.showMessageDialog(this, "Sukunimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+		else if (tfEtunimi.getText().isEmpty()) JOptionPane.showMessageDialog(this, "Etunimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+		else if (tfSukunimi.getText().isEmpty()) JOptionPane.showMessageDialog(this, "Sukunimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
 		
 	}
 	
@@ -211,7 +134,7 @@ public class LisaaKayttaja extends JPanel implements ActionListener {
 	 */
 	private void addUser() {
 		resetLabelColors();
-		if (rdbtnOppilas.isSelected() && (tfEtunimi.getText().equals("") || tfEtunimi.getText().length() > 20 || tfSukunimi.getText().equals("") || tfSukunimi.getText().length() > 30 || tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15 || pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30 || pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30)) {
+		if (rdbtnOppilas.isSelected() && (tfEtunimi.getText().isEmpty() || tfEtunimi.getText().length() > 20 || tfSukunimi.getText().isEmpty()|| tfSukunimi.getText().length() > 30 || tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15 || pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30 || pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30)) {
 			checkTextFields();
 		} else if (rdbtnYllpito.isSelected() && (tfKayttajatunnus.getText().length() < 5 || tfKayttajatunnus.getText().length() > 15 || pfSalasana.getPassword().length < 5 || pfSalasana.getPassword().length > 30 || pfSalasanaUudestaan.getPassword().length < 5 || pfSalasanaUudestaan.getPassword().length > 30)) {
 			checkTextFields();
