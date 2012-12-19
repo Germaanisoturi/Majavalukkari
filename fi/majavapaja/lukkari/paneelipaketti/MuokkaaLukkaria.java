@@ -158,7 +158,7 @@ public class MuokkaaLukkaria extends JPanel implements MouseListener {
 			if (i == 0) {
 				vkpaivat[i].setPreferredSize(new Dimension(100, 20));
 			} else {
-				vkpaivat[i].setPreferredSize(new Dimension(140, 20));
+				vkpaivat[i].setPreferredSize(new Dimension(142, 20));
 			}
 		}
 	}
