@@ -206,7 +206,7 @@ public class MuokkaaOppilasta extends JPanel {
 		if ("".equals(salasana))
 			return;
 		
-		kayttajatunnus.setKayttajnimi(kayttajanimi);
+		kayttajatunnus.setKayttajanimi(kayttajanimi);
 		kayttajatunnus.setSalasana(salasana);
 
 		boolean onnistui = Database.updateKayttajatunnus(kayttajatunnus);

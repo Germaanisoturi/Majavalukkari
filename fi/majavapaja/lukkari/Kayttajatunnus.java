@@ -69,7 +69,7 @@ public class Kayttajatunnus {
 	 * 
 	 * @param kayttajanimi uusi käyttäjänimi
 	 */
-	public void setKayttajnimi(String kayttajanimi) {
+	public void setKayttajanimi(String kayttajanimi) {
 		this.kayttajatunnus = kayttajanimi;
 	}
 
