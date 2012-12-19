@@ -84,6 +84,13 @@ public class EtsiRyhma extends JPanel {
 		});
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		
+		JButton btnPoistaRyhma = new JButton("Poista ryhmä");
+		btnPoistaRyhma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				poistaActionPerformed();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -95,11 +102,13 @@ public class EtsiRyhma extends JPanel {
 								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnMuokkaa, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnPoistaRyhma, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
 							.addGap(334))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblRyhmanNimi)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(ryhmanNimiField))
@@ -110,8 +119,8 @@ public class EtsiRyhma extends JPanel {
 							.addGap(554))))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblRyhmanNimi)
@@ -125,7 +134,9 @@ public class EtsiRyhma extends JPanel {
 						.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
 						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnMuokkaa)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnMuokkaa)
+						.addComponent(btnPoistaRyhma))
 					.addContainerGap())
 		);
 		
@@ -140,6 +151,24 @@ public class EtsiRyhma extends JPanel {
 		});
 		scrollPane.setViewportView(ryhmaList);
 		setLayout(groupLayout);
+	}
+
+	/**
+	 * Poistaa valitun ryhmän tietokannasta ja listasta.
+	 */
+	protected void poistaActionPerformed() {
+		int i = ryhmaList.getSelectedIndex();
+		if (i == -1)
+			return;
+		
+		Ryhma r = (Ryhma) ryhmaList.getModel().getElementAt(i);
+		boolean onnistui = Database.poistaRyhma(r);
+		if (!onnistui) {
+			JOptionPane.showMessageDialog(this, "Ryhmän poistaminen epäonnistui.\nOnko ryhmässä vielä oppilaita tai tunteja?", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		etsiActionPerformed();
 	}
 
 	/**

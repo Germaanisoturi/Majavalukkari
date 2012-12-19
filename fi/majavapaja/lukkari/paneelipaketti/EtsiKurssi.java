@@ -83,24 +83,32 @@ public class EtsiKurssi extends JPanel {
 				muokkaaActionPerformed();
 			}
 		});
+		
+		JButton btnPoistaKurssi = new JButton("Poista kurssi");
+		btnPoistaKurssi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				poistaActionPerformed();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addComponent(lblKurssinNimi)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(kurssinNimiField, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(622, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addComponent(btnHae, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnTakaisin, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())
 						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnPoistaKurssi, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
 								.addComponent(btnMuokkaaKurssia, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
 								.addComponent(scrollPane, 0, 0, Short.MAX_VALUE))
 							.addGap(622))))
@@ -120,7 +128,9 @@ public class EtsiKurssi extends JPanel {
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnMuokkaaKurssia)
-					.addContainerGap(260, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnPoistaKurssi)
+					.addContainerGap(231, Short.MAX_VALUE))
 		);
 		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnHae, btnTakaisin});
 		
@@ -129,6 +139,24 @@ public class EtsiKurssi extends JPanel {
 		setLayout(groupLayout);
 	}
 	
+	/**
+	 * Poistaa valitun oppilaan tietokannasta ja listasta.
+	 */
+	protected void poistaActionPerformed() {
+		int i = kurssiList.getSelectedIndex();
+		if (i == -1)
+			return;
+		
+		Kurssi k = (Kurssi) kurssiList.getModel().getElementAt(i);
+		boolean onnistui = Database.poistaKurssi(k);
+		if (!onnistui) {
+			JOptionPane.showMessageDialog(this, "Kurssin poistaminen epäonnistu. Onko ryhmillä kyseisen kurssin tunteja?", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		haeActionPerformed();
+	}
+
 	/**
 	 * Vaihtaa näkymäksi uuden MuokkaaKurssia paneelin, jos
 	 * hakutuloksista on valittuna ryhmä.
