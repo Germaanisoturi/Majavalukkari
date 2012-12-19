@@ -21,6 +21,7 @@ import fi.majavapaja.lukkari.Ryhma;
  *
  * @author Majavapaja
  */
+@SuppressWarnings("serial")
 public class MuokkaaRyhmaa extends JPanel {
 
     private JTextField ryhmanNimiField;

@@ -21,6 +21,7 @@ import fi.majavapaja.lukkari.Paaikkuna;
  *
  * @author Majavapaja
  */
+@SuppressWarnings("serial")
 public class MuokkaaKurssia extends JPanel {
 
     private JTextField kurssinNimiField;

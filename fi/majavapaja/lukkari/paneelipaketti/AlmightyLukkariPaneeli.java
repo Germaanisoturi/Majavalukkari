@@ -11,6 +11,7 @@ import javax.swing.border.Border;
 
 import fi.majavapaja.lukkari.*;
 
+@SuppressWarnings("javadoc")
 public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
 	// PERSE
 

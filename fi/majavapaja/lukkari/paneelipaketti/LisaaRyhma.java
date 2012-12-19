@@ -14,6 +14,7 @@ import javax.swing.*;
  *
  * @author Majavapaja
  */
+@SuppressWarnings("serial")
 public class LisaaRyhma extends JPanel {
 
     private Paaikkuna ikkuna;

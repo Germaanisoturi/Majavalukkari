@@ -21,6 +21,7 @@ import fi.majavapaja.lukkari.Paaikkuna;
  * 
  * @author Majavapaja
  */
+@SuppressWarnings("serial")
 public class LisaaKurssi extends JPanel {
 
     private Paaikkuna ikkuna;

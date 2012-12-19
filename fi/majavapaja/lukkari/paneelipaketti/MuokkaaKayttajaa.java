@@ -13,6 +13,7 @@ import javax.swing.*;
  *
  * @author Majavapaja
  */
+@SuppressWarnings("serial")
 public class MuokkaaKayttajaa extends JPanel {
 
     private Paaikkuna paaikkuna;
