@@ -303,6 +303,21 @@ public class Database {
 		Ryhma ryhma = ryhmaResultSetista(rs);
 		return new Oppilas(etunimi, sukunimi, ryhma, oppilaanId);
 	}
+	
+	/**
+	 * Luo Oppilas objektin annetun ResultSetin sisällöstä ja annetulla ryhmällä.
+	 * 
+	 * @param rs
+	 * @param ryhma oppilaan ryhmä
+	 * @return ResultSetin sisällöstä muodostettu Oppilas objekti
+	 * @throws SQLException
+	 */
+	private static Oppilas oppilasResultSetista(ResultSet rs, Ryhma ryhma) throws SQLException {
+		String etunimi = rs.getString("etunimi");
+		String sukunimi = rs.getString("sukunimi");
+		int oppilaanId = rs.getInt("oppilasID");
+		return new Oppilas(etunimi, sukunimi, ryhma, oppilaanId);
+	}
 
 	/**
 	 * Luo Kurssi objektin annetun ResultSetin sisällöstä.
@@ -544,8 +559,8 @@ public class Database {
 	/**
 	 * Hakee annetun ryhmän tunnit tietokannasta.
 	 * 
-	 * @param ryhma ryhma, jonka tunnit halutaan hakea
-	 * @return annetun tyhmän tunnit
+	 * @param ryhma ryhmä, jonka tunnit halutaan hakea
+	 * @return annetun ryhmän tunnit
 	 */
 	public static List<Tunti> getRyhmanTunnit(Ryhma ryhma) {
 		Connection c = connect();
@@ -568,6 +583,33 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee annetun ryhmän oppilaat tietokannasta.
+	 * 
+	 * @param ryhma ryhmä, jonka oppilaat halutaan hakea
+	 * @return annetun ryhmän oppilaat
+	 */
+	public static List<Oppilas> getRyhmanOppilaat(Ryhma ryhma) {
+		Connection c = connect();
+		try {
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas WHERE ryhma = ?");
+			ps.setInt(1, ryhma.getId());
+			
+			List<Oppilas> oppilaat = new ArrayList<>();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				oppilaat.add(oppilasResultSetista(rs, ryhma));
+			}
+
+			return oppilaat;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			closeConnection(c);
+		}
+	}
+	
 	/**
 	 * Hakee ryhmät annetun nimen mukaan.
 	 * 
