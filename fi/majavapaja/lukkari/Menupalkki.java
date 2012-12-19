@@ -113,26 +113,36 @@ public class Menupalkki extends JMenuBar implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Tulosta lukkari")) {
-            //TODO TULOSTA LUKKARI PRINTTERILLÄ
-        } else if (e.getActionCommand().equals("Lopeta")) {
-            System.exit(0);
-        } else if (e.getActionCommand().equals("Kirjaudu ulos")) {
-            ikkuna.kirjaaUlos();
-        } else if (e.getActionCommand().equals("Uusi käyttäjätunnus/oppilas...")) {
-            ikkuna.vaihdaPaneeli(new LisaaKayttaja(ikkuna));
-        } else if (e.getActionCommand().equals("Uusi ryhmä")) {
-            ikkuna.vaihdaPaneeli(new LisaaRyhma(ikkuna));
-        } else if (e.getActionCommand().equals("Uusi kurssi")) {
-            ikkuna.vaihdaPaneeli(new LisaaKurssi(ikkuna));
-        } else if (e.getActionCommand().equals("Hallinnoi oppilaita/käyttäjiä")) {
-            ikkuna.vaihdaPaneeli(new EtsiOppilas(ikkuna));
-        } else if (e.getActionCommand().equals("Hallinnoi kursseja")) {
-            ikkuna.vaihdaPaneeli(new EtsiKurssi(ikkuna));
-        } else if (e.getActionCommand().equals("Hallinnoi ryhmiä")) {
-            ikkuna.vaihdaPaneeli(new EtsiRyhma(ikkuna));
-        } else if (e.getActionCommand().equals("Hallinnoi lukujärjestyksiä")) {
-            ikkuna.vaihdaPaneeli(new EtsiLukkari(ikkuna));
+        switch (e.getActionCommand()) {
+            case "Tulosta lukkari":
+                break;
+            case "Lopeta":
+                System.exit(0);
+                break;
+            case "Kirjaudu ulos":
+                ikkuna.kirjaaUlos();
+                break;
+            case "Uusi käyttäjätunnus/oppilas...":
+                ikkuna.vaihdaPaneeli(new LisaaKayttaja(ikkuna));
+                break;
+            case "Uusi ryhmä":
+                ikkuna.vaihdaPaneeli(new LisaaRyhma(ikkuna));
+                break;
+            case "Uusi kurssi":
+                ikkuna.vaihdaPaneeli(new LisaaKurssi(ikkuna));
+                break;
+            case "Hallinnoi oppilaita/käyttäjiä":
+                ikkuna.vaihdaPaneeli(new EtsiOppilas(ikkuna));
+                break;
+            case "Hallinnoi kursseja":
+                ikkuna.vaihdaPaneeli(new EtsiKurssi(ikkuna));
+                break;
+            case "Hallinnoi ryhmiä":
+                ikkuna.vaihdaPaneeli(new EtsiRyhma(ikkuna));
+                break;
+            case "Hallinnoi lukujärjestyksiä":
+                ikkuna.vaihdaPaneeli(new EtsiLukkari(ikkuna));
+                break;
         }
     }
 }
