@@ -61,9 +61,33 @@ public class MuokkaaRyhmaa extends JPanel {
         });
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
-                groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addContainerGap().addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false).addGroup(groupLayout.createSequentialGroup().addComponent(lblRyhmanNimi).addGap(18).addComponent(ryhmanNimiField, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)).addGroup(groupLayout.createSequentialGroup().addComponent(btnTallenna, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnTakaisin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))).addContainerGap(251, Short.MAX_VALUE)));
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addComponent(lblRyhmanNimi)
+        					.addGap(18)
+        					.addComponent(ryhmanNimiField, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addComponent(btnTallenna, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(btnTakaisin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        			.addContainerGap(579, GroupLayout.PREFERRED_SIZE))
+        );
         groupLayout.setVerticalGroup(
-                groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addContainerGap().addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblRyhmanNimi).addComponent(ryhmanNimiField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(ComponentPlacement.UNRELATED).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnTallenna).addComponent(btnTakaisin)).addContainerGap(235, Short.MAX_VALUE)));
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(lblRyhmanNimi)
+        				.addComponent(ryhmanNimiField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btnTallenna)
+        				.addComponent(btnTakaisin))
+        			.addContainerGap(535, Short.MAX_VALUE))
+        );
         setLayout(groupLayout);
         taytaKentat();
     }
