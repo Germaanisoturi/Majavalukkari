@@ -10,16 +10,19 @@ import fi.majavapaja.lukkari.Paaikkuna;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author s1001069
+ * Kommunikoi kurssien lisäämisen käyttäjän kanssa.
+ * 
+ * @author Majavapaja
  */
 public class LisaaKurssi extends javax.swing.JPanel {
 
-    /**
-     * Creates new form LisaaKurssi
-     */
     private Paaikkuna ikkuna;
 
+    /**
+     * Luo paneelin kurssien lisäämistä varten.
+     * 
+     * @param ikkuna pääikkuna, johonka paneeli tulee näkyviin.
+     */
     public LisaaKurssi(Paaikkuna ikkuna) {
         initComponents();
         setSize(800, 600);
@@ -45,6 +48,7 @@ public class LisaaKurssi extends javax.swing.JPanel {
         lisaaButton.setText("Lisää");
         lisaaButton.addActionListener(new java.awt.event.ActionListener() {
 
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lisaaButtonActionPerformed(evt);
             }
@@ -53,6 +57,7 @@ public class LisaaKurssi extends javax.swing.JPanel {
         takaisinButton.setText("Takaisin");
         takaisinButton.addActionListener(new java.awt.event.ActionListener() {
 
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 takaisinButtonActionPerformed(evt);
             }
@@ -69,7 +74,7 @@ public class LisaaKurssi extends javax.swing.JPanel {
     }// </editor-fold>                        
 
     private void lisaaButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        if (!kurssiField.equals("")) {
+        if (!kurssiField.getText().equals("")) {
             Kurssi uusiKurssi = new Kurssi(kurssiField.getText());
             if (Database.lisaaKurssi(uusiKurssi)) {
                 kurssiField.setText("");
