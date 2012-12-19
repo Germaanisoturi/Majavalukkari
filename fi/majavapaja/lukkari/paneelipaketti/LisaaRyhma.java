@@ -64,7 +64,7 @@ public class LisaaRyhma extends JPanel {
     }                      
 
     private void lisaaButtonActionPerformed(ActionEvent evt) {
-        if (!ryhmaField.getText().equals("")) {
+        if (!ryhmaField.getText().isEmpty()) {
         	if (ryhmaField.getText().length() > 30) {
             	JOptionPane.showMessageDialog(this, "Ryhmän nimi voi olla enintään 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
         	} else {
@@ -73,9 +73,11 @@ public class LisaaRyhma extends JPanel {
                 ryhmaField.setText("");
         		}
         	}
+        } else if (ryhmaField.getText().isEmpty()) {
+        	JOptionPane.showMessageDialog(this, "Ryhmän nimi ei voi olla tyhjä.", "Taktinen Virhe", JOptionPane.ERROR_MESSAGE);
         } else {
-                String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
-                JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
+        	String message = "Tapahtui vakava tuntematon virhe!\n" + "Ottakaa välittömästi yhteys tirehtööriin!\n" + "Sähköposti: Henry.Heikkinen@majavapaja.fi";
+        	JOptionPane.showMessageDialog(this, message, "Error #???", JOptionPane.ERROR_MESSAGE);
         }
     }
 
