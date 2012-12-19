@@ -11,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -192,7 +193,7 @@ public class EtsiKayttaja extends JPanel {
 		}
 		
 		if (kayttajatunnukset == null) {
-			System.out.println("LOOOOL NULLL");
+			JOptionPane.showMessageDialog(this, "Virhe haettaessa käyttäjiä tietokannasta", "Virhe", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		

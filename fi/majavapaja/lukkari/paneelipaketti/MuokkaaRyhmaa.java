@@ -78,8 +78,14 @@ public class MuokkaaRyhmaa extends JPanel {
      */
     protected void tallennaActionPerformed() {
         String ryhmanNimi = ryhmanNimiField.getText().trim();
+        
         if ("".equals(ryhmanNimi)) {
-            // TODO: Virheilmoitus
+			JOptionPane.showMessageDialog(this, "Ryhmän nimi ei voi olla tyhjä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (ryhmanNimi.length() > 30) {
+			JOptionPane.showMessageDialog(this, "Ryhmän nimi ei voi olla yli 30 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

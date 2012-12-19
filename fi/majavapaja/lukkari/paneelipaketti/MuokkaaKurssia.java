@@ -80,18 +80,24 @@ public class MuokkaaKurssia extends JPanel {
      */
     protected void tallennaActionPerformed() {
         String kurssinNimi = kurssinNimiField.getText().trim();
+        
         if (kurssinNimi.equals("")) {
             JOptionPane.showMessageDialog(this, "Kurssin nimi ei voi olla tyhjä!", "Virhe! Kurssilta puuttuu nimi.", JOptionPane.ERROR_MESSAGE);
-        } else {
+            return;
+        }
+        
+        if (kurssinNimi.length() > 50) {
+            JOptionPane.showMessageDialog(this, "Kurssin nimi ei voi olla yli 50 merkkiä pitkä.", "Virhe", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            kurssi.setNimi(kurssinNimi);
-            boolean onnistui = Database.updateKurssi(kurssi);
-            if (onnistui) {
-                JOptionPane.showMessageDialog(this, "Tietojen päivitys onnistui");
-                ikkuna.edellinenPaneeli();
-            } else {
-                JOptionPane.showMessageDialog(this, "Tietojen päivitys epäonnistui");
-            }
+        kurssi.setNimi(kurssinNimi);
+        boolean onnistui = Database.updateKurssi(kurssi);
+        if (onnistui) {
+            JOptionPane.showMessageDialog(this, "Tietojen päivitys onnistui");
+            ikkuna.edellinenPaneeli();
+        } else {
+            JOptionPane.showMessageDialog(this, "Tietojen päivitys epäonnistui");
         }
     }
     

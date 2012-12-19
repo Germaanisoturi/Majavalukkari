@@ -11,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -145,7 +146,7 @@ public class EtsiRyhma extends JPanel {
 		List<Ryhma> ryhmat = Database.haeRyhmat(nimi);
 		
 		if (ryhmat == null) {
-			System.out.println("LOOOOL NULLL");
+			JOptionPane.showMessageDialog(this, "Virhe haettaessa ryhmiä tietokannasta", "Virhe", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
