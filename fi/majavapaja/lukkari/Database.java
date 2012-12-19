@@ -208,6 +208,27 @@ public class Database {
 			closeConnection(con);
 		}
 	}
+	
+	/**
+	 * Poistetaan kurssi tietokannasta.
+	 * 
+	 * @param kurssi
+	 *            Poistettava kurssi.
+	 * @return true tai false operaation onnistumisen mukaan.
+	 */
+	public static boolean poistaKurssi(Kurssi kurssi) {
+		Connection con = connect();
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM kurssi WHERE kurssiID = ?");
+			ps.setInt(1, kurssi.getId());
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException ex) {
+			return false;
+		} finally {
+			closeConnection(con);
+		}
+	}
 
 	/**
 	 * Poistaa osallistumisen tietokannasta.
