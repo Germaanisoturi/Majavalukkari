@@ -7,7 +7,7 @@ package fi.majavapaja.lukkari;
 /**
  * Kurssin nimi kertoo kurssin sisällön.
  * 
- * @author s1001069
+ * @author Majavapaja
  */
 public class Kurssi {
 

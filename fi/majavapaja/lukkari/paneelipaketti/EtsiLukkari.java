@@ -14,6 +14,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -22,13 +23,20 @@ import fi.majavapaja.lukkari.Paaikkuna;
 import fi.majavapaja.lukkari.Ryhma;
 
 /**
+ * EtsiLukkari paneelissa etsitään ryhmän lukujärjestys
+ * muokkaamista varten.
  *
- * @author s1001069
+ * @author Majavapaja
  */
 @SuppressWarnings("serial")
 public class EtsiLukkari extends javax.swing.JPanel {
 	private Paaikkuna ikkuna;
     
+	/**
+	 * Luo lukkarinhakunäkymän.
+	 * 
+	 * @param ikkuna Paaikkuna, johon paneeli sijoitetaan
+	 */
     public EtsiLukkari(Paaikkuna ikkuna) {
     	this.ikkuna = ikkuna;
     	
@@ -110,6 +118,10 @@ public class EtsiLukkari extends javax.swing.JPanel {
 		etsiActionPerformed();
     }
 
+    /**
+     * Vaihtaa näkymäksi uuden AlmightyLukkariPaneeli paneelin,
+     * jos hakutuloksista on valittuna ryhmä.
+     */
     protected void muokkaaActionPerformed() {
 		int i = ryhmaList.getSelectedIndex();
 		if (i == -1)
@@ -118,17 +130,24 @@ public class EtsiLukkari extends javax.swing.JPanel {
 		ikkuna.vaihdaPaneeli(new MuokkaaLukkaria(ryhma));
 	}
 
+    /**
+     * Pyytää pääikkunaa palaamaan edelliseen paneeliin.
+     */
 	protected void takaisinActionPerformed() {
 		ikkuna.edellinenPaneeli();
 	}
 
+	/**
+	 * Hakee tietokannasta syötettyä nimeä vastaavat ryhmät ja
+	 * lisää ne hakutulosten listaan.
+	 */
 	protected void etsiActionPerformed() {
 		String nimi = ryhmanNimiField.getText().trim();
 		
 		List<Ryhma> ryhmat = Database.haeRyhmat(nimi);
 		
 		if (ryhmat == null) {
-			System.out.println("LOOOOL NULLL");
+			JOptionPane.showMessageDialog(this, "Virhe haettaessa ryhmiä tietokannasta", "Virhe", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		

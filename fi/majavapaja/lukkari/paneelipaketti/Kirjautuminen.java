@@ -16,9 +16,9 @@ import javax.swing.*;
  * Kirjautumisessa kysytään käyttäjältä tunnuksia ja
  * avataan ohjelma tunnuksien mukaiseen näkymään.
  * 
- * $author Majavapaja
+ * @author Majavapaja
  */
-
+@SuppressWarnings("serial")
 public class Kirjautuminen extends JPanel {
 
     private JTextField kayttajatunnusField;

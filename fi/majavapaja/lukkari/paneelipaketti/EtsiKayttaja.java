@@ -11,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -25,8 +26,14 @@ import fi.majavapaja.lukkari.Kayttajatunnus;
 import fi.majavapaja.lukkari.Oppilas;
 import fi.majavapaja.lukkari.Paaikkuna;
 
+/**
+ * EtsiKayttaja paneelissa etsitään oppilas nimen ja käyttäjätunnuksen
+ * avulla muokkaamista varten.
+ *
+ * @author Majavapaja
+ */
 @SuppressWarnings("serial")
-public class EtsiOppilas extends JPanel {
+public class EtsiKayttaja extends JPanel {
 	private JTextField etunimiField;
 	private JTextField sukunimiField;
 	private JList<Kayttajatunnus> kayttajatunnuksetList;
@@ -34,7 +41,12 @@ public class EtsiOppilas extends JPanel {
 	private Paaikkuna paaikkuna;
 	private JTextField kayttajatunnusField;
 
-	public EtsiOppilas(Paaikkuna paaikkuna) {
+	/**
+	 * Luo oppilaanhakunäkymän.
+	 * 
+	 * @param paaikkuna Paaikkuna, johon paneeli sijoitetaan
+	 */
+	public EtsiKayttaja(Paaikkuna paaikkuna) {
 		this.paaikkuna = paaikkuna;
 		setSize(800, 600);
 		
@@ -42,7 +54,7 @@ public class EtsiOppilas extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					etsiActionPerformed(null);
+					etsiActionPerformed();
 				}
 			}
 		};
@@ -64,14 +76,14 @@ public class EtsiOppilas extends JPanel {
 		JButton btnEtsi = new JButton("Etsi");
 		btnEtsi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				etsiActionPerformed(e);
+				etsiActionPerformed();
 			}
 		});
 		
 		JButton btnTakaisin = new JButton("Takaisin");
 		btnTakaisin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				takaisinActionPerformed(e);
+				takaisinActionPerformed();
 			}
 		});
 		
@@ -81,10 +93,10 @@ public class EtsiOppilas extends JPanel {
 		oppilasInfoTextArea.setLineWrap(true);
 		oppilasInfoTextArea.setEditable(false);
 		
-		JButton btnNewButton = new JButton("Muokkaa oppilasta");
+		JButton btnNewButton = new JButton("Muokkaa tietoja");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				muokkaaOppilastaActionPerformed(e);
+				muokkaaOppilastaActionPerformed();
 			}
 		});
 		
@@ -95,6 +107,13 @@ public class EtsiOppilas extends JPanel {
 		kayttajatunnusField.setColumns(10);
 		kayttajatunnusField.addKeyListener(enterAdapter);
 		
+		JButton btnPoistaOppilas = new JButton("Poista oppilas");
+		btnPoistaOppilas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				poistaActionPerformed();
+			}
+		});
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -103,13 +122,16 @@ public class EtsiOppilas extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-								.addComponent(btnEtsi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+								.addComponent(btnEtsi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnTakaisin, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-								.addComponent(oppilasInfoTextArea)
-								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnPoistaOppilas, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+								.addComponent(oppilasInfoTextArea)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
@@ -120,7 +142,7 @@ public class EtsiOppilas extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(etunimiField, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
 								.addComponent(sukunimiField, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
-								.addComponent(kayttajatunnusField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))))
+								.addComponent(kayttajatunnusField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -143,12 +165,14 @@ public class EtsiOppilas extends JPanel {
 						.addComponent(btnEtsi)
 						.addComponent(btnTakaisin))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(oppilasInfoTextArea, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnPoistaOppilas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		
@@ -163,7 +187,29 @@ public class EtsiOppilas extends JPanel {
 		setLayout(groupLayout);
 	}
 
-	private void etsiActionPerformed(ActionEvent e) {
+	/**
+	 * Poistaa valitun oppilaan tietokannasta ja listasta.
+	 */
+	private void poistaActionPerformed() {
+		int i = kayttajatunnuksetList.getSelectedIndex();
+		if (i == -1)
+			return;
+		
+		Kayttajatunnus kt = (Kayttajatunnus) kayttajatunnuksetList.getModel().getElementAt(i);
+		boolean onnistui = Database.poistaKayttajatunnus(kt);
+		if (!onnistui) {
+			JOptionPane.showMessageDialog(this, "Käyttäjätunnuksen poistaminen epäonnistui", "Virhe", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		etsiActionPerformed();
+	}
+
+	/**
+	 * Hakee tietokannasta syötettyjä tietoja vastaavat oppilaat ja
+	 * lisää ne hakutulosten listaan.
+	 */
+	private void etsiActionPerformed() {
 		String kayttajanimi = kayttajatunnusField.getText().trim();
 		String etunimi = etunimiField.getText().trim();
 		String sukunimi = sukunimiField.getText().trim();
@@ -177,14 +223,17 @@ public class EtsiOppilas extends JPanel {
 		}
 		
 		if (kayttajatunnukset == null) {
-			System.out.println("LOOOOL NULLL");
+			JOptionPane.showMessageDialog(this, "Virhe haettaessa käyttäjiä tietokannasta", "Virhe", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
 		kayttajatunnuksetList.setListData(kayttajatunnukset.toArray(new Kayttajatunnus[0]));
 	}
 	
-	
+	/**
+	 * Näyttää oppilaan tiedot tekstikentässä, kun oppilas valitaan
+	 * hakutulosten listasta.
+	 */
 	private void oppilaatListSelectionChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting())
 			return;
@@ -212,16 +261,22 @@ public class EtsiOppilas extends JPanel {
 		
 	}
 	
-	private void takaisinActionPerformed(ActionEvent e) {
+	/**
+	 * Pyytää pääikkunaa palaamaan edelliseen paneeliin.
+	 */
+	private void takaisinActionPerformed() {
 		paaikkuna.edellinenPaneeli();
 	}
 	
-	
-	private void muokkaaOppilastaActionPerformed(ActionEvent e) {
+	/**
+	 * Vaihtaa näkymäksi uuden MuokkaaKayttajaa paneelin, jos
+	 * hakutuloksista on valittuna oppilas.
+	 */
+	private void muokkaaOppilastaActionPerformed() {
 		int i = kayttajatunnuksetList.getSelectedIndex();
 		if (i == -1)
 			return;
 		Kayttajatunnus oppilas = (Kayttajatunnus) kayttajatunnuksetList.getModel().getElementAt(i);
-		paaikkuna.vaihdaPaneeli(new MuokkaaOppilasta(paaikkuna, oppilas));
+		paaikkuna.vaihdaPaneeli(new MuokkaaKayttajaa(paaikkuna, oppilas));
 	}
 }

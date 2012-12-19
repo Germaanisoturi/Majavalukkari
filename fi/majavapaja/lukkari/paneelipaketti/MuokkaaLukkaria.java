@@ -11,6 +11,7 @@ import javax.swing.border.Border;
 
 import fi.majavapaja.lukkari.*;
 
+<<<<<<< HEAD:fi/majavapaja/lukkari/paneelipaketti/MuokkaaLukkaria.java
 /**
  * Lukujärjestyksen näyttämiseen tenhty paneeli.
  * 
@@ -18,6 +19,10 @@ import fi.majavapaja.lukkari.*;
  * 
  */
 public class MuokkaaLukkaria extends JPanel implements MouseListener {
+=======
+@SuppressWarnings("serial")
+public class AlmightyLukkariPaneeli extends JPanel implements MouseListener {
+>>>>>>> 535f7bfdb7e1325765050c0a2e91697d4f3c719c:fi/majavapaja/lukkari/paneelipaketti/AlmightyLukkariPaneeli.java
 	// PERSE
 
 	private static final int RIVI = 9;

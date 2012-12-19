@@ -7,8 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Database luokka toimii tiedon välittjänä tietokannan ja
+ * itse ohjelman välillä.
  * 
- * @author s1001069
+ * @author Majavapaja
  */
 public class Database {
 	private static String driver = "com.mysql.jdbc.Driver";
@@ -228,42 +230,33 @@ public class Database {
 			closeConnection(con);
 		}
 	}
-
+	
 	/**
-	 * Poistetaan oppilas tietokannasta.
+	 * Poistetaan käyttäjätunnus ja siihen liitetty oppilas tietokannasta.
 	 * 
-	 * @param poistettavaOppilas
-	 *            Poistettava oppilas.
-	 * @returntrue tai false operaation onnistumisen mukaan.
-	 */
-	public static boolean poistaKayttajatunnus(Oppilas poistettavaOppilas) {
-		Connection con = connect();
-		try {
-			PreparedStatement ps = con.prepareStatement("DELETE FROM oppilas WHERE oppilasID=?");
-			ps.setInt(1, poistettavaOppilas.getId());
-			ps.executeUpdate();
-			return true;
-		} catch (SQLException ex) {
-			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-			return false;
-		} finally {
-			closeConnection(con);
-		}
-	}
-
-	/**
-	 * Poistetaan käyttäjätunnus tietokannasta.
-	 * 
-	 * @param tunnus
-	 *            Poistettavan käyttäjätunnuksen ID.
+	 * @param kayttajatunnus
+	 *            Poistettava kayttajatunnus
 	 * @return true tai false operaation onnistumisen mukaan.
 	 */
-	public static boolean poistaKayttajatunnus(int tunnus) {
+	public static boolean poistaKayttajatunnus(Kayttajatunnus kayttajatunnus) {
 		Connection con = connect();
 		try {
-			PreparedStatement ps = con.prepareStatement("DELETE FROM kayttajatunnus WHERE kayttajatunnusID=?");
-			ps.setInt(1, tunnus);
+			con.setAutoCommit(false);
+			
+			PreparedStatement ps = null;
+			
+			if (kayttajatunnus.getOppilas() != null) {
+				ps = con.prepareStatement("DELETE FROM oppilas WHERE oppilasID = ?");
+				ps.setInt(1, kayttajatunnus.getOppilas().getId());
+				ps.executeUpdate();
+			}
+			
+			ps = con.prepareStatement("DELETE FROM kayttajatunnus WHERE kayttajatunnusID = ?");
+			ps.setInt(1, kayttajatunnus.getId());
 			ps.executeUpdate();
+			
+			
+			con.commit();
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -299,6 +292,21 @@ public class Database {
 		String sukunimi = rs.getString("sukunimi");
 		int oppilaanId = rs.getInt("oppilasID");
 		Ryhma ryhma = ryhmaResultSetista(rs);
+		return new Oppilas(etunimi, sukunimi, ryhma, oppilaanId);
+	}
+	
+	/**
+	 * Luo Oppilas objektin annetun ResultSetin sisällöstä ja annetulla ryhmällä.
+	 * 
+	 * @param rs
+	 * @param ryhma oppilaan ryhmä
+	 * @return ResultSetin sisällöstä muodostettu Oppilas objekti
+	 * @throws SQLException
+	 */
+	private static Oppilas oppilasResultSetista(ResultSet rs, Ryhma ryhma) throws SQLException {
+		String etunimi = rs.getString("etunimi");
+		String sukunimi = rs.getString("sukunimi");
+		int oppilaanId = rs.getInt("oppilasID");
 		return new Oppilas(etunimi, sukunimi, ryhma, oppilaanId);
 	}
 
@@ -390,7 +398,7 @@ public class Database {
 	 * Hae oppilas käyttjätunnuksen ID:n mukaan.
 	 * 
 	 * @param kayttajatunnusID käyttäjätunnuksen ID
-	 * @return käyttäjätunnukseen liitetty oppilas tai null, jos käyttäjätunnus on ylläpitäjä 
+	 * @return käyttäjätunnukseen liitetty oppilas tai null, jos käyttäjätunnus on ylläpitäjä
 	 */
 	public static Oppilas getKayttajanOppilas(int kayttajatunnusID) {
 		Connection c = connect();
@@ -542,8 +550,8 @@ public class Database {
 	/**
 	 * Hakee annetun ryhmän tunnit tietokannasta.
 	 * 
-	 * @param ryhma ryhma, jonka tunnit halutaan hakea
-	 * @return annetun tyhmän tunnit
+	 * @param ryhma ryhmä, jonka tunnit halutaan hakea
+	 * @return annetun ryhmän tunnit
 	 */
 	public static List<Tunti> getRyhmanTunnit(Ryhma ryhma) {
 		Connection c = connect();
@@ -566,6 +574,33 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Hakee annetun ryhmän oppilaat tietokannasta.
+	 * 
+	 * @param ryhma ryhmä, jonka oppilaat halutaan hakea
+	 * @return annetun ryhmän oppilaat
+	 */
+	public static List<Oppilas> getRyhmanOppilaat(Ryhma ryhma) {
+		Connection c = connect();
+		try {
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM oppilas WHERE ryhma = ?");
+			ps.setInt(1, ryhma.getId());
+			
+			List<Oppilas> oppilaat = new ArrayList<>();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				oppilaat.add(oppilasResultSetista(rs, ryhma));
+			}
+
+			return oppilaat;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			closeConnection(c);
+		}
+	}
+	
 	/**
 	 * Hakee ryhmät annetun nimen mukaan.
 	 * 
